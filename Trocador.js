@@ -19,13 +19,18 @@ Trocador = {
         this.divNombreUsuario = this.pantallaLogin.find("#nombre_usuario");
         this.divBotonIngresar = this.pantallaLogin.find("#boton_ingresar");
         this.divBotonIngresar.click(function(){
-            var load_data = _this.pantallaLogin.find("#load_data").val();
             var nombre_usuario = _this.divNombreUsuario.val();
-            PersistidorManual.start(nombre_usuario);
+            var password = _this.divNombreUsuario.val();
+            
+            _this.claveRSA = cryptico.generateRSAKey(nombre_usuario + password, 1024);
+            
             _this.usuario = {
+                id: cryptico.publicKeyString(_this.claveRSA),
                 nombre: nombre_usuario,
                 inventario: []
             };
+            
+            PersistidorManual.start(_this.usuario.id);
             _this.pantallaLogin.hide();
             _this.alIngresarAlMercado();
         });
@@ -38,7 +43,7 @@ Trocador = {
         this.mercaderes = [];
         this.maxIdDeProductoGenerado = 0;
         
-        this.mercaderSeleccionado = {nombre:"", inventario:[], trueque: {mio:[], suyo:[]}};
+        this.mercaderSeleccionado = {nombre:"", id:"", inventario:[], trueque: {mio:[], suyo:[]}};
         
         this.panelInventarioUsuario = this.ui.find("#panel_propio .panel_inventario");        
         this.panelInventarioDelOtro = this.ui.find("#panel_ajeno .panel_inventario");
@@ -67,8 +72,8 @@ Trocador = {
         this.btnProponerTrueque.click(function(){
             vx.enviarMensaje({
                 tipoDeMensaje:"trocador.propuestaDeTrueque",
-                para: _this.mercaderSeleccionado.nombre,
-                de: _this.usuario.nombre,
+                para: _this.mercaderSeleccionado.id,
+                de: _this.usuario.id,
                 pido: _this.mercaderSeleccionado.trueque.suyo,
                 doy: _this.mercaderSeleccionado.trueque.mio
             });
@@ -80,8 +85,8 @@ Trocador = {
         this.btnAceptarTrueque.click(function(){
             vx.enviarMensaje({
                 tipoDeMensaje:"trocador.aceptacionDeTrueque",
-                para: _this.mercaderSeleccionado.nombre,
-                de: _this.usuario.nombre,
+                para: _this.mercaderSeleccionado.id,
+                de: _this.usuario.id,
                 pido: _this.mercaderSeleccionado.trueque.suyo,
                 doy: _this.mercaderSeleccionado.trueque.mio
             });
@@ -93,7 +98,7 @@ Trocador = {
         this.btnRefrescarMercaderes.click(function(){
             vx.enviarMensaje({
                 tipoDeMensaje: "trocador.avisoDeIngreso",
-                de: _this.usuario.nombre,
+                de: _this.usuario.id,
                 inventario:_this.usuario.inventario
             });     
         });
@@ -102,8 +107,8 @@ Trocador = {
         this.btnSave.click(function(){            
             vx.enviarMensaje({
                 tipoDeMensaje:"vortex.persistencia.guardarDatos",
-                de: _this.usuario.nombre,                
-                datos: {usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}
+                de: _this.usuario.id,                
+                datos: cryptico.encrypt(JSON.stringify({usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}), _this.usuario.id).cipher
             });
         });
         
@@ -111,7 +116,7 @@ Trocador = {
         this.btnLoad.click(function(){            
             vx.enviarMensaje({
                 tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-                de: _this.usuario.nombre
+                de: _this.usuario.id
             });
         });
         
@@ -120,7 +125,8 @@ Trocador = {
         
         vx.enviarMensaje({
             tipoDeMensaje: "trocador.avisoDeIngreso",
-            de: this.usuario.nombre,
+            de: this.usuario.id,
+            nombre: this.nombre,
             inventario:this.usuario.inventario
         });
     },
@@ -131,11 +137,12 @@ Trocador = {
                 tipoDeMensaje:"trocador.avisoDeIngreso"
             }),
             callback: function(mensaje){
-                if(mensaje.de == _this.usuario.nombre) return;
-                _this.agregarMercader(mensaje.de, mensaje.inventario);
+                if(mensaje.de == _this.usuario.id) return;
+                _this.agregarMercader(mensaje.de, mensaje.nombre, mensaje.inventario);
                 vx.enviarMensaje({
                     tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
-                    de: _this.usuario.nombre,
+                    de: _this.usuario.id,
+                    nombre: _this.usuario.nombre,
                     para: mensaje.de,
                     inventario: _this.usuario.inventario
                 });
@@ -147,8 +154,8 @@ Trocador = {
                 tipoDeMensaje:"trocador.inventario"
             }),
             callback: function(mensaje){
-                if(mensaje.de == _this.usuario.nombre) return;
-                var mercader = _.findWhere(_this.mercaderes, {nombre:mensaje.de});
+                if(mensaje.de == _this.usuario.id) return;
+                var mercader = _.findWhere(_this.mercaderes, {id:mensaje.de});
                 mercader.inventario = mensaje.inventario;
                 _this.dibujarInventarios();
             }
@@ -157,10 +164,10 @@ Trocador = {
         vx.pedirMensajes({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
-                para: this.usuario.nombre
+                para: this.usuario.id
             }),
             callback: function(mensaje){
-                _this.agregarMercader(mensaje.de, mensaje.inventario);
+                _this.agregarMercader(mensaje.de, mensaje.nombre, mensaje.inventario);
             }
         });
         
@@ -169,8 +176,8 @@ Trocador = {
                 tipoDeMensaje:"trocador.avisoDeNuevoProducto"
             }),
             callback: function(mensaje){
-                if(mensaje.de == _this.usuario.nombre) return;
-                var mercader = _.findWhere(_this.mercaderes, {nombre: mensaje.de});
+                if(mensaje.de == _this.usuario.id) return;
+                var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
                 _this.agregarProductoAlInventarioDe(mensaje.producto, mercader);
             }
         });  
@@ -180,8 +187,8 @@ Trocador = {
                 tipoDeMensaje:"trocador.avisoDeBajaDeProducto"
             }),
             callback: function(mensaje){
-                if(mensaje.de == _this.usuario.nombre) return;
-                var mercader = _.findWhere(_this.mercaderes, {nombre: mensaje.de});
+                if(mensaje.de == _this.usuario.id) return;
+                var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
                 _this.quitarProductoDelInventarioDe(mensaje.producto, mercader);
             }
         });  
@@ -189,10 +196,10 @@ Trocador = {
         vx.pedirMensajes({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.propuestaDeTrueque",
-                para: this.usuario.nombre
+                para: this.usuario.id
             }),
             callback: function(mensaje){
-                var mercader = _.findWhere(_this.mercaderes, {nombre: mensaje.de});
+                var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
                 mercader.trueque.mio = mensaje.pido;
                 mercader.trueque.suyo = mensaje.doy;            
                 mercader.trueque.envioPropuesta = "el";                
@@ -203,10 +210,10 @@ Trocador = {
         vx.pedirMensajes({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.aceptacionDeTrueque",
-                para: this.usuario.nombre
+                para: this.usuario.id
             }),
             callback: function(mensaje){
-                var mercader = _.findWhere(_this.mercaderes, {nombre: mensaje.de});
+                var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
                 _this.concretarTruequeCon(mercader);
                 _this.dibujarInventarios();
             }
@@ -215,28 +222,30 @@ Trocador = {
         vx.pedirMensajes({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"vortex.persistencia.datos",
-                de: this.usuario.nombre,
+                de: this.usuario.id,
             }),
             callback: function(mensaje){
-                _this.usuario = mensaje.datos.usuario;
-                _this.maxIdDeProductoGenerado = mensaje.maxIdDeProductoGenerado;
+                var datos = JSON.parse(cryptico.decrypt(mensaje.datos, _this.claveRSA).plaintext);
+                _this.usuario = datos.usuario;
+                _this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
                 vx.enviarMensaje({
                     tipoDeMensaje: "trocador.inventario",
-                    de: _this.usuario.nombre,
+                    de: _this.usuario.id,
                     inventario:_this.usuario.inventario
                 });
                 _this.dibujarInventarios();
             }
         });  
     },
-    agregarMercader: function(nombre, inventario){
-        var mercader = _.findWhere(this.mercaderes, {nombre:nombre});
+    agregarMercader: function(id, nombre, inventario){
+        var mercader = _.findWhere(this.mercaderes, {id:nombre});
         if( mercader !== undefined) {
             mercader.inventario = inventario;
             this.dibujarInventarios();
             return;
         }
         this.mercaderes.push({
+            id:id,
             nombre: nombre,
             inventario:inventario||[],
             trueque: {
@@ -258,7 +267,7 @@ Trocador = {
         this.agregarProductoAlInventarioDe(producto, this.usuario);
         vx.enviarMensaje({
             tipoDeMensaje:"trocador.avisoDeNuevoProducto",
-            de: this.usuario.nombre,
+            de: this.usuario.id,
             producto: producto
         });
     },
@@ -272,7 +281,7 @@ Trocador = {
         this.quitarProductoDelInventarioDe(producto, this.usuario)
         vx.enviarMensaje({
             tipoDeMensaje:"trocador.avisoDeBajaDeProducto",
-            de: this.usuario.nombre,
+            de: this.usuario.id,
             producto: producto
         });
     },
