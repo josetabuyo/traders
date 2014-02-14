@@ -6,7 +6,13 @@ var PersistidorManual = {
                 de: nombre_usuario
             }), 
             callback: function(mensaje){
-                alertify.alert(JSON.stringify(mensaje.datos));
+                alertify.prompt("Copia tus datos donde quieras", function (e, str) {
+                    if (e) {
+
+                    } else {
+
+                    }
+                }, JSON.stringify(mensaje.datos));
             }
         });  
         
