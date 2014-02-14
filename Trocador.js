@@ -17,11 +17,15 @@ Trocador = {
         
         this.pantallaLogin = $("#pantalla_login");
         this.divNombreUsuario = this.pantallaLogin.find("#nombre_usuario");
+		
+		
+		
         this.divBotonIngresar = this.pantallaLogin.find("#boton_ingresar");
         this.divBotonIngresar.click(function(){
             var load_data = _this.pantallaLogin.find("#load_data").val();
             var nombre_usuario = _this.divNombreUsuario.val();
             PersistidorManual.start(nombre_usuario);
+			
             _this.usuario = {
                 nombre: nombre_usuario,
                 inventario: []
@@ -29,6 +33,15 @@ Trocador = {
             _this.pantallaLogin.hide();
             _this.alIngresarAlMercado();
         });
+		
+		this.divNombreUsuario.keypress(function(e) {
+			if(e.which == 13) {
+				_this.divBotonIngresar.click();
+			}
+		});
+		this.divNombreUsuario.focus();
+		
+		
     },
     
     alIngresarAlMercado:function(){
