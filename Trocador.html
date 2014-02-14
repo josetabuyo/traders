@@ -4,6 +4,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="Trocador.css" />
+        <link rel="stylesheet" href="Alertify/alertify.core.css" />
+        <link rel="stylesheet" href="Alertify/alertify.default.css" />
         <title>Trocador</title>
 	</head>
 	
@@ -11,11 +13,15 @@
         <div id="trocador">
             <div id="pantalla_login">
                 <div class="barra_titulo"> Login </div>
-                <input id=nombre_usuario type="text"/>
+                <label>Ingresá un nombre de usuario si entras por primera vez</label><input id=nombre_usuario type="text"/>
+                <br>
+                <label>O ingresá tus datos guardados </label><textarea id="load_data"></textarea>
                 <input id="boton_ingresar" type="button" value="Ingresar"/>
             </div>
             <div id="pantalla_mercado">
-                <div class="barra_titulo"> Mercado </div>
+                <div class="barra_titulo"> Mercado 
+                    <input id="btn_guardar" type="button" value="Guardar"/>
+                </div>
                 <div id="panel_propio" class="panel_trueque">
                     <div class="datos_usuario"></div>
                     <div class="panel_inventario"></div>
@@ -53,7 +59,7 @@
     
     <script type="text/javascript" src="jquery-1.10.2.min.js"></script> 
     <script type="text/javascript" src="underscore-min.js"></script> 
-    <script type="text/javascript" src="masonry.pkgd.min.js"></script> 
+    <script type="text/javascript" src="Alertify/alertify.min.js"></script> 
 
     <script type="text/javascript" src="VortexJS/FiltrosYTransformaciones.js"></script>
     <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script> 
@@ -66,18 +72,12 @@
     <script type="text/javascript" src="VortexJS/PataConectora.js"></script> 
     <script type="text/javascript" src="VortexJS/NodoConectorSocket.js"></script>
     <script type="text/javascript" src="VortexJS/socket.io.js"></script>
-    <script type="text/javascript" src="VortexJS/NodoConectorBluetooth.js"></script> 
-    <script type="text/javascript" src="VortexJS/NodoAdaptadorBluetoothArduino.js"></script> 
     <script type="text/javascript" src="VortexJS/Vortex.js"></script> 
     
     <script type="text/javascript" src="Main.js"></script> 
     <script type="text/javascript" src="Trocador.js"></script> 
-    <script type="text/javascript" src="PantallaLogin.js"></script> 
-    <script type="text/javascript" src="PantallaMercado.js"></script> 
-    <script type="text/javascript" src="Mercader.js"></script> 
     <script type="text/javascript" src="VistaDeMercaderEnLista.js"></script> 
     <script type="text/javascript" src="SelectorDeMercaderes.js"></script> 
-    <script type="text/javascript" src="PanelInventario.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
 
     <script type="text/javascript" src="phonegap.js"></script>

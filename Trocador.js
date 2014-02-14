@@ -1,5 +1,8 @@
 Trocador = {
-    start : function(){        
+    start : function(){   
+        this.mercaderes = [];
+        this.maxIdDeProductoGenerado = 0;
+        
         vx.start({verbose:true});
 
         vx.conectarPorHTTP({
@@ -19,12 +22,19 @@ Trocador = {
         this.divNombreUsuario = this.pantallaLogin.find("#nombre_usuario");
         this.divBotonIngresar = this.pantallaLogin.find("#boton_ingresar");
         this.divBotonIngresar.click(function(){
-            var nombre_usuario = _this.divNombreUsuario.val();
+            var load_data = _this.pantallaLogin.find("#load_data").val();
+            if(load_data!=""){
+                var datos = JSON.parse(load_data);
+                _this.usuario = datos.usuario;
+                _this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
+            }else{
+                var nombre_usuario = _this.divNombreUsuario.val();
+                _this.usuario = {
+                    nombre: nombre_usuario,
+                    inventario: []
+                };
+            }
             _this.pantallaLogin.hide();
-            _this.usuario = {
-                nombre: nombre_usuario,
-                inventario: []
-            };
             _this.alIngresarAlMercado();
         });
     },
@@ -33,8 +43,6 @@ Trocador = {
         var _this = this;
         this.setupVortex();
         
-        this.mercaderes = [];
-        this.maxIdDeProductoGenerado = 0;
         this.mercaderSeleccionado = {nombre:"", inventario:[], trueque: {mio:[], suyo:[]}};
         
         this.panelInventarioUsuario = this.ui.find("#panel_propio .panel_inventario");        
@@ -93,6 +101,11 @@ Trocador = {
                 de: _this.usuario.nombre,
                 inventario:_this.usuario.inventario
             });     
+        });
+        
+        this.btnGuardar = $("#btn_guardar");
+        this.btnGuardar.click(function(){            
+            alertify.alert(JSON.stringify({usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}));
         });
         
         this.dibujarInventarios();
