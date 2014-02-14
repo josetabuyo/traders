@@ -1,17 +1,5 @@
 Trocador = {
     start : function(){   
-        vx.start({verbose:true});
-
-        vx.conectarPorHTTP({
-            url:'http://router-vortex.herokuapp.com',
-            //url:'http://localhost:3000',
-            intervalo_polling: 50
-        });    
-//        vx.conectarPorWebSockets({
-//            //url:'https://router-vortex.herokuapp.com' 
-//            url:'http://localhost:3000'
-//        });   
-        
         var _this = this;
         this.ui = $("#trocador");
         
@@ -31,7 +19,6 @@ Trocador = {
                 inventario: []
             };
             
-            PersistidorManual.start(_this.usuario.id);
             _this.pantallaLogin.hide();
             _this.alIngresarAlMercado();
         });
@@ -52,7 +39,9 @@ Trocador = {
         this.pantalla_mercado =  $("#pantalla_mercado");
         this.barraDatosUsuario = this.pantalla_mercado.find("#panel_propio .datos_usuario");
         this.barraDatosUsuario.text(this.usuario.nombre);
-
+        
+        PersistidorManual.start(_this.usuario.id);
+        
         SelectorDeMercaderes.start({
             mercaderes: this.mercaderes,
             alSeleccionarMercader: function(mercader){           
@@ -109,7 +98,7 @@ Trocador = {
             vx.enviarMensaje({
                 tipoDeMensaje:"vortex.persistencia.guardarDatos",
                 de: _this.usuario.id,                
-                datos: cryptico.encrypt(JSON.stringify({usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}), _this.usuario.id).cipher
+                datos: {usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}
             });
         });
         
@@ -133,6 +122,19 @@ Trocador = {
     },
     setupVortex: function(){
         var _this = this;
+        vx.start({verbose:true, claveRSA: this.claveRSA});
+
+        vx.conectarPorHTTP({
+            url:'http://router-vortex.herokuapp.com',
+            //url:'http://localhost:3000',
+            intervalo_polling: 50
+        });    
+//        vx.conectarPorWebSockets({
+//            //url:'https://router-vortex.herokuapp.com' 
+//            url:'http://localhost:3000'
+//        });   
+        
+        
         vx.pedirMensajes({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.avisoDeIngreso"
@@ -226,9 +228,9 @@ Trocador = {
                 de: this.usuario.id,
             }),
             callback: function(mensaje){
-                var datos = JSON.parse(cryptico.decrypt(mensaje.datos, _this.claveRSA).plaintext);
-                _this.usuario = datos.usuario;
-                _this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
+                //var datos = JSON.parse(cryptico.decrypt(mensaje.datos, _this.claveRSA).plaintext);
+                _this.usuario = mensaje.datos.usuario;
+                _this.maxIdDeProductoGenerado = mensaje.datos.maxIdDeProductoGenerado;
                 vx.enviarMensaje({
                     tipoDeMensaje: "trocador.inventario",
                     de: _this.usuario.id,

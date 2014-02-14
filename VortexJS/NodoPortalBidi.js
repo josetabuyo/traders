@@ -11,7 +11,9 @@ if(typeof(require) != "undefined"){
     var FiltroAND = require("./FiltrosYTransformaciones").FiltroAND;
 }
 
-var NodoPortalBidi = function(aliasPortal){
+var NodoPortalBidi = function(aliasPortal, claveRSA){
+    this._claveRSA = claveRSA;
+    this._encriptar = claveRSA !== undefined;
     this._listaPedidos = [];
     this._pata = new PataConectora(0, new GeneradorDeIdMensaje());
     this._alias_portal = "portal " + aliasPortal;
@@ -27,6 +29,10 @@ NodoPortalBidi.prototype.publicarFiltros = function(){
 };
 
 NodoPortalBidi.prototype.enviarMensaje = function(un_mensaje){
+//    if(this._encriptar && mensaje.de !== undefined && mensaje.datos !== undefined){
+//        if(un_mensaje.para === undefined) un_mensaje.datos = cryptico.encrypt(JSON.stringify(un_mensaje.datos), "", this._claveRSA).cipher
+//        else un_mensaje.datos = cryptico.encrypt(JSON.stringify(un_mensaje.datos), un_mensaje.para, this._claveRSA).cipher
+//    }
     this._pata.recibirMensaje(un_mensaje);
 };
 
@@ -43,7 +49,14 @@ NodoPortalBidi.prototype.recibirMensaje = function(un_mensaje) {
     }   
     this._listaPedidos.forEach(function (pedido) {					
         if(pedido.filtro.evaluarMensaje(un_mensaje)){
-            pedido.callback(un_mensaje);
+//            if(this._encriptar && mensaje.para !== undefined && mensaje.datos !== undefined) {
+//                var desencriptado = cryptico.decrypt(un_mensaje.datos, _this.claveRSA);
+//                if(desencriptado.status == "success" && desencriptado.signature != "forged"){}
+//                    un_mensaje.datos = desencriptado.plaintext;
+//                    pedido.callback(un_mensaje);
+//            }else{
+                pedido.callback(un_mensaje);
+//            }            
         }
     });	        
 };

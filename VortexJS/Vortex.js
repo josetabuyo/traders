@@ -38,7 +38,7 @@ var Vortex = Vx = vX = vx = {
         this.router.conectarBidireccionalmenteCon(this.adaptadorArduino);
     },
     pedirMensajes: function(p){
-        var portal = new NodoPortalBidi();
+        var portal = new NodoPortalBidi("portal" + this.portales.length, this.claveRSA);
         portal.conectarBidireccionalmenteCon(this.router);        
         portal.pedirMensajes(p.filtro, p.callback); 
         this.portales.push(portal);
