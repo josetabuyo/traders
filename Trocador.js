@@ -17,10 +17,11 @@ Trocador = {
         
         this.pantallaLogin = $("#pantalla_login");
         this.divNombreUsuario = this.pantallaLogin.find("#nombre_usuario");
+        this.divPassword = this.pantallaLogin.find("#password");
         this.divBotonIngresar = this.pantallaLogin.find("#boton_ingresar");
         this.divBotonIngresar.click(function(){
             var nombre_usuario = _this.divNombreUsuario.val();
-            var password = _this.divNombreUsuario.val();
+            var password = _this.divPassword.val();
             
             _this.claveRSA = cryptico.generateRSAKey(nombre_usuario + password, 1024);
             
