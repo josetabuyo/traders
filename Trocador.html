@@ -13,14 +13,13 @@
         <div id="trocador">
             <div id="pantalla_login">
                 <div class="barra_titulo"> Login </div>
-                <label>Ingresá un nombre de usuario si entras por primera vez</label><input id=nombre_usuario type="text"/>
-                <br>
-                <label>O ingresá tus datos guardados </label><textarea id="load_data"></textarea>
+                <input id=nombre_usuario type="text"/>
                 <input id="boton_ingresar" type="button" value="Ingresar"/>
             </div>
             <div id="pantalla_mercado">
                 <div class="barra_titulo"> Mercado 
-                    <input id="btn_guardar" type="button" value="Guardar"/>
+                    <input id="btn_load" type="button" value="Load"/>
+                    <input id="btn_save" type="button" value="Save"/>
                 </div>
                 <div id="panel_propio" class="panel_trueque">
                     <div class="datos_usuario"></div>
@@ -79,6 +78,7 @@
     <script type="text/javascript" src="VistaDeMercaderEnLista.js"></script> 
     <script type="text/javascript" src="SelectorDeMercaderes.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
+    <script type="text/javascript" src="PersistidorManual.js"></script> 
 
     <script type="text/javascript" src="phonegap.js"></script>
 </html>

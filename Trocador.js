@@ -1,8 +1,5 @@
 Trocador = {
     start : function(){   
-        this.mercaderes = [];
-        this.maxIdDeProductoGenerado = 0;
-        
         vx.start({verbose:true});
 
         vx.conectarPorHTTP({
@@ -23,17 +20,12 @@ Trocador = {
         this.divBotonIngresar = this.pantallaLogin.find("#boton_ingresar");
         this.divBotonIngresar.click(function(){
             var load_data = _this.pantallaLogin.find("#load_data").val();
-            if(load_data!=""){
-                var datos = JSON.parse(load_data);
-                _this.usuario = datos.usuario;
-                _this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
-            }else{
-                var nombre_usuario = _this.divNombreUsuario.val();
-                _this.usuario = {
-                    nombre: nombre_usuario,
-                    inventario: []
-                };
-            }
+            var nombre_usuario = _this.divNombreUsuario.val();
+            PersistidorManual.start(nombre_usuario);
+            _this.usuario = {
+                nombre: nombre_usuario,
+                inventario: []
+            };
             _this.pantallaLogin.hide();
             _this.alIngresarAlMercado();
         });
@@ -42,6 +34,9 @@ Trocador = {
     alIngresarAlMercado:function(){
         var _this = this;
         this.setupVortex();
+        
+        this.mercaderes = [];
+        this.maxIdDeProductoGenerado = 0;
         
         this.mercaderSeleccionado = {nombre:"", inventario:[], trueque: {mio:[], suyo:[]}};
         
@@ -103,9 +98,21 @@ Trocador = {
             });     
         });
         
-        this.btnGuardar = $("#btn_guardar");
-        this.btnGuardar.click(function(){            
-            alertify.alert(JSON.stringify({usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}));
+        this.btnSave = $("#btn_save");
+        this.btnSave.click(function(){            
+            vx.enviarMensaje({
+                tipoDeMensaje:"vortex.persistencia.guardarDatos",
+                de: _this.usuario.nombre,                
+                datos: {usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}
+            });
+        });
+        
+        this.btnLoad = $("#btn_load");
+        this.btnLoad.click(function(){            
+            vx.enviarMensaje({
+                tipoDeMensaje:"vortex.persistencia.obtenerDatos",
+                de: _this.usuario.nombre
+            });
         });
         
         this.dibujarInventarios();
@@ -135,6 +142,18 @@ Trocador = {
             }
         });  
 
+        vx.pedirMensajes({
+            filtro: new FiltroXEjemplo({
+                tipoDeMensaje:"trocador.inventario"
+            }),
+            callback: function(mensaje){
+                if(mensaje.de == _this.usuario.nombre) return;
+                var mercader = _.findWhere(_this.mercaderes, {nombre:mensaje.de});
+                mercader.inventario = mensaje.inventario;
+                _this.dibujarInventarios();
+            }
+        }); 
+        
         vx.pedirMensajes({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
@@ -191,7 +210,24 @@ Trocador = {
                 _this.concretarTruequeCon(mercader);
                 _this.dibujarInventarios();
             }
-        });    
+        });   
+        
+        vx.pedirMensajes({
+            filtro: new FiltroXEjemplo({
+                tipoDeMensaje:"vortex.persistencia.datos",
+                de: this.usuario.nombre,
+            }),
+            callback: function(mensaje){
+                _this.usuario = mensaje.datos.usuario;
+                _this.maxIdDeProductoGenerado = mensaje.maxIdDeProductoGenerado;
+                vx.enviarMensaje({
+                    tipoDeMensaje: "trocador.inventario",
+                    de: _this.usuario.nombre,
+                    inventario:_this.usuario.inventario
+                });
+                _this.dibujarInventarios();
+            }
+        });  
     },
     agregarMercader: function(nombre, inventario){
         var mercader = _.findWhere(this.mercaderes, {nombre:nombre});
