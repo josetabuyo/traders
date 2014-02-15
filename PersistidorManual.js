@@ -20,15 +20,13 @@ var PersistidorManual = {
         vx.pedirMensajes({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-                de: id_usuario,
-                para:id_usuario
+                de: id_usuario
             }), 
             callback: function(mensaje){
                 alertify.prompt("Ingrese sus datos guardados", function (e, str) {
                     if (e) {
                         vx.enviarMensaje({
                             tipoDeMensaje:"vortex.persistencia.datos",
-                            de: id_usuario,
                             para: id_usuario,
                             datos:JSON.parse(str)
                         });
@@ -36,7 +34,6 @@ var PersistidorManual = {
                         // user clicked "cancel"
                         vx.enviarMensaje({
                             tipoDeMensaje:"vortex.persistencia.noHayDatos",
-                            de: id_usuario,
                             para:id_usuario
                         });
                     }

@@ -6,7 +6,16 @@ var VistaDeUnProductoEnInventario = function(opt){
 VistaDeUnProductoEnInventario.prototype.start = function(){
     var _this = this;
     this.ui = $("#plantillas").find(".producto_en_inventario").clone();  
-    this.ui.text(this.producto.nombre);
+    this.lblNombre = this.ui.find("#nombre");
+    this.lblNombre.text(this.producto.nombre);
+    
+    if(this.alEliminar){
+        this.btnEliminar = this.ui.find("#btn_eliminar");
+        this.btnEliminar.click(function(){
+            _this.alEliminar();
+        });
+        this.btnEliminar.show();
+    }
     this.ui.click(function(){
         if(_this.seleccionadoParaTrueque){
             _this.ui.removeClass("producto_seleccionado_para_trueque");

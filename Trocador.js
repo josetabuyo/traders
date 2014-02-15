@@ -3,6 +3,25 @@ Trocador = {
         var _this = this;
         this.ui = $("#trocador");
         
+        //prueba
+//        vx.start({verbose:true});
+//        vx.conectarPorHTTP({
+//            //url:'http://router-vortex.herokuapp.com',
+//            url:'http://localhost:3000',
+//            intervalo_polling: 50
+//        });  
+//        
+//        vx.pedirMensajes({
+//            filtro: new FiltroXEjemplo({tipoDeMensaje: "prueba"}),
+//            callback: function(mensaje){
+//                console.log("me llego esto", mensaje);
+//            }
+//        });
+        //fin prueba
+        
+        
+        
+        
         this.pantallaLogin = $("#pantalla_login");
         this.divNombreUsuario = this.pantallaLogin.find("#nombre_usuario");
         this.divPassword = this.pantallaLogin.find("#password");
@@ -60,25 +79,29 @@ Trocador = {
         
         this.btnProponerTrueque = this.pantalla_mercado.find("#btnProponerTrueque");
         this.btnProponerTrueque.click(function(){
-            vx.enviarMensaje({
+            vx.enviarMensajeSeguro({
                 tipoDeMensaje:"trocador.propuestaDeTrueque",
                 para: _this.mercaderSeleccionado.id,
                 de: _this.usuario.id,
-                pido: _this.mercaderSeleccionado.trueque.suyo,
-                doy: _this.mercaderSeleccionado.trueque.mio
+                datos:{
+                    pido: _this.mercaderSeleccionado.trueque.suyo,
+                    doy: _this.mercaderSeleccionado.trueque.mio
+                }
             });
-            _this.mercaderSeleccionado.trueque.envioPropuesta = "yo";
+            _this.mercaderSeleccionado.trueque.enviado = true;
             _this.dibujarInventarios();
         });
         
         this.btnAceptarTrueque = this.pantalla_mercado.find("#btnAceptarTrueque");
         this.btnAceptarTrueque.click(function(){
-            vx.enviarMensaje({
+            vx.enviarMensajeSeguro({
                 tipoDeMensaje:"trocador.aceptacionDeTrueque",
                 para: _this.mercaderSeleccionado.id,
                 de: _this.usuario.id,
-                pido: _this.mercaderSeleccionado.trueque.suyo,
-                doy: _this.mercaderSeleccionado.trueque.mio
+                datos:{
+                    pido: _this.mercaderSeleccionado.trueque.suyo,
+                    doy: _this.mercaderSeleccionado.trueque.mio
+                }
             });
             _this.concretarTruequeCon(_this.mercaderSeleccionado);
             _this.dibujarInventarios();
@@ -86,19 +109,26 @@ Trocador = {
         
         this.btnRefrescarMercaderes = this.pantalla_mercado.find("#btn_refrescar");
         this.btnRefrescarMercaderes.click(function(){
-            vx.enviarMensaje({
+            vx.enviarMensajeSeguro({
                 tipoDeMensaje: "trocador.avisoDeIngreso",
                 de: _this.usuario.id,
-                inventario:_this.usuario.inventario
+                datos:{
+                    nombre: _this.usuario.nombre,
+                    inventario:_this.usuario.inventario
+                }
             });     
         });
         
         this.btnSave = $("#btn_save");
         this.btnSave.click(function(){            
-            vx.enviarMensaje({
+            vx.enviarMensajeSeguro({
                 tipoDeMensaje:"vortex.persistencia.guardarDatos",
                 de: _this.usuario.id,                
-                datos: {usuario: _this.usuario, maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado}
+                para: _this.usuario.id,                
+                datos: {
+                    usuario: _this.usuario, 
+                    maxIdDeProductoGenerado: _this.maxIdDeProductoGenerado
+                }
             });
         });
         
@@ -113,135 +143,144 @@ Trocador = {
         this.dibujarInventarios();
         this.pantalla_mercado.show();
         
-        vx.enviarMensaje({
+        vx.enviarMensajeSeguro({
             tipoDeMensaje: "trocador.avisoDeIngreso",
             de: this.usuario.id,
-            nombre: this.nombre,
-            inventario:this.usuario.inventario
+            datos:{
+                nombre: this.usuario.nombre,
+                inventario:this.usuario.inventario
+            }
         });
     },
     setupVortex: function(){
         var _this = this;
         vx.start({verbose:true, claveRSA: this.claveRSA});
 
-        vx.conectarPorHTTP({
-            url:'http://router-vortex.herokuapp.com',
-            //url:'http://localhost:3000',
-            intervalo_polling: 50
-        });    
-//        vx.conectarPorWebSockets({
-//            //url:'https://router-vortex.herokuapp.com' 
-//            url:'http://localhost:3000'
-//        });   
+//        vx.conectarPorHTTP({
+//            //url:'http://router-vortex.herokuapp.com',
+//            url:'http://localhost:3000',
+//            intervalo_polling: 50
+//        });    
+        vx.conectarPorWebSockets({
+            url:'https://router-vortex.herokuapp.com' 
+            //url:'http://localhost:3000'
+        });   
         
         
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.avisoDeIngreso"
             }),
             callback: function(mensaje){
-                if(mensaje.de == _this.usuario.id) return;
-                _this.agregarMercader(mensaje.de, mensaje.nombre, mensaje.inventario);
-                vx.enviarMensaje({
+                if(mensaje.de == _this.usuario.id) 
+                    return;
+                _this.agregarMercader(mensaje.de, mensaje.datos.nombre, mensaje.datos.inventario);
+                vx.enviarMensajeSeguro({
                     tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
                     de: _this.usuario.id,
-                    nombre: _this.usuario.nombre,
-                    para: mensaje.de,
-                    inventario: _this.usuario.inventario
+                    para: mensaje.de,                 
+                    datos: {
+                        nombre: _this.usuario.nombre,  
+                        inventario:_this.usuario.inventario
+                    }
                 });
             }
         });  
 
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.inventario"
             }),
             callback: function(mensaje){
                 if(mensaje.de == _this.usuario.id) return;
                 var mercader = _.findWhere(_this.mercaderes, {id:mensaje.de});
-                mercader.inventario = mensaje.inventario;
+                mercader.inventario = mensaje.datos.inventario;
                 _this.dibujarInventarios();
             }
         }); 
         
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
                 para: this.usuario.id
             }),
             callback: function(mensaje){
-                _this.agregarMercader(mensaje.de, mensaje.nombre, mensaje.inventario);
+                _this.agregarMercader(mensaje.de, mensaje.datos.nombre, mensaje.datos.inventario);
             }
         });
         
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.avisoDeNuevoProducto"
             }),
             callback: function(mensaje){
                 if(mensaje.de == _this.usuario.id) return;
                 var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
-                _this.agregarProductoAlInventarioDe(mensaje.producto, mercader);
+                _this.agregarProductoAlInventarioDe(mensaje.datos.producto, mercader);
             }
         });  
         
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.avisoDeBajaDeProducto"
             }),
             callback: function(mensaje){
                 if(mensaje.de == _this.usuario.id) return;
                 var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
-                _this.quitarProductoDelInventarioDe(mensaje.producto, mercader);
+                _this.quitarProductoDelInventarioDe(mensaje.datos.producto, mercader);
             }
         });  
         
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.propuestaDeTrueque",
                 para: this.usuario.id
             }),
             callback: function(mensaje){
                 var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
-                mercader.trueque.mio = mensaje.pido;
-                mercader.trueque.suyo = mensaje.doy;            
-                mercader.trueque.envioPropuesta = "el";                
+                mercader.trueque.mio = mensaje.datos.pido;
+                mercader.trueque.suyo = mensaje.datos.doy;            
+                mercader.trueque.propuestoPor = "el";                
                 _this.dibujarInventarios();
             }
         });  
         
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"trocador.aceptacionDeTrueque",
                 para: this.usuario.id
             }),
             callback: function(mensaje){
                 var mercader = _.findWhere(_this.mercaderes, {id: mensaje.de});
+                mercader.trueque.mio = mensaje.datos.pido;
+                mercader.trueque.suyo = mensaje.datos.doy;      
                 _this.concretarTruequeCon(mercader);
                 _this.dibujarInventarios();
             }
         });   
         
-        vx.pedirMensajes({
+        vx.pedirMensajesSeguros({
             filtro: new FiltroXEjemplo({
                 tipoDeMensaje:"vortex.persistencia.datos",
-                de: this.usuario.id,
+                para: this.usuario.id
             }),
             callback: function(mensaje){
                 //var datos = JSON.parse(cryptico.decrypt(mensaje.datos, _this.claveRSA).plaintext);
                 _this.usuario = mensaje.datos.usuario;
                 _this.maxIdDeProductoGenerado = mensaje.datos.maxIdDeProductoGenerado;
-                vx.enviarMensaje({
+                vx.enviarMensajeSeguro({
                     tipoDeMensaje: "trocador.inventario",
                     de: _this.usuario.id,
-                    inventario:_this.usuario.inventario
+                    datos:{
+                        inventario:_this.usuario.inventario
+                    }
                 });
                 _this.dibujarInventarios();
             }
         });  
     },
     agregarMercader: function(id, nombre, inventario){
-        var mercader = _.findWhere(this.mercaderes, {id:nombre});
+        var mercader = _.findWhere(this.mercaderes, {id:id});
         if( mercader !== undefined) {
             mercader.inventario = inventario;
             this.dibujarInventarios();
@@ -254,7 +293,8 @@ Trocador = {
             trueque: {
                 suyo: [],
                 mio: [],
-                envioPropuesta: "ninguno"
+                propuestoPor: "ninguno",
+                enviado:false
             }
         });
         SelectorDeMercaderes.actualizar();
@@ -268,10 +308,12 @@ Trocador = {
         producto.id = this.maxIdDeProductoGenerado; //_.max(this.usuario.inventario, function(p){return p.id;}) + 1;
         this.maxIdDeProductoGenerado+=1;
         this.agregarProductoAlInventarioDe(producto, this.usuario);
-        vx.enviarMensaje({
+        vx.enviarMensajeSeguro({
             tipoDeMensaje:"trocador.avisoDeNuevoProducto",
             de: this.usuario.id,
-            producto: producto
+            datos: {
+                producto: producto
+            }
         });
     },
     quitarProductoDelInventarioDe: function(producto, mercader){
@@ -282,10 +324,12 @@ Trocador = {
     },
     quitarProductoDeMiInventario: function(producto){
         this.quitarProductoDelInventarioDe(producto, this.usuario)
-        vx.enviarMensaje({
+        vx.enviarMensajeSeguro({
             tipoDeMensaje:"trocador.avisoDeBajaDeProducto",
             de: this.usuario.id,
-            producto: producto
+            datos:{
+                producto: producto
+            }
         });
     },
     concretarTruequeCon: function(mercader){
@@ -299,7 +343,7 @@ Trocador = {
         });
         mercader.trueque.mio.length = 0;
         mercader.trueque.suyo.length = 0;   
-        mercader.trueque.envioPropuesta = "ninguno";
+        mercader.trueque.propuestoPor = "ninguno";
     },
     dibujarInventarios: function(){
         this.panelInventarioUsuario.empty();
@@ -311,15 +355,20 @@ Trocador = {
                 seleccionadoParaTrueque: (_.findWhere(_this.mercaderSeleccionado.trueque.mio, {id: producto.id})!== undefined),
                 alSeleccionarParaTrueque: function(){
                     _this.mercaderSeleccionado.trueque.mio.push(producto);
-                    _this.btnProponerTrueque.show();            
-                    _this.btnAceptarTrueque.hide();   
+                    _this.mercaderSeleccionado.trueque.propuestoPor = "mi";
+                    _this.mercaderSeleccionado.trueque.enviado = false;
+                    _this.dibujarInventarios();  
                 },
                 alDesSeleccionarParaTrueque: function(){
                     _.each(_this.mercaderSeleccionado.trueque.mio, function(p, i){
                         if(producto.id == p.id) _this.mercaderSeleccionado.trueque.mio.splice(i, 1);
                     });
-                    _this.btnProponerTrueque.show();            
-                    _this.btnAceptarTrueque.hide();  
+                    _this.mercaderSeleccionado.trueque.propuestoPor = "mi";
+                    _this.mercaderSeleccionado.trueque.enviado = false;
+                    _this.dibujarInventarios();  
+                },
+                alEliminar: function(){
+                    _this.quitarProductoDeMiInventario(producto);
                 }
             });
             vista.dibujarEn(_this.panelInventarioUsuario);
@@ -331,26 +380,35 @@ Trocador = {
                 seleccionadoParaTrueque: (_.findWhere(_this.mercaderSeleccionado.trueque.suyo, {id: producto.id})!== undefined),
                 alSeleccionarParaTrueque: function(){
                     _this.mercaderSeleccionado.trueque.suyo.push(producto);
-                    _this.btnProponerTrueque.show();            
-                    _this.btnAceptarTrueque.hide();   
+                    _this.mercaderSeleccionado.trueque.propuestoPor = "mi";
+                    _this.mercaderSeleccionado.trueque.enviado = false;
+                    _this.dibujarInventarios();    
                 },
                 alDesSeleccionarParaTrueque: function(){
                     _.each(_this.mercaderSeleccionado.trueque.suyo, function(p, i){
                         if(producto.id == p.id) _this.mercaderSeleccionado.trueque.suyo.splice(i, 1);
                     });
-                    _this.btnProponerTrueque.show();            
-                    _this.btnAceptarTrueque.hide();  
+                    _this.mercaderSeleccionado.trueque.propuestoPor = "mi";
+                    _this.mercaderSeleccionado.trueque.enviado = false;
+                    _this.dibujarInventarios();  
                 }
             });
             vista.dibujarEn(_this.panelInventarioDelOtro);
         });
         
-        if(this.mercaderSeleccionado.trueque.envioPropuesta == "el") {this.btnProponerTrueque.hide();
-                                             this.btnAceptarTrueque.show();}
-        if(this.mercaderSeleccionado.trueque.envioPropuesta == "ninguno") {this.btnProponerTrueque.show();
-                                             this.btnAceptarTrueque.hide();}
-        if(this.mercaderSeleccionado.trueque.envioPropuesta == "yo") {this.btnProponerTrueque.hide();
-                                             this.btnAceptarTrueque.hide();}
-    }
-    
+        if(this.mercaderSeleccionado.trueque.mio.length == 0 && 
+            this.mercaderSeleccionado.trueque.suyo.length == 0){
+            this.btnProponerTrueque.hide();
+            this.btnAceptarTrueque.hide();
+        }else{
+            if(this.mercaderSeleccionado.trueque.propuestoPor == "el"){
+                this.btnProponerTrueque.hide();
+                this.btnAceptarTrueque.show();
+            }else{
+                if(this.mercaderSeleccionado.trueque.enviado) this.btnProponerTrueque.hide();
+                else this.btnProponerTrueque.show();
+                this.btnAceptarTrueque.hide();
+            }
+        }
+    }    
 };

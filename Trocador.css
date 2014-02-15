@@ -97,18 +97,19 @@ html, body{
     transition: all .5s;
     cursor: pointer;
     padding: 5px;
+    position: relative;
 }
 
 .producto_en_inventario:hover {
-    background-color: blue;
+    border:3px solid yellow;
 }
 
 .producto_seleccionado_para_trueque{
-    background-color: green;
+    background-color: yellow;
 }
 
 .producto_seleccionado_para_trueque:hover{
-    background-color: yellow;
+    border: 3px solid gray;
 }
 
 #panel_alta_producto {
@@ -165,4 +166,30 @@ html, body{
     bottom: 0px;
     width: 60px;
     background-color: darkorange;
+}
+
+.producto_en_inventario #btn_eliminar {
+    position: absolute;
+    top:5px;
+    left:5px;
+    color:red;
+    background-color: black;
+    border-radius: 50%;
+    display:none;
+    width: 23px;
+    height: 23px;
+    font-weight: bold;
+}
+
+#btn_eliminar: hover {
+    background-color: white;
+    color:black;
+}
+
+.producto_en_inventario #nombre {
+    position: absolute;
+    top:50%;
+    left:5px;
+    right:5px;
+    color:black;
 }
