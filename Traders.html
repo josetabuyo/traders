@@ -3,19 +3,20 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="Trocador.css" />
+        <link rel="stylesheet" href="Traders.css" />
         <link rel="stylesheet" href="Alertify/alertify.core.css" />
         <link rel="stylesheet" href="Alertify/alertify.default.css" />
-        <title>Trocador</title>
+        <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
+        <title>Traders</title>
 	</head>
 	
 	<body>	
         <div id="trocador">
             <div id="pantalla_login">
                 <div class="barra_titulo"> Login </div>
-                <label> Usuario: </label><input id=nombre_usuario type="text"/>
+                <div class="label"> Usuario: </div><input id="nombre_usuario" type="text"/>
                 <br>
-                <label> Password:</label><input id=password type="password"/>
+                <div class="label"> Password:</div><input id="password" type="password"/>
                 <input id="boton_ingresar" type="button" value="Ingresar"/>
             </div>
             <div id="pantalla_mercado">
@@ -24,7 +25,9 @@
                     <input id="btn_save" type="button" value="Save"/>
                 </div>
                 <div id="panel_propio" class="panel_trueque">
-                    <div class="datos_usuario"></div>
+                    <div id="datos_usuario" class="datos_mercader">
+                        <div id="nombre"></div>
+                    </div>
                     <div class="panel_inventario"></div>
                     <div id="panel_alta_producto">
                         <span>Agregar producto:</span>
@@ -33,12 +36,8 @@
                     </div>
                 </div>
                 <div id="panel_ajeno" class="panel_trueque">
-                    <div id="selector_mercaderes" class="datos_usuario">
-                        <div id="leyenda_cuando_no_hay_seleccionado">Elegí con quien comerciar...</div>
-                        <div id="leyenda_cuando_no_hay_mercaderes">No hay nadie...</div>
-                        <div id="mercader_seleccionado"></div>
-                        <input id="btn_refrescar" type="button" value="R"/>
-                        <div id="lista_mercaderes"></div>
+                    <div id="datos_mercader_seleccionado" class="datos_mercader">
+                         <input id="selector_mercaderes" type="hidden"></input>
                     </div>
                     <div class="panel_inventario"></div>
                     <div id="btnProponerTrueque" class="boton_trueque">
@@ -53,7 +52,9 @@
     </body>    
     
     <div id="plantillas">
-        <div class="mercader_en_lista"></div>
+        <div class="mercader_en_lista">
+            <div id="nombre"></div>
+        </div>
         <div class="panel_inventario"></div>
         <div class="producto_en_inventario">
             <div id="nombre"></div>
@@ -65,7 +66,8 @@
     <script type="text/javascript" src="underscore-min.js"></script> 
     <script type="text/javascript" src="Alertify/alertify.min.js"></script> 
     <script type="text/javascript" src="Cryptico.min.js"></script> 
-
+    <script type="text/javascript" src="select2-3.4.5/select2.min.js"></script> 
+    
     <script type="text/javascript" src="VortexJS/FiltrosYTransformaciones.js"></script>
     <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script> 
     <script type="text/javascript" src="VortexJS/ClonadorDeObjetos.js"></script> 
@@ -80,9 +82,8 @@
     <script type="text/javascript" src="VortexJS/Vortex.js"></script> 
     
     <script type="text/javascript" src="Main.js"></script> 
-    <script type="text/javascript" src="Trocador.js"></script> 
-    <script type="text/javascript" src="VistaDeMercaderEnLista.js"></script> 
-    <script type="text/javascript" src="SelectorDeMercaderes.js"></script> 
+    <script type="text/javascript" src="Traders.js"></script> 
+    <script type="text/javascript" src="PantallaTraders.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
     <script type="text/javascript" src="PersistidorManual.js"></script> 
 

@@ -22,8 +22,8 @@ var Vortex = Vx = vX = vx = {
     start:function(opt){
         $.extend(true, this, opt);
         this.router = new NodoRouter();
-        this.claveRSAComun = cryptico.generateRSAKey("VORTEXCAPO", 1024);                             //ATA
-        this.clavePublicaComun = cryptico.publicKeyString(this.claveRSAComun);             //PINGO
+        this.claveRSAComun = cryptico.generateRSAKey("VORTEXCAPO", 1024);                               //ATA
+        this.clavePublicaComun = cryptico.publicKeyString(this.claveRSAComun);                          //PINGO
         this.portales = [];
     },
     conectarPorHTTP: function(p){
@@ -46,13 +46,13 @@ var Vortex = Vx = vX = vx = {
         this.portales.push(portal);
         return this.portales.length - 1; //devuelvo id del portal/pedido para que el cliente pueda darlos de baja
     },
-    pedirMensajesSeguros: function(p){
+    pedirMensajesSeguros: function(p, claveRSA){
         var _this = this;
         return this.pedirMensajes({
             filtro:p.filtro,
             callback: function(mensaje){                
                 var clave = _this.claveRSAComun;
-                if(mensaje.para) clave = _this.claveRSA;
+                if(mensaje.para) clave = claveRSA;
         
                 var desencriptado = cryptico.decrypt(mensaje.datos, clave);
                 if(desencriptado.status == "success" && desencriptado.signature != "forged"){
@@ -65,10 +65,10 @@ var Vortex = Vx = vX = vx = {
     enviarMensaje:function(mensaje){
         this.router.recibirMensaje(mensaje);
     },
-    enviarMensajeSeguro:function(mensaje){
+    enviarMensajeSeguro:function(mensaje, claveRSA){
         var mi_clave_privada = undefined;
         var su_clave_publica = this.clavePublicaComun;
-        if(mensaje.de) mi_clave_privada = this.claveRSA;
+        if(mensaje.de) mi_clave_privada = claveRSA;
         if(mensaje.para) su_clave_publica = mensaje.para;
         mensaje.datos = cryptico.encrypt(JSON.stringify(mensaje.datos), su_clave_publica, mi_clave_privada).cipher
         

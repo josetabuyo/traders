@@ -1,14 +1,3 @@
-#lean_overlay {
-    position: fixed;
-    z-index:100;
-    top: 0px;
-    left: 0px;
-    height:100%;
-    width:100%;
-    background: #000;
-    display: none;
-}
-
 #plantillas{
     display:none;
 }
@@ -29,6 +18,26 @@ html, body{
     position: relative;
 }
 
+#pantalla_login {
+    height: 100%;
+    position: relative;
+    background-color: gray;
+}
+
+#pantalla_login .label{
+    color: orange;
+    width: 80px;
+    text-align: right;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+#pantalla_login #nombre_usuario,
+#pantalla_login #password
+{
+    border-radius: 5px;
+}
+
 .barra_titulo {
     background-color: gray;
     color:orange;
@@ -40,32 +49,6 @@ html, body{
     left:0px;
     right:0px;
     height:30px;
-}
-
-#lista_mercaderes {
-    position: absolute;
-    width: 100%;
-    top: 0px;
-    bottom: 0px;
-    right: 0px;
-    background-color: gray;
-}
-
-.barra_datos_mercader,
-.mercader_en_lista,
-.datos_usuario{
-    height:30px;
-    color:orange;
-    font-weight: bold;
-    text-align: center;
-    border: 1px solid black;
-    cursor: pointer;
-    padding-top: 9px;
-    background-color: gray;
-}
-
-.mercader_en_lista:hover{
-    background-color: blue;
 }
 
 .panel_trueque {
@@ -192,4 +175,68 @@ html, body{
     left:5px;
     right:5px;
     color:black;
+}
+
+.selector_mercaderes {
+    height:100%;
+    width:100% !important;
+}
+
+.selector_mercaderes .select2-choice{
+    height: 38px !important;
+    padding: 0 0 0 0 !important;
+}
+
+.selector_mercaderes .select2-chosen{
+    margin-right: 20px !important;
+    background-color: gray;
+    padding-top:5px;
+    height: 100%;
+    color:orange;
+}
+
+.mercader_en_lista{
+    background-color: gray;   
+    color:orange;
+    text-align: center;
+    padding-bottom: 4px;
+}
+
+.datos_mercader{
+    height:40px;
+    color:orange;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    background-color: gray;
+}
+
+#datos_usuario #nombre {
+    margin-top: 8px;
+}
+
+.dropdown_selector_mercaderes{
+    background-color: gray !important;
+}
+
+.dropdown_selector_mercaderes .select2-search{
+    margin-top: 3px;
+}
+
+.dropdown_selector_mercaderes .select2-results{
+    background-color:gray;
+    color:orange;
+}
+
+.dropdown_selector_mercaderes .select2-no-results{
+    background-color:gray !important;
+    color:orange;
+}
+
+.dropdown_selector_mercaderes .select2-results .select2-result-label{
+    padding:2px !important;
+}
+
+.dropdown_selector_mercaderes .select2-highlighted{
+    background-color:  rgb(207, 207, 182) !important;
 }

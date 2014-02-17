@@ -1,5 +1,5 @@
 var onDeviceReady = function() {     
-    Trocador.start();
+    PantallaTraders.start();
 };
 
 $(document).ready(function() {  
@@ -18,4 +18,6 @@ $(document).ready(function() {
     
     console.log("comenzando aplicacion de prueba bluetooth");
 });
+
+
 
