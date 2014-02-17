@@ -1,7 +1,3 @@
-var onDeviceReady = function() {     
-    PantallaTraders.start();
-};
-
 $(document).ready(function() {  
     //toda esta garcha es para detectar si la aplicacion esta corriendo en un celular o en una pc.
     //En el celular para arrancar la app hay que esperar al evento deviceReady, en la pc solo al documentReady
@@ -15,9 +11,30 @@ $(document).ready(function() {
     } else {
         onDeviceReady();
     }
-    
-    console.log("comenzando aplicacion de prueba bluetooth");
 });
+
+
+var onDeviceReady = function() {     
+    vx.start({verbose:true, claveRSA: this.claveRSA});
+    /*
+    vx.conectarPorHTTP({
+        //url:'http://router-vortex.herokuapp.com',
+        url:'http://localhost:3000',
+        intervalo_polling: 50
+    }); 
+    */
+    vx.conectarPorWebSockets({
+        url:'https://router-vortex.herokuapp.com' 
+        //url:'http://localhost:3000'
+    });   
+            
+    PantallaTraders.start();
+    Traders.onUsuarioLogueado(function(){
+        PersistidorManual.start(Traders.usuario.id);
+    });
+    
+};
+
 
 
 

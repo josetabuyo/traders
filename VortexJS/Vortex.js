@@ -32,7 +32,7 @@ var Vortex = Vx = vX = vx = {
     },
     conectarPorWebSockets: function(p){
         var socket = io.connect(p.url);    
-        this.adaptadorWebSockets = new NodoConectorSocket(socket);    
+        this.adaptadorWebSockets = new NodoConectorSocket(socket, this.verbose);    
         this.router.conectarBidireccionalmenteCon(this.adaptadorWebSockets);
     },
     conectarPorBluetoothConArduino: function(p){

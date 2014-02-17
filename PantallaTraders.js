@@ -1,21 +1,6 @@
 var PantallaTraders = {
     start : function(){   
         var _this = this;
-        
-        vx.start({verbose:true, claveRSA: this.claveRSA});
-
-        vx.conectarPorHTTP({
-            url:'http://router-vortex.herokuapp.com',
-            //url:'http://localhost:3000',
-            intervalo_polling: 50
-        }); 
-        /*
-        vx.conectarPorWebSockets({
-            url:'https://router-vortex.herokuapp.com' 
-            //url:'http://localhost:3000'
-        });   
-    */    
-        
         this.ui = $("#trocador");
         this.pantallaLogin = $("#pantalla_login");
         this.divNombreUsuario = this.pantallaLogin.find("#nombre_usuario");
@@ -46,8 +31,6 @@ var PantallaTraders = {
         this.pantalla_mercado =  $("#pantalla_mercado");
         this.barraDatosUsuario = this.pantalla_mercado.find("#panel_propio #datos_usuario");
         this.barraDatosUsuario.find("#nombre").text(Traders.usuario.nombre);
-        
-        PersistidorManual.start(Traders.usuario.id);
         
         this.selectorDeMercaderes = $("#selector_mercaderes").select2({
             width: 'resolve',

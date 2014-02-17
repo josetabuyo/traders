@@ -2,9 +2,13 @@ var Traders = {
     _mercaderes:[],
     _maxIdDeProductoGenerado: 0,
     _onNovedades:function(){},
+    _onUsuarioLogueado:function(){},
     onNovedades:function(callback){
         this._onNovedades = callback;
     },
+    onUsuarioLogueado:function(callback){
+        this._onUsuarioLogueado = callback;
+    },  
     mercaderes:function(p){
         if(p.id) return _.findWhere(this._mercaderes, {id:p.id});
         if(p.query){
@@ -24,6 +28,7 @@ var Traders = {
             nombre: usuario,
             inventario: []
         };  
+        this._onUsuarioLogueado();
         
         var _this = this;
         vx.pedirMensajesSeguros({
