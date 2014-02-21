@@ -158,9 +158,16 @@ var Traders = {
         },2000);
     },
     agregarProductoAPropuesta: function(id_mercader, id_producto, mio_o_suyo){
-        var mercader = this.mercaderes({id:id_mercader});
-        if(mio_o_suyo == "suyo") mercader.trueque.suyo.push(id_producto);
-        else mercader.trueque.mio.push(id_producto);
+		var mercader = this.mercaderes({
+			id: id_mercader
+		});
+        
+		if(mio_o_suyo == "suyo"){
+			mercader.trueque.suyo.push(id_producto);
+		}else{
+			mercader.trueque.mio.push(id_producto);
+		}
+		
         mercader.trueque.estado = "borrador";
         this._onNovedades();
     },

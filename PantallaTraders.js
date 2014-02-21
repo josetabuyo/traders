@@ -17,13 +17,35 @@ var PantallaTraders = {
         });
         Traders.onNovedades(function(){
             _this.dibujarInventarios();
-        })
+        });
+		
+		this.divNombreUsuario.keypress(function(e) {
+			if(e.which == 13) {
+				_this.divPassword.focus();
+			}
+		});
+		
+		this.divPassword.keypress(function(e) {
+			if(e.which == 13) {
+				_this.divBotonIngresar.click();
+			}
+		});
+		
+		this.divNombreUsuario.focus();
     },
     
     alIngresarAlMercado:function(){
         var _this = this;
 
-        this.mercaderSeleccionado = {nombre:"", id:"", inventario:[], trueque: {mio:[], suyo:[]}};
+        this.mercaderSeleccionado = {
+			nombre:"",
+			id:"",
+			inventario:[],
+			trueque: {
+				mio:[],
+				suyo:[]
+			}
+		};
         
         this.panelInventarioUsuario = this.ui.find("#panel_propio .panel_inventario");        
         this.panelInventarioDelOtro = this.ui.find("#panel_ajeno .panel_inventario");
@@ -62,6 +84,7 @@ var PantallaTraders = {
             _this.txt_nombre_producto_add.val("");
         });
        
+	   
         this.btnProponerTrueque = this.pantalla_mercado.find("#btnProponerTrueque");
         this.btnProponerTrueque.click(function(){
             Traders.proponerTruequeA(_this.mercaderSeleccionado.id);
@@ -96,6 +119,15 @@ var PantallaTraders = {
         
         this.dibujarInventarios();
         this.pantalla_mercado.show();
+		
+		this.txt_nombre_producto_add.focus();
+		
+		this.txt_nombre_producto_add.keypress(function(e) {
+			if(e.which == 13) {
+				_this.btnAgregarProducto.click();
+			}
+		});
+		
     },
     
     generarVistaMercader: function (mercader) {
@@ -116,7 +148,7 @@ var PantallaTraders = {
                     Traders.agregarProductoAPropuesta(_this.mercaderSeleccionado.id, producto.id, "mio");
                 },
                 alDesSeleccionarParaTrueque: function(){
-                    Traders.quitarProductoDePropuesta(_this.mercaderSeleccionado.id, producto.id, "mio");
+					Traders.quitarProductoDePropuesta(_this.mercaderSeleccionado.id, producto.id, "mio");
                 },
                 alEliminar: function(){
                     Traders.quitarProducto(producto.id);

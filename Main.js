@@ -27,7 +27,7 @@ var onDeviceReady = function() {
         url:'https://router-vortex.herokuapp.com' 
         //url:'http://localhost:3000'
     });   
-            
+    
     PantallaTraders.start();
     Traders.onUsuarioLogueado(function(){
         PersistidorManual.start(Traders.usuario.id);

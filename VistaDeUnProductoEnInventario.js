@@ -17,6 +17,7 @@ VistaDeUnProductoEnInventario.prototype.start = function(){
         this.btnEliminar.show();
     }
     this.ui.click(function(){
+		// TO DO: debería saltar y no hacer nada si no hay un mercader seleccionado para trocar
         if(_this.seleccionadoParaTrueque){
             _this.ui.removeClass("producto_seleccionado_para_trueque");
             _this.seleccionadoParaTrueque = false;
@@ -26,6 +27,7 @@ VistaDeUnProductoEnInventario.prototype.start = function(){
             _this.seleccionadoParaTrueque = true;
             _this.alSeleccionarParaTrueque();
         }
+		
     });
     if(_this.seleccionadoParaTrueque){
         _this.ui.addClass("producto_seleccionado_para_trueque");
