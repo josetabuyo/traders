@@ -11,9 +11,7 @@ if(typeof(require) != "undefined"){
     var FiltroAND = require("./FiltrosYTransformaciones").FiltroAND;
 }
 
-var NodoPortalBidi = function(aliasPortal, claveRSA){
-    this._claveRSA = claveRSA;
-    this._encriptar = claveRSA !== undefined;
+var NodoPortalBidi = function(aliasPortal){
     this._listaPedidos = [];
     this._pata = new PataConectora(0, new GeneradorDeIdMensaje());
     this._alias_portal = "portal " + aliasPortal;
@@ -45,7 +43,7 @@ NodoPortalBidi.prototype.recibirMensaje = function(un_mensaje) {
     }   
     this._listaPedidos.forEach(function (pedido) {					
         if(pedido.filtro.evaluarMensaje(un_mensaje)){
-                pedido.callback(un_mensaje);           
+            pedido.callback(un_mensaje);
         }
     });	        
 };

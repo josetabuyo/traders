@@ -32,9 +32,9 @@ var Traders = {
         
         var _this = this;
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"trocador.avisoDeIngreso"
-            }),
+            },
             callback: function(mensaje){
                 if(mensaje.de == _this.usuario.id) 
                     return;
@@ -53,9 +53,9 @@ var Traders = {
         }, this.claveRSA);  
 
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"trocador.inventario"
-            }),
+            },
             callback: function(mensaje){
                 if(mensaje.de == _this.usuario.id) return;
                 var mercader = _this.mercaderes({id:mensaje.de});
@@ -65,10 +65,10 @@ var Traders = {
         }, this.claveRSA); 
         
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
                 para: this.usuario.id
-            }),
+            },
             callback: function(mensaje){
                 _this._agregarMercader(mensaje.de, mensaje.datos.nombre, mensaje.datos.inventario);
                 _this._onNovedades();
@@ -76,9 +76,9 @@ var Traders = {
         }, this.claveRSA);
         
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"trocador.avisoDeNuevoProducto"
-            }),
+            },
             callback: function(mensaje){
                 if(mensaje.de == _this.usuario.id) return;
                 var mercader = _this.mercaderes({id:mensaje.de});
@@ -88,9 +88,9 @@ var Traders = {
         }, this.claveRSA);  
         
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"trocador.avisoDeBajaDeProducto"
-            }),
+            },
             callback: function(mensaje){
                 if(mensaje.de == _this.usuario.id) return;
                 var mercader = _this.mercaderes({id:mensaje.de});
@@ -100,10 +100,10 @@ var Traders = {
         }, this.claveRSA);  
         
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"trocador.propuestaDeTrueque",
                 para: this.usuario.id
-            }),
+            },
             callback: function(mensaje){
                 var mercader = _this.mercaderes({id:mensaje.de});
                 mercader.trueque.mio = mensaje.datos.pido;
@@ -114,10 +114,10 @@ var Traders = {
         }, this.claveRSA);  
         
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"trocador.aceptacionDeTrueque",
                 para: this.usuario.id
-            }),
+            },
             callback: function(mensaje){
                 var mercader = _this.mercaderes({id:mensaje.de});
                 mercader.trueque.mio = mensaje.datos.pido;
@@ -128,10 +128,10 @@ var Traders = {
         }, this.claveRSA);   
         
         vx.pedirMensajesSeguros({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"vortex.persistencia.datos",
                 para: this.usuario.id
-            }),
+            },
             callback: function(mensaje){
                 _this.usuario = mensaje.datos.usuario;
                 _this.maxIdDeProductoGenerado = mensaje.datos.maxIdDeProductoGenerado;

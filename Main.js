@@ -15,14 +15,14 @@ $(document).ready(function() {
 
 
 var onDeviceReady = function() {     
-    vx.start({verbose:true, claveRSA: this.claveRSA});
-    /*
-    vx.conectarPorHTTP({
-        //url:'http://router-vortex.herokuapp.com',
-        url:'http://localhost:3000',
-        intervalo_polling: 50
-    }); 
-    */
+    vx.start({verbose:true});
+    
+//    vx.conectarPorHTTP({
+//        //url:'http://router-vortex.herokuapp.com',
+//        url:'http://localhost:3000',
+//        intervalo_polling: 50
+//    }); 
+    
     vx.conectarPorWebSockets({
         url:'https://router-vortex.herokuapp.com' 
         //url:'http://localhost:3000'

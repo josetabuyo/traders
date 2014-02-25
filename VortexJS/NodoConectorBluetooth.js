@@ -38,4 +38,6 @@ NodoConectorBluetooth.prototype.conectarPorBluetooth = function(){
     });
 };
 
-        
+if(typeof(require) != "undefined"){
+    exports.clase = NodoConectorBluetooth;
+}       

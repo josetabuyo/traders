@@ -1,11 +1,11 @@
 var PersistidorManual = {
     start:function(id_usuario){
         vx.pedirMensajes({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"vortex.persistencia.guardarDatos",
                 de: id_usuario,
                 para: id_usuario
-            }), 
+            }, 
             callback: function(mensaje){
                 alertify.prompt("Copia tus datos donde quieras", function (e, str) {
                     if (e) {
@@ -18,10 +18,10 @@ var PersistidorManual = {
         });  
         
         vx.pedirMensajes({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"vortex.persistencia.obtenerDatos",
                 de: id_usuario
-            }), 
+            }, 
             callback: function(mensaje){
                 alertify.prompt("Ingrese sus datos guardados", function (e, str) {
                     if (e) {
