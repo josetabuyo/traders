@@ -125,16 +125,20 @@ var Traders = {
                 _this._concretarTruequeCon(mercader);
                 _this._onNovedades();
             }
-        }, this.claveRSA);   
+        }, this.claveRSA);
         
-        vx.pedirMensajesSeguros({
+        vx.pedirMensajes({
             filtro: {
-                tipoDeMensaje:"vortex.persistencia.datos",
+                //tipoDeMensaje:"vortex.persistencia.datos",
+                tipoDeMensaje:"vortex.almacen.consulta.resultado",
                 para: this.usuario.id
             },
             callback: function(mensaje){
-                _this.usuario = mensaje.datos.usuario;
-                _this.maxIdDeProductoGenerado = mensaje.datos.maxIdDeProductoGenerado;
+				console.clear();
+				console.log('mensaje de consulta.resultado', mensaje);
+				
+                _this.usuario = mensaje.resultado[0].datos.usuario;
+                _this.maxIdDeProductoGenerado = mensaje.resultado[0].datos.maxIdDeProductoGenerado;
                 vx.enviarMensajeSeguro({
                     tipoDeMensaje: "trocador.inventario",
                     de: _this.usuario.id,
@@ -144,8 +148,20 @@ var Traders = {
                 }, _this.claveRSA);
                 _this._onNovedades();
             }
-        }, this.claveRSA);  
+        }, this.claveRSA);
         
+		
+		vx.pedirMensajes({
+            filtro: {
+                tipoDeMensaje:"vortex.almacen.persistencia.estado",
+                para: this.usuario.id
+            },
+            callback: function(mensaje){
+				alert(mensaje);
+            }
+        });
+		
+		
         setTimeout(function(){
             vx.enviarMensajeSeguro({
                 tipoDeMensaje: "trocador.avisoDeIngreso",
@@ -233,10 +249,12 @@ var Traders = {
         this._onNovedades();
     },
     save: function(){
-        vx.enviarMensajeSeguro({
-            tipoDeMensaje:"vortex.persistencia.guardarDatos",
-            de: this.usuario.id,                
-            para: this.usuario.id,                
+		
+        vx.enviarMensaje({
+            //tipoDeMensaje:"vortex.persistencia.guardarDatos",
+            tipoDeMensaje:"vortex.almacen.persistencia",
+			de: this.usuario.id,
+            //para: this.usuario.id,
             datos: {
                 usuario: this.usuario, 
                 maxIdDeProductoGenerado: this._maxIdDeProductoGenerado
@@ -245,9 +263,10 @@ var Traders = {
     },
     load: function(){
         vx.enviarMensaje({
-            tipoDeMensaje:"vortex.persistencia.obtenerDatos",
+            //tipoDeMensaje:"vortex.persistencia.obtenerDatos",
+            tipoDeMensaje:"vortex.almacen.consulta",
             de: this.usuario.id
-        });  
+        });
     },
     _agregarProductoAlInventarioDe: function(producto, mercader){
         if(_.findWhere(mercader.inventario, {id: producto.id})!== undefined) return;
