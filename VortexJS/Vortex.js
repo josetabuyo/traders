@@ -36,17 +36,23 @@ var Vortex = Vx = vX = vx = {
         this.portales = [];
     },
     conectarPorHTTP: function(p){
-        this.adaptadorHTTP = new NodoClienteHTTP(p.url, p.intervalo_polling, this.verbose, p.mensajes_por_paquete);
+        var _this = this;
+        p.verbose = this.verbose;
+        p.alDesconectar = function(){
+            _this.conectarPorHTTP(p);
+        }
+        this.adaptadorHTTP = new NodoClienteHTTP(p);
         this.router.conectarBidireccionalmenteCon(this.adaptadorHTTP);
     },
     conectarPorWebSockets: function(p){
+        var _this = this;
         var socket = io.connect(p.url);    
         this.adaptadorWebSockets = new NodoConectorSocket({
             id: "1",
             socket: socket, 
             verbose: this.verbose, 
             alDesconectar:function(){
-                sesiones_web_socket.splice(sesiones_web_socket.indexOf(conector_socket), 1);
+                _this.conectarPorWebSockets(p);
             }
         });    
         this.router.conectarBidireccionalmenteCon(this.adaptadorWebSockets);

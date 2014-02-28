@@ -2,36 +2,56 @@ var PantallaTraders = {
     start : function(){   
         var _this = this;
         this.ui = $("#trocador");
-        this.pantallaLogin = $("#pantalla_login");
-        this.divNombreUsuario = this.pantallaLogin.find("#nombre_usuario");
-        this.divPassword = this.pantallaLogin.find("#password");
-        this.divBotonIngresar = this.pantallaLogin.find("#boton_ingresar");
-        this.divBotonIngresar.click(function(){
-            var nombre_usuario = _this.divNombreUsuario.val();
-            var password = _this.divPassword.val();
+        this.pantallaInicio = $("#pantalla_inicio");
+        this.txtNombreUsuario = this.pantallaInicio.find("#nombre_usuario");
+        this.txtPassword = this.pantallaInicio.find("#password");
+        this.botonIngresar = this.pantallaInicio.find("#boton_ingresar");
+        this.lblPswDebil = this.pantallaInicio.find("#label_psw_debil");
+        this.lblPswFuerte = this.pantallaInicio.find("#label_psw_fuerte");
+        this.lblPswDebil.hide();
+        this.lblPswFuerte.hide();
+        
+        this.botonIngresar.click(function(){
+            var nombre_usuario = _this.txtNombreUsuario.val();
+            var password = _this.txtPassword.val();
             
             Traders.login(nombre_usuario, password);
             
-            _this.pantallaLogin.hide();
+            _this.pantallaInicio.hide();
             _this.alIngresarAlMercado();
         });
         Traders.onNovedades(function(){
             _this.dibujarInventarios();
         });
 		
-		this.divNombreUsuario.keypress(function(e) {
+		this.txtNombreUsuario.keypress(function(e) {
 			if(e.which == 13) {
-				_this.divPassword.focus();
+				_this.txtPassword.focus();
 			}
 		});
 		
-		this.divPassword.keypress(function(e) {
-			if(e.which == 13) {
-				_this.divBotonIngresar.click();
+		this.txtPassword.keyup(function(e) {
+            var password = _this.txtPassword.val();
+            var tiene_mayusculas = /[A-Z]+/.test(password)?1:0;
+            var tiene_minusculas = /[a-z]+/.test(password)?1:0;
+            var tiene_numeros = /[0-9]+/.test(password)?1:0;
+            var tiene_simbolos = /[\W]+/.test(password)?1:0;
+            
+            var fortaleza = (tiene_mayusculas + tiene_minusculas + tiene_numeros + tiene_simbolos) * password.length;
+            
+            if(fortaleza>=36){
+                _this.lblPswDebil.hide();
+                _this.lblPswFuerte.show();
+            }else{
+                _this.lblPswDebil.show();
+                _this.lblPswFuerte.hide();                
+            }
+            if(e.which == 13) {
+				_this.botonIngresar.click();
 			}
 		});
 		
-		this.divNombreUsuario.focus();
+		this.txtNombreUsuario.focus();
     },
     
     alIngresarAlMercado:function(){
