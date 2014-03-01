@@ -32,6 +32,8 @@ var PantallaTraders = {
 		});
 		
 		this.divNombreUsuario.focus();
+		
+		
     },
     
     alIngresarAlMercado:function(){

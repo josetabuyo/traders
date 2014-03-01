@@ -22,6 +22,8 @@ var Traders = {
         return this._mercaderes;
     },
     login: function(usuario, password){
+        var _this = this;
+		
         this.claveRSA = cryptico.generateRSAKey(usuario + password, 1024);    
         this.usuario = {
             id: cryptico.publicKeyString(this.claveRSA),
@@ -30,7 +32,19 @@ var Traders = {
         };  
         this._onUsuarioLogueado();
         
-        var _this = this;
+		
+		////parche para atajar las respuestas
+		vx.pedirMensajes({
+            filtro: {
+                para: this.usuario.id
+            },
+            callback: function(mensaje){
+				
+            }
+        });
+		
+		
+		
         vx.pedirMensajesSeguros({
             filtro: {
                 tipoDeMensaje:"trocador.avisoDeIngreso"
@@ -127,39 +141,25 @@ var Traders = {
             }
         }, this.claveRSA);
         
-        vx.pedirMensajes({
-            filtro: {
-                //tipoDeMensaje:"vortex.persistencia.datos",
-                tipoDeMensaje:"vortex.almacen.consulta.resultado",
-                para: this.usuario.id
-            },
-            callback: function(mensaje){
-				console.clear();
-				console.log('mensaje de consulta.resultado', mensaje);
-				
-                _this.usuario = mensaje.resultado[0].datos.usuario;
-                _this.maxIdDeProductoGenerado = mensaje.resultado[0].datos.maxIdDeProductoGenerado;
-                vx.enviarMensajeSeguro({
-                    tipoDeMensaje: "trocador.inventario",
-                    de: _this.usuario.id,
-                    datos:{
-                        inventario:_this.usuario.inventario
-                    }
-                }, _this.claveRSA);
-                _this._onNovedades();
-            }
-        }, this.claveRSA);
         
 		
+		
+		
+		/*
 		vx.pedirMensajes({
             filtro: {
-                tipoDeMensaje:"vortex.almacen.persistencia.estado",
+                tipoDeMensaje:"vortex.persistencia.datos",
                 para: this.usuario.id
             },
             callback: function(mensaje){
-				alert(mensaje);
-            }
+				setDataUsuario(mensaje.datos);
+			}
         });
+		*/
+		
+        
+		
+		
 		
 		
         setTimeout(function(){
@@ -250,23 +250,69 @@ var Traders = {
     },
     save: function(){
 		
-        vx.enviarMensaje({
+        
+		vx.pedirMensajes({
+            filtro: {
+                tipoDeMensaje:"vortex.almacen.persistencia.estado",
+                para: this.usuario.id,
+				idrespuesta: 987546
+            },
+            callback: function(mensaje){
+				alert(mensaje.estado);
+            }
+        });
+		
+		vx.enviarMensaje({
             //tipoDeMensaje:"vortex.persistencia.guardarDatos",
             tipoDeMensaje:"vortex.almacen.persistencia",
 			de: this.usuario.id,
-            //para: this.usuario.id,
+            idrespuesta: 987546,
             datos: {
                 usuario: this.usuario, 
                 maxIdDeProductoGenerado: this._maxIdDeProductoGenerado
             }
-        }, this.claveRSA);
+        });
+		
     },
     load: function(){
-        vx.enviarMensaje({
+        
+		var _this = this;
+		
+		var setDataUsuario = function(datos){
+		
+			_this.usuario = datos.usuario;
+			_this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
+			vx.enviarMensajeSeguro({
+				tipoDeMensaje: "trocador.inventario",
+				de: _this.usuario.id,
+				datos:{
+					inventario:_this.usuario.inventario
+				}
+			}, _this.claveRSA);
+			_this._onNovedades();
+		};
+		
+		
+		vx.pedirMensajes({
+            filtro: {
+                tipoDeMensaje:"vortex.almacen.consulta.resultado",
+                para: this.usuario.id,
+				idrespuesta: 3216548
+            },
+            callback: function(mensaje){
+				
+				setDataUsuario(mensaje.resultado[mensaje.resultado.length-1].datos);
+			}
+        });
+		
+		vx.enviarMensaje({
             //tipoDeMensaje:"vortex.persistencia.obtenerDatos",
             tipoDeMensaje:"vortex.almacen.consulta",
-            de: this.usuario.id
+            de: this.usuario.id,
+			idrespuesta: 3216548
         });
+		
+		
     },
     _agregarProductoAlInventarioDe: function(producto, mercader){
         if(_.findWhere(mercader.inventario, {id: producto.id})!== undefined) return;
