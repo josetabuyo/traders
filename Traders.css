@@ -18,23 +18,49 @@ html, body{
     position: relative;
 }
 
-#pantalla_login {
+#pantalla_inicio {
     height: 100%;
     position: relative;
-    background-color: gray;
 }
 
-#pantalla_login .label{
-    color: orange;
-    width: 80px;
-    text-align: right;
+#pantalla_inicio #barra_superior{
+    position: relative;
+    height: 66px;
+    background-color: rgb(231, 231, 231);
+}
+
+#pantalla_inicio #barra_superior #titulo_traders{
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    font-size: 47px;
+    font-style: italic;
+}
+
+#pantalla_inicio #barra_superior #controles_login{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+#pantalla_inicio #barra_superior #controles_login .control_login{
+    display:inline-block;
+}
+
+#pantalla_inicio #barra_superior #controles_login #comentarios_login{
     display: inline-block;
-    margin-right: 5px;
+    width: 242px;
+    margin-right: 11px;
+    font-size: 14px;
+    font-style: italic;
+    color: red;
 }
 
-#pantalla_login #nombre_usuario,
-#pantalla_login #password
-{
+#pantalla_inicio #barra_superior #controles_login .label_login{
+    
+}
+
+#pantalla_inicio #barra_superior #controles_login .input_login{
     border-radius: 5px;
 }
 
@@ -239,4 +265,13 @@ html, body{
 
 .dropdown_selector_mercaderes .select2-highlighted{
     background-color:  rgb(207, 207, 182) !important;
+}
+#label_psw_debil {
+    display:inline-block;
+    color: red;
+}
+
+#label_psw_fuerte {
+    display:inline-block;
+    color: green;
 }

@@ -12,12 +12,29 @@
 	
 	<body>	
         <div id="trocador">
-            <div id="pantalla_login">
-                <div class="barra_titulo"> Login </div>
-                <div class="label"> Usuario: </div><input id="nombre_usuario" type="text"/>
-                <br>
-                <div class="label"> Password:</div><input id="password" type="password"/>
-                <input id="boton_ingresar" type="button" value="Ingresar"/>
+            <div id="pantalla_inicio">
+                <div id="barra_superior">
+                    <div id="titulo_traders">
+                        Traders
+                    </div>
+                    <div id="controles_login">
+                        <div id="comentarios_login">
+                            *Para ingresar no es necesario registrarte, solo inventate un usuario y un password
+                        </div>
+                        <div class="control_login">
+                            <div class="label_login"> Usuario </div>
+                            <input id="nombre_usuario" type="text" class="input_login"/>
+                        </div>    
+                        <div class="control_login">
+                            <div class="label_login"> Password
+                                <div id="label_psw_debil"> (debil) </div>
+                                <div id="label_psw_fuerte"> (fuerte) </div>   
+                            </div>                                                     
+                            <input id="password" type="password" class="input_login"/>
+                        </div>
+                        <input id="boton_ingresar" type="button" value="Entrar"/>
+                    </div>  
+                </div>
             </div>
             <div id="pantalla_mercado">
                 <div class="barra_titulo"> Mercado 
