@@ -3,10 +3,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="Traders.css" />
         <link rel="stylesheet" href="Alertify/alertify.core.css" />
         <link rel="stylesheet" href="Alertify/alertify.default.css" />
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
+        <link rel="stylesheet" href="Traders.css" />
         <title>Traders</title>
 	</head>
 	
@@ -22,17 +24,13 @@
                             *Para ingresar no es necesario registrarte, solo inventate un usuario y un password
                         </div>
                         <div class="control_login">
-                            <div class="label_login"> Usuario </div>
-                            <input id="nombre_usuario" type="text" class="input_login"/>
+                            <input id="nombre_usuario" type="text" class="input_login" placeholder="Usuario">
                         </div>    
                         <div class="control_login">
-                            <div class="label_login"> Password
-                                <div id="label_psw_debil"> (debil) </div>
-                                <div id="label_psw_fuerte"> (fuerte) </div>   
-                            </div>                                                     
-                            <input id="password" type="password" class="input_login"/>
+                            <div id="indicador_fuerza"></div>                                          
+                            <input id="password" type="password" class="input_login" placeholder="contraseña"/>
                         </div>
-                        <input id="boton_ingresar" type="button" value="Entrar"/>
+                        <input id="boton_ingresar" type="button" value="Entrar" class="btn btn-primary"/>
                     </div>  
                 </div>
             </div>
@@ -84,6 +82,7 @@
     <script type="text/javascript" src="Alertify/alertify.min.js"></script> 
     <script type="text/javascript" src="Cryptico.min.js"></script> 
     <script type="text/javascript" src="select2-3.4.5/select2.min.js"></script> 
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script> 
     
     <script type="text/javascript" src="VortexJS/FiltrosYTransformaciones.js"></script>
     <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script> 

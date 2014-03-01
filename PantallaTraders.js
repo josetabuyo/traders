@@ -6,10 +6,7 @@ var PantallaTraders = {
         this.txtNombreUsuario = this.pantallaInicio.find("#nombre_usuario");
         this.txtPassword = this.pantallaInicio.find("#password");
         this.botonIngresar = this.pantallaInicio.find("#boton_ingresar");
-        this.lblPswDebil = this.pantallaInicio.find("#label_psw_debil");
-        this.lblPswFuerte = this.pantallaInicio.find("#label_psw_fuerte");
-        this.lblPswDebil.hide();
-        this.lblPswFuerte.hide();
+        this.divIndicadorFuerza = this.pantallaInicio.find("#indicador_fuerza");
         
         this.botonIngresar.click(function(){
             var nombre_usuario = _this.txtNombreUsuario.val();
@@ -39,13 +36,15 @@ var PantallaTraders = {
             
             var fortaleza = (tiene_mayusculas + tiene_minusculas + tiene_numeros + tiene_simbolos) * password.length;
             
-            if(fortaleza>=36){
-                _this.lblPswDebil.hide();
-                _this.lblPswFuerte.show();
-            }else{
-                _this.lblPswDebil.show();
-                _this.lblPswFuerte.hide();                
-            }
+            var red = (255/18) * (36-fortaleza);
+            var green = (255/18) * fortaleza;
+            if(red>255) red = 255;
+            if(green>255) green = 255;
+            red = Math.round(red);
+            green = Math.round(green);
+            _this.divIndicadorFuerza.css("background-color", "rgb("+red+","+green+",0)")
+            
+            console.log(fortaleza, red, green, "rgb("+red+","+green+",0)");
             if(e.which == 13) {
 				_this.botonIngresar.click();
 			}

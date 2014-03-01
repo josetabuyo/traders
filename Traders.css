@@ -25,35 +25,40 @@ html, body{
 
 #pantalla_inicio #barra_superior{
     position: relative;
-    height: 66px;
+    height: 59px;
     background-color: rgb(231, 231, 231);
 }
 
 #pantalla_inicio #barra_superior #titulo_traders{
     position: absolute;
     left: 5px;
-    bottom: 5px;
-    font-size: 47px;
+    bottom: 18px;
+    font-size: 40px;
     font-style: italic;
 }
 
 #pantalla_inicio #barra_superior #controles_login{
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: 5px;
+    bottom: 5px;
+    vertical-align: bottom;
 }
 
 #pantalla_inicio #barra_superior #controles_login .control_login{
     display:inline-block;
+    position: relative;
 }
 
 #pantalla_inicio #barra_superior #controles_login #comentarios_login{
     display: inline-block;
-    width: 242px;
+    width: 272px;
     margin-right: 11px;
     font-size: 14px;
     font-style: italic;
     color: red;
+    /* margin-top: 10px; */
+    vertical-align: sub;
 }
 
 #pantalla_inicio #barra_superior #controles_login .label_login{
@@ -61,7 +66,8 @@ html, body{
 }
 
 #pantalla_inicio #barra_superior #controles_login .input_login{
-    border-radius: 5px;
+    width: 150px;
+    
 }
 
 .barra_titulo {
@@ -273,5 +279,19 @@ html, body{
 
 #label_psw_fuerte {
     display:inline-block;
-    color: green;
+    color: rgb(6, 199, 6);
+}
+
+#boton_ingresar {
+    margin-bottom: 9px;
+}
+
+#indicador_fuerza {
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    background-color: red;
+    border-radius: 5px;
 }
