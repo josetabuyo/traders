@@ -14,14 +14,14 @@
 	
 	<body>	
         <div id="trocador">
-            <div id="pantalla_inicio">
+            <div id="pantalla_inicio" class="pantalla">
                 <div id="barra_superior">
-                    <div id="titulo_traders">
+                    <div class="titulo_pantalla titulo_pantalla_inicio">
                         Traders
                     </div>
                     <div id="controles_login">
                         <div id="comentarios_login">
-                            *Para ingresar no es necesario registrarte, solo inventate un usuario y un password
+                            *Para ingresar no es necesario registrarte, inventate un usuario y un password
                         </div>
                         <div class="control_login">
                             <input id="nombre_usuario" type="text" class="input_login" placeholder="Usuario">
@@ -34,25 +34,85 @@
                     </div>  
                 </div>
             </div>
-            <div id="pantalla_mercado">
-                <div class="barra_titulo"> Mercado 
-                    <input id="btn_load" type="button" value="Load"/>
-                    <input id="btn_save" type="button" value="Save"/>
+            <div id="pantalla_usuario" class="pantalla">
+                <div id="barra_superior">
+                    <div class="titulo_pantalla titulo_pantalla_usuario">
+                        Traders
+                    </div>
+                    <div id="btn_contactos">
+                        <img src="icono_contactos.png"/>
+                    </div>
                 </div>
+                <div id="datos_usuario">
+                    <img id="avatar_usuario" class="avatar_usuario" src="v.png"/>
+                    <div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+                    <input id="btn_load" type="button" class="btn" value="Load"/>
+                    <input id="btn_save" type="button" class="btn" value="Save"/>
+                </div>
+                <div class="titulo_panel_inventario">
+                    Tengo
+                </div>
+                <div id="panel_inventario">
+                </div>
+                <div id="panel_alta_producto">
+                    <span>Agregar producto:</span>
+                    <input id="txt_nombre_producto_add" type="text"/>
+                    <input id="btn_add_producto" type="button" value="+"/>
+                </div>
+            </div>
+            <div id="pantalla_contactos" class="pantalla">
+                <div id="barra_superior">
+                    <div class="titulo_pantalla titulo_pantalla_contactos">
+                        Contactos
+                    </div>
+                    <div id="btn_usuario">
+                        <img src="v.png"/>
+                    </div>
+                </div>
+                <div id="panel_contenedor_lista_contactos">
+                    <div id="panel_lista_contactos">
+                    </div>
+                    <div id="panel_alta_contacto">
+                        <span>Agregar contacto:</span>
+                        <input id="txt_id_contacto_add" type="text"/>
+                        <input id="btn_add_contacto" type="button" value="+"/>
+                    </div>
+                </div>
+                <div id="panel_contacto">
+                    <div id="panel_datos_contacto">
+                        <img id="avatar_contacto" class="avatar_usuario" src="v.png"/>
+                        <div id="lbl_nombre_contacto" class="lbl_nombre_usuario">  </div>
+                        <input id="btn_trocar" type="button" value="Trocar" class="btn btn-primary"/>
+                    </div> 
+                    <div class="titulo_panel_inventario">
+                        Tiene
+                    </div>
+                    <div id="panel_inventario_contacto">
+                    
+                    </div> 
+                </div>
+            </div>
+            <div id="pantalla_trueque" class="pantalla">
+                <div id="barra_superior"> 
+                    <div class="titulo_pantalla titulo_pantalla_trueque">
+                        Trueque
+                    </div>
+                    <div id="btn_usuario">
+                        <img src="v.png"/>
+                    </div>
+                    <div id="btn_contactos">
+                        <img src="icono_contactos.png"/>
+                    </div>
+                </div>  
                 <div id="panel_propio" class="panel_trueque">
                     <div id="datos_usuario" class="datos_mercader">
                         <div id="nombre"></div>
                     </div>
                     <div class="panel_inventario"></div>
-                    <div id="panel_alta_producto">
-                        <span>Agregar producto:</span>
-                        <input id="txt_nombre_producto_add" type="text"/>
-                        <input id="btn_add_producto" type="button" value="+"/>
-                    </div>
                 </div>
                 <div id="panel_ajeno" class="panel_trueque">
-                    <div id="datos_mercader_seleccionado" class="datos_mercader">
-                         <input id="selector_mercaderes" type="hidden"></input>
+                    <div id="datos_contacto" class="datos_mercader">
+                        <div id="nombre"></div>
                     </div>
                     <div class="panel_inventario"></div>
                     <div id="btnProponerTrueque" class="boton_trueque">
@@ -70,7 +130,6 @@
         <div class="mercader_en_lista">
             <div id="nombre"></div>
         </div>
-        <div class="panel_inventario"></div>
         <div class="producto_en_inventario">
             <div id="nombre"></div>
             <div id="btn_eliminar">x</div>
@@ -99,7 +158,10 @@
     
     <script type="text/javascript" src="Main.js"></script> 
     <script type="text/javascript" src="Traders.js"></script> 
-    <script type="text/javascript" src="PantallaTraders.js"></script> 
+    <script type="text/javascript" src="PantallaInicio.js"></script> 
+    <script type="text/javascript" src="PantallaUsuario.js"></script> 
+    <script type="text/javascript" src="PantallaContactos.js"></script> 
+    <script type="text/javascript" src="PantallaTrueque.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
     <script type="text/javascript" src="PersistidorManual.js"></script> 
 
