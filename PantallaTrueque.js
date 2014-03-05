@@ -13,21 +13,22 @@ var PantallaTrueque = {
         
         this.ui =  $("#pantalla_trueque");
         
-        this.panelInventarioUsuario = this.ui.find("#panel_propio .panel_inventario");        
-        this.panelInventarioDelOtro = this.ui.find("#panel_ajeno .panel_inventario");
         this.btn_usuario = this.ui.find("#btn_usuario");
         this.btn_contactos = this.ui.find("#btn_contactos");
-        this.barraDatosUsuario = this.ui.find("#panel_propio #datos_usuario");
-        this.barraDatosContacto = this.ui.find("#panel_ajeno #datos_contacto");
-        this.btnProponerTrueque = this.ui.find("#btnProponerTrueque");
-        this.btnAceptarTrueque = this.ui.find("#btnAceptarTrueque");
+        
+        this.panel_inventario_usuario = this.ui.find("#panel_inventario_usuario");        
+        this.panel_inventario_contacto = this.ui.find("#panel_inventario_contacto");
+        this.lbl_nombre_usuario = this.ui.find("#lbl_nombre_usuario");
+        this.lbl_nombre_contacto = this.ui.find("#lbl_nombre_contacto");
+        this.chk_usuario_de_acuerdo = this.ui.find("#chk_usuario_de_acuerdo");
+        this.chk_contacto_de_acuerdo = this.ui.find("#chk_contacto_de_acuerdo");
        	   
-        this.btnProponerTrueque.click(function(){
-            Traders.proponerTruequeA(_this.contacto.id);
+        this.chk_usuario_de_acuerdo.click(function(){
+            if(_this.contacto.trueque.estado == "recibido")
+                Traders.aceptarTruequeDe(_this.contacto.id);
+            else
+                Traders.proponerTruequeA(_this.contacto.id);
         });        
-        this.btnAceptarTrueque.click(function(){
-            Traders.aceptarTruequeDe(_this.contacto.id);
-        });
         this.btn_usuario.click(function(e) {
             _this.ui.hide();
             PantallaUsuario.render();
@@ -38,10 +39,10 @@ var PantallaTrueque = {
 		});	
     },
     render: function(){
-        this.barraDatosUsuario.find("#nombre").text(Traders.usuario.nombre);
-        this.barraDatosContacto.find("#nombre").text(this.contacto.nombre);
-        this.panelInventarioUsuario.empty();
-        this.panelInventarioDelOtro.empty();
+        this.lbl_nombre_usuario.text(Traders.usuario.nombre);
+        this.lbl_nombre_contacto.text(this.contacto.nombre);
+        this.panel_inventario_usuario.empty();
+        this.panel_inventario_contacto.empty();
         var _this = this;
         _.each(Traders.usuario.inventario, function(producto){
             var vista = new VistaDeUnProductoEnInventario({
@@ -52,12 +53,9 @@ var PantallaTrueque = {
                 },
                 alDesSeleccionarParaTrueque: function(){
 					Traders.quitarProductoDePropuesta(_this.contacto.id, producto.id, "mio");
-                },
-                alEliminar: function(){
-                    Traders.quitarProducto(producto.id);
                 }
             });
-            vista.dibujarEn(_this.panelInventarioUsuario);
+            vista.dibujarEn(_this.panel_inventario_usuario);
         });
         
         _.each(this.contacto.inventario, function(producto){
@@ -71,21 +69,17 @@ var PantallaTrueque = {
                     Traders.quitarProductoDePropuesta(_this.contacto.id, producto.id, "suyo");
                 }
             });
-            vista.dibujarEn(_this.panelInventarioDelOtro);
+            vista.dibujarEn(_this.panel_inventario_contacto);
         });
         
-        if(this.contacto.trueque.mio.length == 0 && 
-            this.contacto.trueque.suyo.length == 0){
-            this.btnProponerTrueque.hide();
-            this.btnAceptarTrueque.hide();
-        }else{
+        this.chk_usuario_de_acuerdo.removeClass("checkeado");
+        this.chk_contacto_de_acuerdo.removeClass("checkeado");
+        if(this.contacto.trueque.mio.length != 0 || this.contacto.trueque.suyo.length != 0){
             if(this.contacto.trueque.estado == "recibido"){
-                this.btnProponerTrueque.hide();
-                this.btnAceptarTrueque.show();
-            }else{
-                if(this.contacto.trueque.estado=="enviado") this.btnProponerTrueque.hide();
-                else this.btnProponerTrueque.show();
-                this.btnAceptarTrueque.hide();
+                this.chk_contacto_de_acuerdo.addClass("checkeado");
+            }
+            if(this.contacto.trueque.estado == "enviado"){
+                this.chk_usuario_de_acuerdo.addClass("checkeado");
             }
         }
         Traders.onNovedades(function(){
