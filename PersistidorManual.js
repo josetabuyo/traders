@@ -1,10 +1,11 @@
 var PersistidorManual = {
-    start:function(nombre_usuario){
+    start:function(id_usuario){
         vx.pedirMensajes({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"vortex.persistencia.guardarDatos",
-                de: nombre_usuario
-            }), 
+                de: id_usuario,
+                para: id_usuario
+            }, 
             callback: function(mensaje){
                 alertify.prompt("Copia tus datos donde quieras", function (e, str) {
                     if (e) {
@@ -17,23 +18,23 @@ var PersistidorManual = {
         });  
         
         vx.pedirMensajes({
-            filtro: new FiltroXEjemplo({
+            filtro: {
                 tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-                de: nombre_usuario
-            }), 
+                de: id_usuario
+            }, 
             callback: function(mensaje){
                 alertify.prompt("Ingrese sus datos guardados", function (e, str) {
                     if (e) {
                         vx.enviarMensaje({
                             tipoDeMensaje:"vortex.persistencia.datos",
-                            de: nombre_usuario,
+                            para: id_usuario,
                             datos:JSON.parse(str)
                         });
                     } else {
                         // user clicked "cancel"
                         vx.enviarMensaje({
                             tipoDeMensaje:"vortex.persistencia.noHayDatos",
-                            de: nombre_usuario
+                            para:id_usuario
                         });
                     }
                 }, "");

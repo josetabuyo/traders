@@ -1,0 +1,423 @@
+#plantillas{
+    display:none;
+}
+
+html, body{
+    height:100%;
+    margin: 0px;
+}
+
+#trocador {
+    height: 100%;
+}
+
+.pantalla{
+    display: none;
+    height: 100%;
+    position: relative;
+}
+
+#barra_superior{
+    position: relative;    
+    background-color: rgb(231, 231, 231);
+}
+
+#pantalla_usuario #barra_superior,
+#pantalla_trueque #barra_superior,
+#pantalla_contactos #barra_superior
+{
+    height: 40px;
+}
+
+#pantalla_inicio #barra_superior{
+    height: 59px;
+}
+
+.titulo_pantalla{
+    position: absolute;
+    left: 5px;
+    font-size: 40px;
+    font-style: italic;
+}
+
+.titulo_pantalla_inicio{
+    bottom: 18px;
+}
+
+.titulo_pantalla_usuario,
+.titulo_pantalla_contactos,
+.titulo_pantalla_trueque{
+    bottom: 10px;
+}
+
+#pantalla_inicio #barra_superior #controles_login{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    bottom: 5px;
+    vertical-align: bottom;
+}
+
+#pantalla_inicio #barra_superior #controles_login .control_login{
+    display:inline-block;
+    position: relative;
+}
+
+#pantalla_inicio #barra_superior #controles_login #comentarios_login{
+    display: inline-block;
+    width: 272px;
+    margin-right: 11px;
+    font-size: 14px;
+    font-style: italic;
+    color: red;
+    /* margin-top: 10px; */
+    vertical-align: sub;
+}
+
+#pantalla_inicio #barra_superior #controles_login .label_login{
+    
+}
+
+#pantalla_inicio #barra_superior #controles_login .input_login{
+    width: 150px;
+    
+}
+
+.panel_trueque {
+    position: absolute;
+    top:40px;
+    bottom:0px;
+    width: 50%;
+    box-sizing: border-box;
+    border: 2px solid;
+}
+
+#panel_propio {
+    left:0px;
+}
+
+#panel_ajeno {
+    right: 0px;
+}
+
+.producto_en_inventario {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-color: gray;
+    margin: 2px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    transition: all .5s;
+    cursor: pointer;
+    padding: 5px;
+    position: relative;
+}
+
+.producto_en_inventario:hover {
+    border:3px solid yellow;
+}
+
+.producto_seleccionado_para_trueque{
+    background-color: yellow;
+}
+
+.producto_seleccionado_para_trueque:hover{
+    border: 3px solid gray;
+}
+
+#panel_alta_producto {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+
+.boton_trueque {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    cursor: pointer;
+    text-align: center;
+}
+
+.boton_trueque:hover{
+    background-color: red;
+}
+
+
+#btnProponerTrueque {
+    background-color: yellow;
+}
+
+#btnAceptarTrueque {
+    background-color: green;
+    display: none;
+}
+
+#btn_refrescar {
+    position:absolute;
+    right: 5px;
+    top: 5px;
+    height:30px;
+    width: 30px;
+    display: none;
+}
+
+#btn_load,
+#btn_save {
+    float: right;
+    margin:5px;
+}
+
+.producto_en_inventario #btn_eliminar {
+    position: absolute;
+    top:5px;
+    left:5px;
+    color:red;
+    background-color: black;
+    border-radius: 50%;
+    display:none;
+    width: 23px;
+    height: 23px;
+    font-weight: bold;
+}
+
+#btn_eliminar: hover {
+    background-color: white;
+    color:black;
+}
+
+.producto_en_inventario #nombre {
+    position: absolute;
+    top:50%;
+    left:5px;
+    right:5px;
+    color:black;
+}
+
+.mercader_en_lista{
+    font-size: 25px;
+    vertical-align: bottom;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: all .5s ease;
+    cursor: pointer;
+    margin: 5px;
+    position: relative;
+}
+
+.mercader_en_lista:hover{
+    background-color: rgb(231, 231, 231);
+}
+
+.mercader_en_lista #nombre{
+    position: absolute;
+    left: 5px;
+    top: 8px;
+}
+
+.mercader_seleccionado{
+    background-color: rgb(231, 231, 231);
+}
+
+.datos_mercader{
+    height:40px;
+    color:orange;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid black;
+    background-color: gray;
+}
+
+.datos_mercader #nombre {
+    margin-top: 8px;
+}
+
+#boton_ingresar {
+    margin-bottom: 9px;
+}
+
+#indicador_fuerza {
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    background-color: red;
+    border-radius: 5px;
+}
+
+.avatar_usuario {
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    margin:10px;
+}
+
+.lbl_nombre_usuario {
+    display: inline-block;
+    font-size: 45px;
+    font-weight: bold;
+    vertical-align: bottom;
+    margin-bottom: 24px;
+}
+
+.titulo_panel_inventario {
+    font-size: 35px;
+    margin-left: 10px;
+    margin-top: 13px;
+}
+
+#panel_inventario {
+    padding:10px;
+}
+
+#btn_contactos, #btn_usuario {
+    display: inline-block;
+    float: right;
+    margin: 2px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#btn_contactos img,
+#btn_usuario img
+{
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+#pantalla_contactos #panel_contenedor_lista_contactos {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    bottom: 0px;
+    width: 300px;
+}
+
+#pantalla_contactos #panel_contacto {
+    position: absolute;
+    top:40px;
+    bottom:0px;
+    right: 0px;
+    left: 300px;
+}
+
+#pantalla_contactos #panel_lista_contactos {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 60px;
+}
+
+#pantalla_contactos #panel_alta_contacto {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+    
+    display: none;
+}
+
+#pantalla_contactos #panel_datos_contacto {
+    
+}
+
+#pantalla_contactos #lbl_nombre_contacto {
+    
+}
+
+#pantalla_contactos #panel_inventario_contacto {
+        padding:10px;
+}
+
+.datos_usuario {
+    background-color: rgb(248, 248, 248); 
+    position: relative;
+}
+
+.botonera_usuario {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.chk_acuerdo{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10px;
+    transition: all .5s ease;
+}
+
+#pantalla_trueque  #chk_usuario_de_acuerdo {
+    left: 50%;
+    margin-left: -55px;
+    cursor: pointer;
+}
+
+#pantalla_trueque  #chk_contacto_de_acuerdo {
+    left: 50%;
+    margin-left: 5px;
+}
+
+.checkeado{
+    background-color: lime;
+}
+
+#pantalla_trueque #avatar_usuario {
+    
+}
+
+#pantalla_trueque #avatar_contacto {
+    position: absolute;
+    right: 0px;
+}
+
+
+#pantalla_trueque #lbl_nombre_usuario{
+    
+}
+
+#pantalla_trueque #lbl_nombre_contacto{
+    float: right;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    margin-right: 124px;
+}
+
+#pantalla_trueque #panel_inventario_usuario {
+    position: absolute;
+    width: 50%;
+    left: 10px;
+    top: 205px;
+}
+
+#pantalla_trueque #panel_inventario_contacto {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    margin-right: 10px;
+    margin-left: 10px;
+    top: 205px;
+}
+
+#pantalla_trueque #titulo_panel_inventario_usuario {
+    position: absolute;
+}
+
+#pantalla_trueque #titulo_panel_inventario_contacto {
+    position: absolute;
+    right: 10px;
+    margin-left: 0px;
+}

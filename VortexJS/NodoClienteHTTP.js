@@ -3,11 +3,13 @@ Vortex by Vortex Group is licensed under a Creative Commons Reconocimiento 3.0 U
 To view a copy of this licence, visit: http://creativecommons.org/licenses/by/3.0/
 Project URL: https://sourceforge.net/p/vortexnet
 */
-var NodoClienteHTTP = function (url, intervalo_polling, verbose, mensajes_por_paquete) {
-    this.url = url;
-    this.intervalo_polling = (intervalo_polling === undefined) ? 1500 : intervalo_polling;
-    this.verbose = verbose || false;
-    this.mensajes_por_paquete = mensajes_por_paquete || 100;
+
+var NodoClienteHTTP = function (p) {    
+    this.url = p.url;
+    this.intervalo_polling = p.intervalo_polling  || 1500;
+    this.verbose = p.verbose || false;
+    this.mensajes_por_paquete = p.mensajes_por_paquete || 100;
+    this.alDesconectar = p.alDesconectar || function(){};
     this.start();
 };
 
@@ -86,8 +88,8 @@ NodoClienteHTTP.prototype.enviarYRecibirMensajes = function () {
 
         error: function (request, error) {
             console.log("error Al Enviar/Recibir Mensajes:", error);
-            setTimeout(function () { _this.pedirIdSesion(); }, _this.intervaloPedidoIdSesion);
             _this.bandejaSalida = bandejaSalidaAux.concat(_this.bandejaSalida);
+            _this.desconectarDe(_this.receptor);
         }
     });
 };
@@ -99,3 +101,18 @@ NodoClienteHTTP.prototype.recibirMensaje = function (un_mensaje) {
 NodoClienteHTTP.prototype.conectarCon = function (un_receptor) {
     this.receptor = un_receptor;
 };
+
+NodoClienteHTTP.prototype.desconectarDe = function(un_nodo){
+    this.receptor = {
+        recibirMensaje:function(){},
+        desconectarDe: function(){}
+    };
+    this.desconectarDe = function(){};
+    
+    un_nodo.desconectarDe(this);
+    if(this.verbose) console.log('socket ' + this.id + ' desconectado');
+    this.alDesconectar();
+};
+if(typeof(require) != "undefined"){
+    exports.clase = NodoClienteHTTP;
+}
