@@ -2,7 +2,6 @@
     display:none;
 }
 
-
 html, body{
     height:100%;
     margin: 0px;
@@ -12,48 +11,67 @@ html, body{
     height: 100%;
 }
 
-#pantalla_mercado {
+.pantalla{
     display: none;
     height: 100%;
     position: relative;
 }
 
-#pantalla_inicio {
-    height: 100%;
-    position: relative;
-}
-
-#pantalla_inicio #barra_superior{
-    position: relative;
-    height: 66px;
+#barra_superior{
+    position: relative;    
     background-color: rgb(231, 231, 231);
 }
 
-#pantalla_inicio #barra_superior #titulo_traders{
+#pantalla_usuario #barra_superior,
+#pantalla_trueque #barra_superior,
+#pantalla_contactos #barra_superior
+{
+    height: 40px;
+}
+
+#pantalla_inicio #barra_superior{
+    height: 59px;
+}
+
+.titulo_pantalla{
     position: absolute;
     left: 5px;
-    bottom: 5px;
-    font-size: 47px;
+    font-size: 40px;
     font-style: italic;
+}
+
+.titulo_pantalla_inicio{
+    bottom: 18px;
+}
+
+.titulo_pantalla_usuario,
+.titulo_pantalla_contactos,
+.titulo_pantalla_trueque{
+    bottom: 10px;
 }
 
 #pantalla_inicio #barra_superior #controles_login{
     position: absolute;
-    right: 5px;
+    right: 10px;
     top: 5px;
+    bottom: 5px;
+    vertical-align: bottom;
 }
 
 #pantalla_inicio #barra_superior #controles_login .control_login{
     display:inline-block;
+    position: relative;
 }
 
 #pantalla_inicio #barra_superior #controles_login #comentarios_login{
     display: inline-block;
-    width: 242px;
+    width: 272px;
     margin-right: 11px;
     font-size: 14px;
     font-style: italic;
     color: red;
+    /* margin-top: 10px; */
+    vertical-align: sub;
 }
 
 #pantalla_inicio #barra_superior #controles_login .label_login{
@@ -61,25 +79,13 @@ html, body{
 }
 
 #pantalla_inicio #barra_superior #controles_login .input_login{
-    border-radius: 5px;
-}
-
-.barra_titulo {
-    background-color: gray;
-    color:orange;
-    text-align: center;
-    font-size: 25px;
-    font-weight: bold;
-    position: relative;
-    top:0px;
-    left:0px;
-    right:0px;
-    height:30px;
+    width: 150px;
+    
 }
 
 .panel_trueque {
     position: absolute;
-    top:30px;
+    top:40px;
     bottom:0px;
     width: 50%;
     box-sizing: border-box;
@@ -159,22 +165,10 @@ html, body{
     display: none;
 }
 
-#btn_load {
-    position:absolute;
-    left: 2px;
-    top: 0px;
-    bottom: 0px;
-    width: 60px;
-    background-color: yellow;
-}
-
+#btn_load,
 #btn_save {
-    position:absolute;
-    right: 2px;
-    top: 0px;
-    bottom: 0px;
-    width: 60px;
-    background-color: darkorange;
+    float: right;
+    margin:5px;
 }
 
 .producto_en_inventario #btn_eliminar {
@@ -203,29 +197,30 @@ html, body{
     color:black;
 }
 
-.selector_mercaderes {
-    height:100%;
-    width:100% !important;
-}
-
-.selector_mercaderes .select2-choice{
-    height: 38px !important;
-    padding: 0 0 0 0 !important;
-}
-
-.selector_mercaderes .select2-chosen{
-    margin-right: 20px !important;
-    background-color: gray;
-    padding-top:5px;
-    height: 100%;
-    color:orange;
-}
-
 .mercader_en_lista{
-    background-color: gray;   
-    color:orange;
-    text-align: center;
-    padding-bottom: 4px;
+    font-size: 25px;
+    vertical-align: bottom;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: all .5s ease;
+    cursor: pointer;
+    margin: 5px;
+    position: relative;
+}
+
+.mercader_en_lista:hover{
+    background-color: rgb(231, 231, 231);
+}
+
+.mercader_en_lista #nombre{
+    position: absolute;
+    left: 5px;
+    top: 8px;
+}
+
+.mercader_seleccionado{
+    background-color: rgb(231, 231, 231);
 }
 
 .datos_mercader{
@@ -237,41 +232,192 @@ html, body{
     background-color: gray;
 }
 
-#datos_usuario #nombre {
+.datos_mercader #nombre {
     margin-top: 8px;
 }
 
-.dropdown_selector_mercaderes{
-    background-color: gray !important;
+#boton_ingresar {
+    margin-bottom: 9px;
 }
 
-.dropdown_selector_mercaderes .select2-search{
-    margin-top: 3px;
+#indicador_fuerza {
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    background-color: red;
+    border-radius: 5px;
 }
 
-.dropdown_selector_mercaderes .select2-results{
-    background-color:gray;
-    color:orange;
+.avatar_usuario {
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    margin:10px;
 }
 
-.dropdown_selector_mercaderes .select2-no-results{
-    background-color:gray !important;
-    color:orange;
+.lbl_nombre_usuario {
+    display: inline-block;
+    font-size: 45px;
+    font-weight: bold;
+    vertical-align: bottom;
+    margin-bottom: 24px;
 }
 
-.dropdown_selector_mercaderes .select2-results .select2-result-label{
-    padding:2px !important;
+.titulo_panel_inventario {
+    font-size: 35px;
+    margin-left: 10px;
+    margin-top: 13px;
 }
 
-.dropdown_selector_mercaderes .select2-highlighted{
-    background-color:  rgb(207, 207, 182) !important;
-}
-#label_psw_debil {
-    display:inline-block;
-    color: red;
+#panel_inventario {
+    padding:10px;
 }
 
-#label_psw_fuerte {
-    display:inline-block;
-    color: green;
+#btn_contactos, #btn_usuario {
+    display: inline-block;
+    float: right;
+    margin: 2px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#btn_contactos img,
+#btn_usuario img
+{
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+#pantalla_contactos #panel_contenedor_lista_contactos {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    bottom: 0px;
+    width: 300px;
+}
+
+#pantalla_contactos #panel_contacto {
+    position: absolute;
+    top:40px;
+    bottom:0px;
+    right: 0px;
+    left: 300px;
+}
+
+#pantalla_contactos #panel_lista_contactos {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 60px;
+}
+
+#pantalla_contactos #panel_alta_contacto {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+    
+    display: none;
+}
+
+#pantalla_contactos #panel_datos_contacto {
+    
+}
+
+#pantalla_contactos #lbl_nombre_contacto {
+    
+}
+
+#pantalla_contactos #panel_inventario_contacto {
+        padding:10px;
+}
+
+.datos_usuario {
+    background-color: rgb(248, 248, 248); 
+    position: relative;
+}
+
+.botonera_usuario {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.chk_acuerdo{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10px;
+    transition: all .5s ease;
+}
+
+#pantalla_trueque  #chk_usuario_de_acuerdo {
+    left: 50%;
+    margin-left: -55px;
+    cursor: pointer;
+}
+
+#pantalla_trueque  #chk_contacto_de_acuerdo {
+    left: 50%;
+    margin-left: 5px;
+}
+
+.checkeado{
+    background-color: lime;
+}
+
+#pantalla_trueque #avatar_usuario {
+    
+}
+
+#pantalla_trueque #avatar_contacto {
+    position: absolute;
+    right: 0px;
+}
+
+
+#pantalla_trueque #lbl_nombre_usuario{
+    
+}
+
+#pantalla_trueque #lbl_nombre_contacto{
+    float: right;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    margin-right: 124px;
+}
+
+#pantalla_trueque #panel_inventario_usuario {
+    position: absolute;
+    width: 50%;
+    left: 10px;
+    top: 205px;
+}
+
+#pantalla_trueque #panel_inventario_contacto {
+    position: absolute;
+    width: 50%;
+    left: 50%;
+    margin-right: 10px;
+    margin-left: 10px;
+    top: 205px;
+}
+
+#pantalla_trueque #titulo_panel_inventario_usuario {
+    position: absolute;
+}
+
+#pantalla_trueque #titulo_panel_inventario_contacto {
+    position: absolute;
+    right: 10px;
+    margin-left: 0px;
 }

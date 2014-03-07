@@ -10,6 +10,7 @@ var Traders = {
         this._onUsuarioLogueado = callback;
     },  
     mercaderes:function(p){
+        if(!p) return this._mercaderes;
         if(p.id) return _.findWhere(this._mercaderes, {id:p.id});
         if(p.query){
             if(p.query == "") 
@@ -19,7 +20,6 @@ var Traders = {
                     return mercader.nombre.indexOf(p.query)>=0 || mercader.id == p.query;
                 });  
         }
-        return this._mercaderes;
     },
     login: function(usuario, password){
         var _this = this;

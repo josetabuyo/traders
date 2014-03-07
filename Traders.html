@@ -3,67 +3,129 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="Traders.css" />
         <link rel="stylesheet" href="Alertify/alertify.core.css" />
         <link rel="stylesheet" href="Alertify/alertify.default.css" />
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
+        <link rel="stylesheet" href="Traders.css" />
         <title>Traders</title>
 	</head>
 	
 	<body>	
         <div id="trocador">
-            <div id="pantalla_inicio">
+            <div id="pantalla_inicio" class="pantalla">
                 <div id="barra_superior">
-                    <div id="titulo_traders">
+                    <div class="titulo_pantalla titulo_pantalla_inicio">
                         Traders
                     </div>
                     <div id="controles_login">
                         <div id="comentarios_login">
-                            *Para ingresar no es necesario registrarte, solo inventate un usuario y un password
+                            *Para ingresar no es necesario registrarte, inventate un usuario y un password
                         </div>
                         <div class="control_login">
-                            <div class="label_login"> Usuario </div>
-                            <input id="nombre_usuario" type="text" class="input_login"/>
+                            <input id="nombre_usuario" type="text" class="input_login" placeholder="Usuario">
                         </div>    
                         <div class="control_login">
-                            <div class="label_login"> Password
-                                <div id="label_psw_debil"> (debil) </div>
-                                <div id="label_psw_fuerte"> (fuerte) </div>   
-                            </div>                                                     
-                            <input id="password" type="password" class="input_login"/>
+                            <div id="indicador_fuerza"></div>                                          
+                            <input id="password" type="password" class="input_login" placeholder="contraseña"/>
                         </div>
-                        <input id="boton_ingresar" type="button" value="Entrar"/>
+                        <input id="boton_ingresar" type="button" value="Entrar" class="btn btn-primary"/>
                     </div>  
                 </div>
             </div>
-            <div id="pantalla_mercado">
-                <div class="barra_titulo"> Mercado 
-                    <input id="btn_load" type="button" value="Load"/>
-                    <input id="btn_save" type="button" value="Save"/>
-                </div>
-                <div id="panel_propio" class="panel_trueque">
-                    <div id="datos_usuario" class="datos_mercader">
-                        <div id="nombre"></div>
+            <div id="pantalla_usuario" class="pantalla">
+                <div id="barra_superior">
+                    <div class="titulo_pantalla titulo_pantalla_usuario">
+                        Yo
                     </div>
-                    <div class="panel_inventario"></div>
-                    <div id="panel_alta_producto">
-                        <span>Agregar producto:</span>
-                        <input id="txt_nombre_producto_add" type="text"/>
-                        <input id="btn_add_producto" type="button" value="+"/>
+                    <div id="btn_contactos">
+                        <img src="icono_contactos.png"/>
                     </div>
                 </div>
-                <div id="panel_ajeno" class="panel_trueque">
-                    <div id="datos_mercader_seleccionado" class="datos_mercader">
-                         <input id="selector_mercaderes" type="hidden"></input>
-                    </div>
-                    <div class="panel_inventario"></div>
-                    <div id="btnProponerTrueque" class="boton_trueque">
-                        Proponer Trueque
-                    </div>
-                    <div id="btnAceptarTrueque" class="boton_trueque">
-                        Aceptar Trueque
+                <div class="datos_usuario">
+                    <img id="avatar_usuario" class="avatar_usuario" src="avatar.png"/>
+                    <div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+                    <div class="botonera_usuario">
+                        <input id="btn_load" type="button" class="btn" value="Load"/>
+                        <input id="btn_save" type="button" class="btn" value="Save"/>
                     </div>
                 </div>
+                <div class="titulo_panel_inventario">
+                    Tengo
+                </div>
+                <div id="panel_inventario">
+                </div>
+                <div id="panel_alta_producto">
+                    <span>Agregar producto:</span>
+                    <input id="txt_nombre_producto_add" type="text"/>
+                    <input id="btn_add_producto" type="button" value="+"/>
+                </div>
+            </div>
+            <div id="pantalla_contactos" class="pantalla">
+                <div id="barra_superior">
+                    <div class="titulo_pantalla titulo_pantalla_contactos">
+                        Contactos
+                    </div>
+                    <div id="btn_usuario">
+                        <img src="avatar.png"/>
+                    </div>
+                </div>
+                <div id="panel_contenedor_lista_contactos">
+                    <div id="panel_lista_contactos">
+                    </div>
+                    <div id="panel_alta_contacto">
+                        <span>Agregar contacto:</span>
+                        <input id="txt_id_contacto_add" type="text"/>
+                        <input id="btn_add_contacto" type="button" value="+"/>
+                    </div>
+                </div>
+                <div id="panel_contacto">
+                    <div id="panel_datos_contacto" class="datos_usuario">
+                        <img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
+                        <div id="lbl_nombre_contacto" class="lbl_nombre_usuario">  </div>
+                        <div class="botonera_usuario">
+                            <input id="btn_trocar" type="button" value="Trocar" class="btn"/>
+                        </div> 
+                    </div> 
+                    <div class="titulo_panel_inventario">
+                        Tiene
+                    </div>
+                    <div id="panel_inventario_contacto">
+                    
+                    </div> 
+                </div>
+            </div>
+            <div id="pantalla_trueque" class="pantalla">
+                <div id="barra_superior"> 
+                    <div class="titulo_pantalla titulo_pantalla_trueque">
+                        Trueque
+                    </div>
+                    <div id="btn_usuario">
+                        <img src="avatar.png"/>
+                    </div>
+                    <div id="btn_contactos">
+                        <img src="icono_contactos.png"/>
+                    </div>
+                </div>  
+                <div class="participantes_trueque">
+                    <div class="datos_usuario">
+                        <img id="avatar_usuario" class="avatar_usuario" src="avatar.png"/>
+                        <div id="lbl_nombre_usuario" class="lbl_nombre_usuario">  </div>
+                        <div id="chk_usuario_de_acuerdo" class="chk_acuerdo"></div>
+                        <div id="chk_contacto_de_acuerdo" class="chk_acuerdo"></div>
+                        <div id="lbl_nombre_contacto" class="lbl_nombre_usuario">  </div>
+                        <img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
+                    </div>
+                </div>
+                <div id="titulo_panel_inventario_usuario" class="titulo_panel_inventario">
+                    Tengo
+                </div>
+                <div id="panel_inventario_usuario" class="panel_inventario"></div>
+                <div id="titulo_panel_inventario_contacto" class="titulo_panel_inventario">
+                    Tiene
+                </div>
+                <div id="panel_inventario_contacto" class="panel_inventario"></div>
             </div>
         </div>
     </body>    
@@ -72,7 +134,6 @@
         <div class="mercader_en_lista">
             <div id="nombre"></div>
         </div>
-        <div class="panel_inventario"></div>
         <div class="producto_en_inventario">
             <div id="nombre"></div>
             <div id="btn_eliminar">x</div>
@@ -84,6 +145,7 @@
     <script type="text/javascript" src="Alertify/alertify.min.js"></script> 
     <script type="text/javascript" src="Cryptico.min.js"></script> 
     <script type="text/javascript" src="select2-3.4.5/select2.min.js"></script> 
+    <script type="text/javascript" src="Bootstrap/js/bootstrap.min.js"></script> 
     
     <script type="text/javascript" src="VortexJS/FiltrosYTransformaciones.js"></script>
     <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script> 
@@ -100,7 +162,10 @@
     
     <script type="text/javascript" src="Main.js"></script> 
     <script type="text/javascript" src="Traders.js"></script> 
-    <script type="text/javascript" src="PantallaTraders.js"></script> 
+    <script type="text/javascript" src="PantallaInicio.js"></script> 
+    <script type="text/javascript" src="PantallaUsuario.js"></script> 
+    <script type="text/javascript" src="PantallaContactos.js"></script> 
+    <script type="text/javascript" src="PantallaTrueque.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
     <script type="text/javascript" src="PersistidorManual.js"></script> 
 
