@@ -28,11 +28,14 @@ var onDeviceReady = function() {
         //url:'http://localhost:3000'
     });   
     
-    PantallaTraders.start();
+    PantallaInicio.start();
+    PantallaUsuario.start();
+    PantallaContactos.start();
+    PantallaTrueque.start();
     Traders.onUsuarioLogueado(function(){
         PersistidorManual.start(Traders.usuario.id);
     });
-    
+    PantallaInicio.render();
 };
 
 
