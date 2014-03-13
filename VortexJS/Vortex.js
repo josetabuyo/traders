@@ -27,6 +27,7 @@ if(typeof(require) != "undefined"){
     
 }
 
+
 var Vortex = Vx = vX = vx = {
     start:function(opt){
         this.verbose = opt.verbose;
@@ -34,6 +35,10 @@ var Vortex = Vx = vX = vx = {
         this.claveRSAComun = cryptico.generateRSAKey("VORTEXCAPO", 1024);                               //ATA
         this.clavePublicaComun = cryptico.publicKeyString(this.claveRSAComun);                          //PINGO
         this.portales = [];
+        this.keys = [];
+		
+		this.lastRequest = 0;
+		
     },
     conectarPorHTTP: function(p){
         var _this = this;
@@ -78,9 +83,9 @@ var Vortex = Vx = vX = vx = {
                 var clave = _this.claveRSAComun;
                 if(mensaje.para) clave = claveRSA;
         
-                var desencriptado = cryptico.decrypt(mensaje.datos, clave);
+                var desencriptado = cryptico.decrypt(mensaje.datoSeguro, clave);
                 if(desencriptado.status == "success" && desencriptado.signature != "forged"){
-                    mensaje.datos = JSON.parse(desencriptado.plaintext);
+                    mensaje.datoSeguro = JSON.parse(desencriptado.plaintext);
                     p.callback(mensaje);
                 }                    
             }
@@ -94,10 +99,81 @@ var Vortex = Vx = vX = vx = {
         var su_clave_publica = this.clavePublicaComun;
         if(mensaje.de) mi_clave_privada = claveRSA;
         if(mensaje.para) su_clave_publica = mensaje.para;
-        mensaje.datos = cryptico.encrypt(JSON.stringify(mensaje.datos), su_clave_publica, mi_clave_privada).cipher
+        mensaje.datoSeguro = cryptico.encrypt(JSON.stringify(mensaje.datoSeguro), su_clave_publica, mi_clave_privada).cipher
         
         this.router.recibirMensaje(mensaje);
-    }    
+    },
+	
+	addKey: function(){
+		
+		var claveRSA = null;
+		if(typeof(arguments[0]) == 'object'){
+			claveRSA = arguments[0];
+		}else if(typeof(arguments[0]) == 'string'){
+			claveRSA = cryptico.generateRSAKey(arguments[0], 1024);
+		}
+		
+		
+		var clavePublica = cryptico.publicKeyString(claveRSA);
+		this.keys[clavePublica] = claveRSA;
+		
+		return clavePublica;
+	},
+	
+	send: function(){
+		
+		var _this = this;
+		
+		
+		
+		var obj = null;
+		
+		
+		var callback = null;
+		var claveRSA = null;
+		
+		obj = arguments[0];
+		
+		if(arguments.length==2){
+			callback = arguments[1];
+		}
+		//////////
+		
+		
+		if(callback && obj.de){
+			
+			obj.idRequest = ++this.lastRequest;
+			
+			var idPortal = this.when({
+				filtro: {
+					idRequest: obj.idRequest,
+					para: obj.de
+				},
+				callback: function(objRespuesta){
+					callback(objRespuesta);
+					
+					_this.portales.splice(idPortal, 1);
+				}
+			});
+		}
+		
+		if(obj.de){
+			claveRSA = this.keys[obj.de];
+			this.enviarMensajeSeguro(obj, claveRSA);
+		}else{
+			this.enviarMensaje(obj);
+		}
+		
+	},
+	
+	when: function(){
+		if(arguments.length==1){
+			return this.pedirMensajes(arguments[0]);
+		}
+		if(arguments.length==2){
+			return this.pedirMensajesSeguros(arguments[0], arguments[1]);
+		}
+	}
 };
 
 if(typeof(require) != "undefined"){
