@@ -57,14 +57,14 @@ var Traders = {
                     tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
                     de: _this.usuario.id,
                     para: mensaje.de,                 
-                    datos: {
+                    datoSeguro: {
                         nombre: _this.usuario.nombre,  
                         inventario:_this.usuario.inventario
                     }
                 }, _this.claveRSA);
                 _this._onNovedades();
             }
-        }, this.claveRSA);  
+        }, this.claveRSA);
 
         vx.pedirMensajesSeguros({
             filtro: {
@@ -166,7 +166,7 @@ var Traders = {
             vx.enviarMensajeSeguro({
                 tipoDeMensaje: "trocador.avisoDeIngreso",
                 de: _this.usuario.id,
-                datos:{
+                datoSeguro:{
                     nombre: _this.usuario.nombre,
                     inventario:_this.usuario.inventario
                 }
@@ -200,7 +200,7 @@ var Traders = {
             tipoDeMensaje:"trocador.propuestaDeTrueque",
             para: id_mercader,
             de: this.usuario.id,
-            datos:{
+            datoSeguro:{
                 pido: mercader.trueque.suyo,
                 doy: mercader.trueque.mio
             }
@@ -215,7 +215,7 @@ var Traders = {
             tipoDeMensaje:"trocador.aceptacionDeTrueque",
             para: id_mercader,
             de: this.usuario.id,
-            datos:{
+            datoSeguro:{
                 pido: mercader.trueque.suyo,
                 doy: mercader.trueque.mio
             }
@@ -231,7 +231,7 @@ var Traders = {
         vx.enviarMensajeSeguro({
             tipoDeMensaje:"trocador.avisoDeNuevoProducto",
             de: this.usuario.id,
-            datos: {
+            datoSeguro: {
                 producto: producto
             }
         }, this.claveRSA);
@@ -242,7 +242,7 @@ var Traders = {
         vx.enviarMensajeSeguro({
             tipoDeMensaje:"trocador.avisoDeBajaDeProducto",
             de: this.usuario.id,
-            datos:{
+            datoSeguro:{
                 id_producto: id_producto
             }
         }, this.claveRSA);
@@ -250,7 +250,10 @@ var Traders = {
     },
     save: function(){
 		
+		/////SEGUIR
         
+		
+		/*
 		vx.pedirMensajes({
             filtro: {
                 tipoDeMensaje:"vortex.almacen.persistencia.estado",
@@ -262,16 +265,20 @@ var Traders = {
             }
         });
 		
+		
 		vx.enviarMensaje({
             //tipoDeMensaje:"vortex.persistencia.guardarDatos",
             tipoDeMensaje:"vortex.almacen.persistencia",
 			de: this.usuario.id,
             idrespuesta: 987546,
-            datos: {
+            datoSeguro: {
                 usuario: this.usuario, 
                 maxIdDeProductoGenerado: this._maxIdDeProductoGenerado
             }
         });
+		*/
+		
+		
 		
     },
     load: function(){
@@ -285,7 +292,7 @@ var Traders = {
 			vx.enviarMensajeSeguro({
 				tipoDeMensaje: "trocador.inventario",
 				de: _this.usuario.id,
-				datos:{
+				datoSeguro:{
 					inventario:_this.usuario.inventario
 				}
 			}, _this.claveRSA);
