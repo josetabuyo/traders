@@ -127,11 +127,8 @@ html, body{
     border: 3px solid gray;
 }
 
-#panel_alta_producto {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-}
+
+
 
 
 .boton_trueque {
@@ -265,15 +262,7 @@ html, body{
     margin-bottom: 24px;
 }
 
-.titulo_panel_inventario {
-    font-size: 35px;
-    margin-left: 10px;
-    margin-top: 13px;
-}
 
-#panel_inventario {
-    padding:10px;
-}
 
 #btn_contactos, #btn_usuario {
     display: inline-block;
@@ -421,3 +410,67 @@ html, body{
     right: 10px;
     margin-left: 0px;
 }
+
+.secciones{
+	border: solid 1px;
+	position: absolute;
+	width: 100%;
+	top: 160px;
+	bottom: 0;
+}
+
+.seccion_container{
+	border: solid 1px;
+	position: absolute;
+	bottom: 0px;
+}
+
+#panel_inventario_container{
+	left:0;
+	top:0;
+	
+	width: 50%;
+	height: 50%;
+}
+
+
+#panel_trueques_pendientes_container{
+	left:50%;
+	top:0;
+	
+	width: 50%;
+	height: 50%;
+}
+
+#panel_alta_producto {
+    position: absolute;
+    top: 0px;
+	right: 0px;
+    /*width: 100%;*/
+	float:right;
+	text-align:right;
+}
+
+.titulo_panel {
+    font-size: 35px;
+    margin-left: 10px;
+    margin-top: 13px;
+}
+
+#panel_inventario {
+    padding:10px;
+}
+
+#panel_alta_producto #btn_add_producto{
+	position: absolute;
+	top: 2px;
+	right: 3px;
+}
+
+
+#panel_alta_producto #txt_nombre_producto_add{
+	position: absolute;
+	top: 0px;
+	right: 30px;
+}
+
