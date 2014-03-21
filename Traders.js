@@ -145,19 +145,18 @@ var Traders = {
 		
 		
 		
-		/*
 		vx.pedirMensajes({
             filtro: {
                 tipoDeMensaje:"vortex.persistencia.datos",
                 para: this.usuario.id
             },
             callback: function(mensaje){
-				setDataUsuario(mensaje.datos);
+				_this.setDataUsuario(mensaje.datos);
 			}
         });
-		*/
 		
         
+		
 		
 		
 		
@@ -171,6 +170,9 @@ var Traders = {
                     inventario:_this.usuario.inventario
                 }
             }, _this.claveRSA);
+			
+			_this.load();
+			
         },2000);
     },
     agregarProductoAPropuesta: function(id_mercader, id_producto, mio_o_suyo){
@@ -248,76 +250,71 @@ var Traders = {
         }, this.claveRSA);
         this._onNovedades();
     },
+	setDataUsuario: function(datos){
+		var _this = this;
+		this.usuario = datos.usuario;
+		this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
+		
+		
+		vx.enviarMensajeSeguro({
+			tipoDeMensaje: "trocador.inventario",
+			de: _this.usuario.id,
+			datoSeguro:{
+				inventario:_this.usuario.inventario
+			}
+		}, this.claveRSA);
+		
+		this._onNovedades();
+	},
+	
+	
     save: function(){
 		
-		/////SEGUIR
-        
+		var _datos = {
+			usuario: 					this.usuario,
+			maxIdDeProductoGenerado: 	this._maxIdDeProductoGenerado
+		};
 		
-		/*
-		vx.pedirMensajes({
-            filtro: {
-                tipoDeMensaje:"vortex.almacen.persistencia.estado",
+		
+		if(typeof(Storage)!=="undefined"){
+			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
+			localStorage.setItem(this.usuario.id, JSON.stringify(_datos));
+			
+		}else{
+			
+			vx.send({
+				tipoDeMensaje:"vortex.persistencia.guardarDatos",
+				de: this.usuario.id,
                 para: this.usuario.id,
-				idrespuesta: 987546
-            },
-            callback: function(mensaje){
-				alert(mensaje.estado);
-            }
-        });
+				datos: _datos
+			});
 		
-		
-		vx.enviarMensaje({
-            //tipoDeMensaje:"vortex.persistencia.guardarDatos",
-            tipoDeMensaje:"vortex.almacen.persistencia",
-			de: this.usuario.id,
-            idrespuesta: 987546,
-            datoSeguro: {
-                usuario: this.usuario, 
-                maxIdDeProductoGenerado: this._maxIdDeProductoGenerado
-            }
-        });
-		*/
-		
+		}
 		
 		
     },
+	
     load: function(){
         
 		var _this = this;
 		
-		var setDataUsuario = function(datos){
+		var _datos = {};
 		
-			_this.usuario = datos.usuario;
-			_this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
-			vx.enviarMensajeSeguro({
-				tipoDeMensaje: "trocador.inventario",
-				de: _this.usuario.id,
-				datoSeguro:{
-					inventario:_this.usuario.inventario
-				}
-			}, _this.claveRSA);
-			_this._onNovedades();
-		};
+		if(typeof(Storage)!=="undefined"){
+			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
+			var sDatos = localStorage.getItem(this.usuario.id);
+			_datos = JSON.parse(sDatos)
+			
+			this.setDataUsuario(_datos);
+			
+			
+		}else{
+			vx.send({
+				tipoDeMensaje:"vortex.persistencia.obtenerDatos",
+				de: this.usuario.id
+			});
+		}
 		
-		
-		vx.pedirMensajes({
-            filtro: {
-                tipoDeMensaje:"vortex.almacen.consulta.resultado",
-                para: this.usuario.id,
-				idrespuesta: 3216548
-            },
-            callback: function(mensaje){
-				
-				setDataUsuario(mensaje.resultado[mensaje.resultado.length-1].datos);
-			}
-        });
-		
-		vx.enviarMensaje({
-            //tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-            tipoDeMensaje:"vortex.almacen.consulta",
-            de: this.usuario.id,
-			idrespuesta: 3216548
-        });
 		
 		
     },
