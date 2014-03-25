@@ -1,3 +1,4 @@
+
 #plantillas{
     display:none;
 }
@@ -6,6 +7,15 @@ html, body{
     height:100%;
     margin: 0px;
 }
+
+
+ul {
+	list-style-type: none;
+	margin:0;
+	padding:0;
+}
+
+
 
 #trocador {
     height: 100%;
@@ -161,12 +171,13 @@ html, body{
     width: 30px;
     display: none;
 }
-
+/*
 #btn_load,
 #btn_save {
     float: right;
     margin:5px;
 }
+*/
 
 .producto_en_inventario #btn_eliminar {
     position: absolute;
@@ -326,16 +337,14 @@ html, body{
         padding:10px;
 }
 
-.datos_usuario {
-    background-color: rgb(248, 248, 248); 
-    position: relative;
-}
+
 
 .botonera_usuario {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
+	position: absolute;
+	top: 10px;
+	left: 120px;
 }
+
 
 .chk_acuerdo{
     display: inline-block;
@@ -411,66 +420,103 @@ html, body{
     margin-left: 0px;
 }
 
-.secciones{
+.cuerpo{
 	border: solid 1px;
 	position: absolute;
 	width: 100%;
-	top: 160px;
+	top: 40px;
 	bottom: 0;
 }
 
+
 .seccion_container{
 	border: solid 1px;
-	position: absolute;
-	bottom: 0px;
+	/*position: absolute;
+	bottom: 0px;*/
+}
+
+
+.datos_usuario {
+    background-color: rgb(248, 248, 248); 
+    /*position: absolute;
+	top: 0;
+	height: 120px;
+	width: 50%;
+	*/
 }
 
 #panel_inventario_container{
-	left:0;
-	top:0;
-	
+	/*left:0;
+	top: 120px;
+	height: 25%;
 	width: 50%;
-	height: 50%;
+	*/
 }
 
+
+#panel_me_deben_container{
+	/*
+	left:0%;
+	top:50%;
+	
+	height: 50%;
+	width: 50%;
+	*/
+}
+
+
+#panel_debo_container{
+	/*left:50%;
+	top:50%;
+	height: 50%;
+	width: 50%;
+	*/
+}
 
 #panel_trueques_pendientes_container{
+	position: absolute;
 	left:50%;
 	top:0;
-	
-	width: 50%;
 	height: 50%;
+	width: 50%;
 }
 
+
 #panel_alta_producto {
-    position: absolute;
-    top: 0px;
-	right: 0px;
-    /*width: 100%;*/
-	float:right;
-	text-align:right;
+    float: right;
+	border: solid 1px;
 }
 
 .titulo_panel {
+	border: solid 1px;
     font-size: 35px;
     margin-left: 10px;
     margin-top: 13px;
+	width: 50%;
 }
 
 #panel_inventario {
     padding:10px;
 }
 
+/*
 #panel_alta_producto #btn_add_producto{
 	position: absolute;
 	top: 2px;
 	right: 3px;
 }
 
-
 #panel_alta_producto #txt_nombre_producto_add{
 	position: absolute;
 	top: 0px;
 	right: 30px;
+	width: 100px;
 }
+*/
 
+.panel_izq{
+	position: absolute;
+	width: 50%;
+	top: 0px;
+	bottom: 0px;
+}

@@ -46,26 +46,57 @@
                         <img src="icono_contactos.png"/>
                     </div>
                 </div>
-                <div class="datos_usuario">
-                    <img id="avatar_usuario" class="avatar_usuario" src="avatar.png"/>
-                    <div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
-                    <div class="botonera_usuario">
-                        <input id="btn_load" type="button" class="btn" value="Load"/>
-                        <input id="btn_save" type="button" class="btn" value="Save"/>
-                    </div>
-                </div>
-				<div class="secciones">
-					<div id="panel_inventario_container" class="seccion_container">
-						<div class="titulo_panel">
-							Tengo
-						</div>
-						<div id="panel_inventario">
-						</div>
-						<div id="panel_alta_producto">
-							<input id="txt_nombre_producto_add" type="text"/>
-							<input id="btn_add_producto" type="button" value="+"/>
-						</div>
-					</div>
+				<div class="cuerpo">
+					
+					<ul class="panel_izq">
+						<li>
+							<div class="datos_usuario">
+								<img id="avatar_usuario" class="avatar_usuario" src="avatar.png"/>
+								<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+								<div class="botonera_usuario">
+									<input id="btn_load" type="button" value="Load"/>
+									<input id="btn_save" type="button" value="Save"/>
+								</div>
+							</div>
+						</li>
+						
+						<li>
+							<div id="panel_inventario_container" class="seccion_container">
+								<div class="titulo_panel">
+									Tengo
+								</div>
+								<div id="panel_alta_producto">
+									<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
+									<input id="btn_add_producto" type="button" value="+"/>
+								</div>
+								<div id="panel_inventario">
+								</div>
+							</div>
+						</li>
+							
+							
+						<li>
+							<div id="panel_me_deben_container" class="seccion_container">
+								<div class="titulo_panel">
+									Me deben
+								</div>
+								<div id="panel_me_deben">
+								</div>
+							</div>
+						</li>
+							
+							
+						<li>
+							<div id="panel_debo_container" class="seccion_container">
+								<div class="titulo_panel">
+									Debo
+								</div>
+								<div id="panel_debo">
+								</div>
+							</div>
+						</li>
+						
+					</ul>
 					
 					
 					<div id="panel_trueques_pendientes_container" class="seccion_container">
@@ -75,8 +106,9 @@
 						<div id="panel_trueques_pendientes">
 						</div>
 					</div>
+					
+					
 				</div>
-				
             </div>
 			
 			
