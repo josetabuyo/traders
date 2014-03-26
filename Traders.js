@@ -25,10 +25,15 @@ var Traders = {
         var _this = this;
 		
         this.claveRSA = cryptico.generateRSAKey(usuario + password, 1024);    
+		
+		
+		
         this.usuario = {
             id: cryptico.publicKeyString(this.claveRSA),
             nombre: usuario,
-            inventario: []
+            inventario: [],
+			debito: [],  // me deben
+			credito: []  // debo
         };  
         this._onUsuarioLogueado();
         
@@ -148,16 +153,13 @@ var Traders = {
 		vx.pedirMensajes({
             filtro: {
                 tipoDeMensaje:"vortex.persistencia.datos",
+				de: this.usuario.id,
                 para: this.usuario.id
             },
             callback: function(mensaje){
 				_this.setDataUsuario(mensaje.datos);
 			}
         });
-		
-        
-		
-		
 		
 		
 		
@@ -171,7 +173,7 @@ var Traders = {
                 }
             }, _this.claveRSA);
 			
-			_this.load();
+			_this.loadDataUsuario();
 			
         },2000);
     },
@@ -294,7 +296,7 @@ var Traders = {
 		
     },
 	
-    load: function(){
+    loadDataUsuario: function(){
         
 		var _this = this;
 		

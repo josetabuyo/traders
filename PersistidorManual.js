@@ -32,6 +32,7 @@ var PersistidorManual = {
 				if (e) {
 					vx.enviarMensaje({
 						tipoDeMensaje:"vortex.persistencia.datos",
+						de: id_usuario,
 						para: id_usuario,
 						datos:JSON.parse(str)
 					});
