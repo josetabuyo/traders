@@ -31,10 +31,10 @@ var PantallaUsuario = {
             PantallaContactos.render();
 		});	
         this.btnSave.click(function(){  
-            Traders.save();
+            Traders.saveDataUsuario();
         });        
         this.btnLoad.click(function(){            
-            Traders.load();
+            Traders.loadDataUsuario();
         });
         
         this.txt_nombre_producto_add.focus();

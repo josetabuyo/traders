@@ -254,9 +254,13 @@ var Traders = {
     },
 	setDataUsuario: function(datos){
 		var _this = this;
-		this.usuario = datos.usuario;
+		
+		this.usuario = ClonadorDeObjetos.extend(this.usuario, datos.usuario);
+		
 		this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
 		
+		
+		this.saveDataUsuario();
 		
 		vx.enviarMensajeSeguro({
 			tipoDeMensaje: "trocador.inventario",
@@ -270,16 +274,16 @@ var Traders = {
 	},
 	
 	
-    save: function(){
+    saveDataUsuario: function(){
 		
 		var _datos = {
 			usuario: 					this.usuario,
 			maxIdDeProductoGenerado: 	this._maxIdDeProductoGenerado
 		};
 		
-		
 		if(typeof(Storage)!=="undefined"){
 			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
+			
 			localStorage.setItem(this.usuario.id, JSON.stringify(_datos));
 			
 		}else{
@@ -305,12 +309,15 @@ var Traders = {
 		if(typeof(Storage)!=="undefined"){
 			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
 			var sDatos = localStorage.getItem(this.usuario.id);
-			_datos = JSON.parse(sDatos)
 			
-			this.setDataUsuario(_datos);
-			
-			
+			vx.enviarMensaje({
+				tipoDeMensaje:"vortex.persistencia.datos",
+				de: this.usuario.id,
+				para: this.usuario.id,
+				datos: JSON.parse(sDatos)
+			});
 		}else{
+			
 			vx.send({
 				tipoDeMensaje:"vortex.persistencia.obtenerDatos",
 				de: this.usuario.id

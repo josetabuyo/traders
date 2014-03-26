@@ -1,0 +1,268 @@
+
+
+
+.producto_en_inventario {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-color: gray;
+    margin: 2px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    transition: all .5s;
+    cursor: pointer;
+    padding: 5px;
+    position: relative;
+}
+
+.producto_en_inventario:hover {
+    border:3px solid yellow;
+}
+
+.producto_seleccionado_para_trueque{
+    background-color: yellow;
+}
+
+.producto_seleccionado_para_trueque:hover{
+    border: 3px solid gray;
+}
+
+
+/*
+#btn_load,
+#btn_save {
+    float: right;
+    margin:5px;
+}
+*/
+
+.producto_en_inventario #btn_eliminar {
+    position: absolute;
+    top:5px;
+    left:5px;
+    color:red;
+    background-color: black;
+    border-radius: 50%;
+    display:none;
+    width: 23px;
+    height: 23px;
+    font-weight: bold;
+}
+
+#btn_eliminar: hover {
+    background-color: white;
+    color:black;
+}
+
+.producto_en_inventario #nombre {
+    position: absolute;
+    top:50%;
+    left:5px;
+    right:5px;
+    color:black;
+}
+
+
+.botonera_usuario {
+	position: absolute;
+	top: 10px;
+	left: 120px;
+}
+
+
+
+
+.avatar_usuario {
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    margin:10px;
+}
+
+.lbl_nombre_usuario {
+    display: inline-block;
+    font-size: 45px;
+    font-weight: bold;
+    vertical-align: bottom;
+    margin-bottom: 24px;
+}
+
+
+
+#btn_contactos, #btn_usuario {
+    display: inline-block;
+    float: right;
+    margin: 2px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#btn_contactos img,
+#btn_usuario img
+{
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+#pantalla_contactos #panel_contenedor_lista_contactos {
+    position: absolute;
+    top: 40px;
+    left: 0px;
+    bottom: 0px;
+    width: 300px;
+}
+
+#pantalla_contactos #panel_contacto {
+    position: absolute;
+    top:40px;
+    bottom:0px;
+    right: 0px;
+    left: 300px;
+}
+
+#pantalla_contactos #panel_lista_contactos {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 60px;
+}
+
+#pantalla_contactos #panel_alta_contacto {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+    
+    display: none;
+}
+
+#pantalla_contactos #panel_datos_contacto {
+    
+}
+
+#pantalla_contactos #lbl_nombre_contacto {
+    
+}
+
+#pantalla_contactos #panel_inventario_contacto {
+        padding:10px;
+}
+
+
+
+.botonera_usuario {
+	position: absolute;
+	top: 10px;
+	left: 120px;
+}
+
+
+
+.cuerpo{
+	border: solid 1px;
+	position: absolute;
+	width: 100%;
+	top: 40px;
+	bottom: 0;
+}
+
+
+.seccion_container{
+	border: solid 1px;
+	/*position: absolute;
+	bottom: 0px;*/
+}
+
+
+.datos_usuario {
+    background-color: rgb(248, 248, 248); 
+    /*position: absolute;
+	top: 0;
+	height: 120px;
+	width: 50%;
+	*/
+}
+
+#panel_inventario_container{
+	/*left:0;
+	top: 120px;
+	height: 25%;
+	width: 50%;
+	*/
+}
+
+
+#panel_me_deben_container{
+	/*
+	left:0%;
+	top:50%;
+	
+	height: 50%;
+	width: 50%;
+	*/
+}
+
+
+#panel_debo_container{
+	/*left:50%;
+	top:50%;
+	height: 50%;
+	width: 50%;
+	*/
+}
+
+#panel_trueques_pendientes_container{
+	position: absolute;
+	left:50%;
+	top:0;
+	height: 50%;
+	width: 50%;
+}
+
+
+
+.titulo_panel {
+	height: 45px;
+}
+
+.descripcion_titulo{
+	font-size: 35px;
+	padding: 13px 10px 0px 10px;
+}
+
+
+#panel_inventario {
+    padding:10px;
+}
+
+#panel_alta_producto {
+	float: right;
+	margin-right: 3px;
+	margin-top: -31px;
+}
+
+#panel_alta_producto #btn_add_producto{
+	margin-top: -12px;
+}
+/*
+#panel_alta_producto #txt_nombre_producto_add{
+	margin-right: 30px;
+    margin-top: 0px;
+	
+	width: 100px;
+}
+*/
+
+
+
+
+.panel_izq{
+	position: absolute;
+	width: 50%;
+	top: 0px;
+	bottom: 0px;
+}

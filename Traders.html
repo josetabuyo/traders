@@ -9,14 +9,16 @@
         <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
         <link rel="stylesheet" href="Traders.css" />
-        <title>Traders</title>
+        <link rel="stylesheet" href="PantallaUsuario.css" />
+		
+		<title>Traders</title>
 	</head>
 	
 	<body>	
         <div id="trocador">
             <div id="pantalla_inicio" class="pantalla">
-                <div id="barra_superior">
-                    <div class="titulo_pantalla titulo_pantalla_inicio">
+                <div class="barra_superior">
+                    <div class="titulo_pantalla">
                         Traders
                     </div>
                     <div id="controles_login">
@@ -38,8 +40,8 @@
 			
 			
             <div id="pantalla_usuario" class="pantalla">
-                <div id="barra_superior">
-                    <div class="titulo_pantalla titulo_pantalla_usuario">
+                <div class="barra_superior">
+                    <div class="titulo_pantalla">
                         Yo
                     </div>
                     <div id="btn_contactos">
@@ -51,7 +53,7 @@
 					<ul class="panel_izq">
 						<li>
 							<div class="datos_usuario">
-								<img id="avatar_usuario" class="avatar_usuario" src="avatar.png"/>
+								<img class="avatar_usuario" src="avatar.png"/>
 								<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
 								<div class="botonera_usuario">
 									<input id="btn_load" type="button" value="Load"/>
@@ -63,12 +65,13 @@
 						<li>
 							<div id="panel_inventario_container" class="seccion_container">
 								<div class="titulo_panel">
-									Tengo
+									<div class="descripcion_titulo">Tengo</div>
+									<div id="panel_alta_producto">
+										<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
+										<input id="btn_add_producto" type="button" value="+"/>
+									</div>
 								</div>
-								<div id="panel_alta_producto">
-									<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
-									<input id="btn_add_producto" type="button" value="+"/>
-								</div>
+								
 								<div id="panel_inventario">
 								</div>
 							</div>
@@ -116,8 +119,8 @@
 			
 			
             <div id="pantalla_contactos" class="pantalla">
-                <div id="barra_superior">
-                    <div class="titulo_pantalla titulo_pantalla_contactos">
+                <div class="barra_superior">
+                    <div class="titulo_pantalla">
                         Contactos
                     </div>
                     <div id="btn_usuario">
@@ -137,7 +140,7 @@
                     <div id="panel_datos_contacto" class="datos_usuario">
                         <img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
                         <div id="lbl_nombre_contacto" class="lbl_nombre_usuario">  </div>
-                        <div class="botonera_usuario">
+                        <div>
                             <input id="btn_trocar" type="button" value="Trocar" class="btn"/>
                         </div> 
                     </div> 
@@ -150,8 +153,8 @@
                 </div>
             </div>
             <div id="pantalla_trueque" class="pantalla">
-                <div id="barra_superior"> 
-                    <div class="titulo_pantalla titulo_pantalla_trueque">
+                <div class="barra_superior">
+                    <div class="titulo_pantalla">
                         Trueque
                     </div>
                     <div id="btn_usuario">
@@ -163,7 +166,7 @@
                 </div>  
                 <div class="participantes_trueque">
                     <div class="datos_usuario">
-                        <img id="avatar_usuario" class="avatar_usuario" src="avatar.png"/>
+                        <img class="avatar_usuario" src="avatar.png"/>
                         <div id="lbl_nombre_usuario" class="lbl_nombre_usuario">  </div>
                         <div id="chk_usuario_de_acuerdo" class="chk_acuerdo"></div>
                         <div id="chk_contacto_de_acuerdo" class="chk_acuerdo"></div>
