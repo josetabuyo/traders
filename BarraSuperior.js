@@ -5,7 +5,7 @@ var BarraSuperior = {
         this.ui = $("#barra_superior");
 			
 		this.solapa_yo 			= this.ui.find("#solapa_yo");
-		this.solapa_amigos 		= this.ui.find("#solapa_amigos");
+		this.solapa_contactos 	= this.ui.find("#solapa_contactos");
 		this.solapa_trueques 	= this.ui.find("#solapa_trueques");
 		this.solapa_productos 	= this.ui.find("#solapa_productos");
 		this.solapa_cerrar 		= this.ui.find("#solapa_cerrar");
@@ -25,8 +25,8 @@ var BarraSuperior = {
 		});
 		
 		
-		this.solapa_amigos.click(function(e) {
-			PantallaAmigos.render();
+		this.solapa_contactos.click(function(e) {
+			PantallaContactos.render();
 		});	
 		
 		this.solapa_trueques.click(function(e) {

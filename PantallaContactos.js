@@ -1,7 +1,7 @@
-var PantallaAmigos = {
+var PantallaContactos = {
     start: function(){
         var _this = this;
-        this.ui =  $("#pantalla_amigos");     
+        this.ui =  $("#pantalla_contactos");     
         
         this.contacto_seleccionado = {
 			nombre:"",
@@ -35,6 +35,7 @@ var PantallaAmigos = {
         var _this = this;
         
         this.panel_lista_contactos.empty();
+		
         _.each(Traders.mercaderes(), function(contacto){
             var vista_contacto = $("#plantillas .mercader_en_lista").clone();
             vista_contacto.find("#nombre").text(contacto.nombre);

@@ -65,7 +65,7 @@
     <control controlID="321" controlTypeID="com.balsamiq.mockups::Title" x="754" y="50" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <size>20</size>
-        <text>Amigos</text>
+        <text>Contactos</text>
       </controlProperties>
     </control>
     <control controlID="322" controlTypeID="com.balsamiq.mockups::HRule" x="41" y="554" w="605" h="-1" measuredW="100" measuredH="10" zOrder="17" locked="false" isInGroup="-1"/>
@@ -630,7 +630,7 @@
     <control controlID="449" controlTypeID="com.balsamiq.mockups::TextInput" x="81" y="521" w="-1" h="-1" measuredW="109" measuredH="42" zOrder="128" locked="false" isInGroup="-1">
       <controlProperties>
         <size>28</size>
-        <text>Amigos</text>
+        <text>Contactos</text>
       </controlProperties>
     </control>
     <control controlID="450" controlTypeID="com.balsamiq.mockups::Title" x="703" y="535" w="-1" h="-1" measuredW="22" measuredH="23" zOrder="129" locked="false" isInGroup="-1">
@@ -647,7 +647,7 @@
     <control controlID="452" controlTypeID="com.balsamiq.mockups::Title" x="734" y="533" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="131" locked="false" isInGroup="-1">
       <controlProperties>
         <size>20</size>
-        <text>Amigos</text>
+        <text>Contactos</text>
       </controlProperties>
     </control>
     <control controlID="453" controlTypeID="com.balsamiq.mockups::Title" x="1055" y="535" w="-1" h="-1" measuredW="60" measuredH="23" zOrder="132" locked="false" isInGroup="-1">
@@ -762,7 +762,7 @@
     <control controlID="528" controlTypeID="com.balsamiq.mockups::Title" x="1391" y="530" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="155" locked="false" isInGroup="-1">
       <controlProperties>
         <size>20</size>
-        <text>Amigos</text>
+        <text>Contactos</text>
       </controlProperties>
     </control>
     <control controlID="529" controlTypeID="com.balsamiq.mockups::TextInput" x="1567" y="520" w="-1" h="-1" measuredW="143" measuredH="42" zOrder="156" locked="false" isInGroup="-1">
@@ -895,7 +895,7 @@
     <control controlID="554" controlTypeID="com.balsamiq.mockups::Title" x="1386" y="48" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="179" locked="false" isInGroup="-1">
       <controlProperties>
         <size>20</size>
-        <text>Amigos</text>
+        <text>Contactos</text>
       </controlProperties>
     </control>
     <control controlID="556" controlTypeID="com.balsamiq.mockups::Title" x="1577" y="47" w="-1" h="-1" measuredW="92" measuredH="23" zOrder="180" locked="false" isInGroup="-1">

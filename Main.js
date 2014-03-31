@@ -31,7 +31,7 @@ var onDeviceReady = function() {
     PantallaInicio.start();
     BarraSuperior.start();
     PantallaUsuario.start();
-    PantallaAmigos.start();
+    PantallaContactos.start();
     PantallaTrueques.start();
     Traders.onUsuarioLogueado(function(){
         PersistidorManual.start(Traders.usuario.id);

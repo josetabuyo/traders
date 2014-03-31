@@ -49,7 +49,7 @@ var Traders = {
         });
 		
 		
-		
+		/*
         vx.pedirMensajesSeguros({
             filtro: {
                 tipoDeMensaje:"trocador.avisoDeIngreso"
@@ -70,7 +70,9 @@ var Traders = {
                 _this._onNovedades();
             }
         }, this.claveRSA);
-
+		*/
+		
+		
         vx.pedirMensajesSeguros({
             filtro: {
                 tipoDeMensaje:"trocador.inventario"
@@ -83,6 +85,8 @@ var Traders = {
             }
         }, this.claveRSA); 
         
+		
+		/*
         vx.pedirMensajesSeguros({
             filtro: {
                 tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
@@ -93,7 +97,10 @@ var Traders = {
                 _this._onNovedades();
             }
         }, this.claveRSA);
-        
+        */
+		
+		
+		
         vx.pedirMensajesSeguros({
             filtro: {
                 tipoDeMensaje:"trocador.avisoDeNuevoProducto"
@@ -349,6 +356,8 @@ var Traders = {
         mercader.trueque.suyo.length = 0;   
         mercader.trueque.estado = "cero";
     },
+	
+	
     _agregarMercader: function(id, nombre, inventario){
         var mercader = this.mercaderes({id:id});
         if( mercader !== undefined) {
