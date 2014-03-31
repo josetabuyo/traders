@@ -23,17 +23,21 @@ ul {
 
 .pantalla{
     display: none;
-    height: 100%;
-    position: relative;
+	
+    position: absolute;
+    top: 40px;
+    bottom: 0px;
+	width: 100%;
 }
 
-.barra_superior{
-    position: relative;    
-    background-color: rgb(231, 231, 231);
-	height: 40px;
+#pantalla_inicio{
+	top:0;
+    display: visible;
 }
 
 #pantalla_inicio .barra_superior{
+	position: relative;
+    background-color: rgb(231, 231, 231);
     height: 59px;
 }
 
@@ -188,86 +192,6 @@ ul {
     background-color: red;
     border-radius: 5px;
 }
-
-.avatar_usuario {
-    height: 100px;
-    width: 100px;
-    border-radius: 10px;
-    margin:10px;
-}
-
-.lbl_nombre_usuario {
-    display: inline-block;
-    font-size: 45px;
-    font-weight: bold;
-    vertical-align: bottom;
-    margin-bottom: 24px;
-}
-
-
-/*Pantalla Contactos*/
-#btn_contactos, #btn_usuario {
-    display: inline-block;
-    float: right;
-    margin: 2px;
-    margin-right: 5px;
-    cursor: pointer;
-}
-
-#btn_contactos img,
-#btn_usuario img
-{
-    width: 35px;
-    height: 35px;
-    border-radius: 5px;
-}
-
-#pantalla_contactos #panel_contenedor_lista_contactos {
-    position: absolute;
-    top: 40px;
-    left: 0px;
-    bottom: 0px;
-    width: 300px;
-}
-
-#pantalla_contactos #panel_contacto {
-    position: absolute;
-    top:40px;
-    bottom:0px;
-    right: 0px;
-    left: 300px;
-}
-
-#pantalla_contactos #panel_lista_contactos {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 60px;
-}
-
-#pantalla_contactos #panel_alta_contacto {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    height: 60px;
-    
-    display: none;
-}
-
-#pantalla_contactos #panel_datos_contacto {
-    
-}
-
-#pantalla_contactos #lbl_nombre_contacto {
-    
-}
-
-#pantalla_contactos #panel_inventario_contacto {
-        padding:10px;
-}
-
 
 
 

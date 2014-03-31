@@ -29,9 +29,10 @@ var onDeviceReady = function() {
     });   
     
     PantallaInicio.start();
+    BarraSuperior.start();
     PantallaUsuario.start();
-    PantallaContactos.start();
-    PantallaTrueque.start();
+    PantallaAmigos.start();
+    PantallaTrueques.start();
     Traders.onUsuarioLogueado(function(){
         PersistidorManual.start(Traders.usuario.id);
     });

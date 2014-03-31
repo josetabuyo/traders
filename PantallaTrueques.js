@@ -1,4 +1,4 @@
-var PantallaTrueque = {    
+var PantallaTrueques = {    
     start: function(){
         var _this = this;
         this.contacto = {
@@ -13,8 +13,6 @@ var PantallaTrueque = {
         
         this.ui =  $("#pantalla_trueque");
         
-        this.btn_usuario = this.ui.find("#btn_usuario");
-        this.btn_contactos = this.ui.find("#btn_contactos");
         
         this.panel_inventario_usuario = this.ui.find("#panel_inventario_usuario");        
         this.panel_inventario_contacto = this.ui.find("#panel_inventario_contacto");
@@ -22,21 +20,13 @@ var PantallaTrueque = {
         this.lbl_nombre_contacto = this.ui.find("#lbl_nombre_contacto");
         this.chk_usuario_de_acuerdo = this.ui.find("#chk_usuario_de_acuerdo");
         this.chk_contacto_de_acuerdo = this.ui.find("#chk_contacto_de_acuerdo");
-       	   
+		
         this.chk_usuario_de_acuerdo.click(function(){
             if(_this.contacto.trueque.estado == "recibido")
                 Traders.aceptarTruequeDe(_this.contacto.id);
             else
                 Traders.proponerTruequeA(_this.contacto.id);
         });        
-        this.btn_usuario.click(function(e) {
-            _this.ui.hide();
-            PantallaUsuario.render();
-		});	
-        this.btn_contactos.click(function(e) {
-            _this.ui.hide();
-            PantallaContactos.render();
-		});	
     },
     render: function(){
         this.lbl_nombre_usuario.text(Traders.usuario.nombre);

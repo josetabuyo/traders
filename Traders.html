@@ -9,7 +9,10 @@
         <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
         <link rel="stylesheet" href="Traders.css" />
+        <link rel="stylesheet" href="BarraSuperior.css" />
         <link rel="stylesheet" href="PantallaUsuario.css" />
+        <link rel="stylesheet" href="PantallaAmigos.css" />
+		
 		
 		<title>Traders</title>
 	</head>
@@ -38,104 +41,109 @@
             </div>
 			
 			
+			<div id="barra_superior" class="barra_superior">
+				<div id="solapa_yo" class="solapa">
+					Yo
+				</div>
+				<div id="solapa_amigos" class="solapa">
+					Amigos
+				</div>
+				<div id="solapa_trueques" class="solapa">
+					Trueques
+				</div>
+				<div id="solapa_productos" class="solapa">
+					Productos
+				</div>
+				
+				<div id="solapa_cerrar" class="solapa">
+					Cerrar
+				</div>
+				
+			</div>
+			
 			
             <div id="pantalla_usuario" class="pantalla">
-                <div class="barra_superior">
-                    <div class="titulo_pantalla">
-                        Yo
-                    </div>
-                    <div id="btn_contactos">
-                        <img src="icono_contactos.png"/>
-                    </div>
-                </div>
-				<div class="cuerpo">
-					
-					<ul class="panel_izq">
-						<li>
-							<div class="datos_usuario">
-								<img class="avatar_usuario" src="avatar.png"/>
-								<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
-								<div class="botonera_usuario">
-									<input id="btn_load" type="button" value="Load"/>
-									<input id="btn_save" type="button" value="Save"/>
-								</div>
+				<ul class="panel panel_izq">
+					<li>
+						<div class="datos_usuario">
+							<img class="avatar_usuario" src="avatar.png"/>
+							<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+							<div class="botonera_usuario">
+								<input id="btn_load" type="button" value="Load"/>
+								<input id="btn_save" type="button" value="Save"/>
 							</div>
-						</li>
-						
-						<li>
-							<div id="panel_inventario_container" class="seccion_container">
-								<div class="titulo_panel">
-									<div class="descripcion_titulo">Tengo</div>
-									<div id="panel_alta_producto">
-										<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
-										<input id="btn_add_producto" type="button" value="+"/>
-									</div>
-								</div>
-								
-								<div id="panel_inventario">
-								</div>
-							</div>
-						</li>
-							
-							
-						<li>
-							<div id="panel_me_deben_container" class="seccion_container">
-								<div class="titulo_panel">
-									Me deben
-								</div>
-								<div id="panel_me_deben">
-								</div>
-							</div>
-						</li>
-							
-							
-						<li>
-							<div id="panel_debo_container" class="seccion_container">
-								<div class="titulo_panel">
-									Debo
-								</div>
-								<div id="panel_debo">
-								</div>
-							</div>
-						</li>
-						
-					</ul>
-					
-					
-					<div id="panel_trueques_pendientes_container" class="seccion_container">
-						<div class="titulo_panel">
-							Trueques pendientes
 						</div>
-						<div id="panel_trueques_pendientes">
+					</li>
+					
+					<li>
+						<div id="panel_trueques_pendientes_container" class="seccion_container">
+							<div class="titulo_panel">
+								<div class="descripcion_titulo">Trueques pendientes</div>
+								<input id="btn_add_trueque" type="button" value="+"/>
+							</div>
+							<div id="panel_trueques_pendientes">
+							</div>
 						</div>
-					</div>
+					</li>
 					
 					
-				</div>
+				</ul>
+				<ul class="panel panel_der">
+					<li>
+						<div id="panel_inventario_container" class="seccion_container">
+							<div class="titulo_panel">
+								<div class="descripcion_titulo">Tengo</div>
+								<div id="panel_alta_producto">
+									<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
+									<input id="btn_add_producto" type="button" value="+"/>
+								</div>
+							</div>
+							
+							<div id="panel_inventario">
+							</div>
+						</div>
+					</li>
+						
+						
+					<li>
+						<div id="panel_me_deben_container" class="seccion_container">
+							<div class="titulo_panel">
+								Me deben
+							</div>
+							<div id="panel_me_deben">
+							</div>
+						</div>
+					</li>
+						
+						
+					<li>
+						<div id="panel_debo_container" class="seccion_container">
+							<div class="titulo_panel">
+								Debo
+							</div>
+							<div id="panel_debo">
+							</div>
+						</div>
+					</li>
+				</ul>
             </div>
 			
 			
 			
 			
 			
-            <div id="pantalla_contactos" class="pantalla">
-                <div class="barra_superior">
-                    <div class="titulo_pantalla">
-                        Contactos
-                    </div>
-                    <div id="btn_usuario">
-                        <img src="avatar.png"/>
-                    </div>
-                </div>
+            <div id="pantalla_amigos" class="pantalla">
+                
                 <div id="panel_contenedor_lista_contactos">
                     <div id="panel_lista_contactos">
                     </div>
                     <div id="panel_alta_contacto">
-                        <span>Agregar contacto:</span>
-                        <input id="txt_id_contacto_add" type="text"/>
+                        <input id="txt_id_contacto_add" type="text" placeholder="Nuevo contacto"/>
                         <input id="btn_add_contacto" type="button" value="+"/>
                     </div>
+					
                 </div>
+				
                 <div id="panel_contacto">
                     <div id="panel_datos_contacto" class="datos_usuario">
                         <img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
@@ -151,19 +159,12 @@
                     
                     </div> 
                 </div>
+				
+				
             </div>
+			
+			
             <div id="pantalla_trueque" class="pantalla">
-                <div class="barra_superior">
-                    <div class="titulo_pantalla">
-                        Trueque
-                    </div>
-                    <div id="btn_usuario">
-                        <img src="avatar.png"/>
-                    </div>
-                    <div id="btn_contactos">
-                        <img src="icono_contactos.png"/>
-                    </div>
-                </div>  
                 <div class="participantes_trueque">
                     <div class="datos_usuario">
                         <img class="avatar_usuario" src="avatar.png"/>
@@ -219,9 +220,10 @@
     <script type="text/javascript" src="Main.js"></script> 
     <script type="text/javascript" src="Traders.js"></script> 
     <script type="text/javascript" src="PantallaInicio.js"></script> 
+    <script type="text/javascript" src="BarraSuperior.js"></script> 
     <script type="text/javascript" src="PantallaUsuario.js"></script> 
-    <script type="text/javascript" src="PantallaContactos.js"></script> 
-    <script type="text/javascript" src="PantallaTrueque.js"></script> 
+    <script type="text/javascript" src="PantallaAmigos.js"></script> 
+    <script type="text/javascript" src="PantallaTrueques.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
     <script type="text/javascript" src="PersistidorManual.js"></script> 
 

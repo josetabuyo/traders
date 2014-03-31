@@ -11,7 +11,6 @@ var PantallaUsuario = {
 		
         this.btn_add_producto = this.ui.find("#btn_add_producto");
         this.txt_nombre_producto_add = this.ui.find("#txt_nombre_producto_add");
-        this.btn_contactos = this.ui.find("#btn_contactos");
         this.btnSave = $("#btn_save");
         this.btnLoad = $("#btn_load");
         
@@ -26,10 +25,6 @@ var PantallaUsuario = {
 				_this.btn_add_producto.click();
 			}
 		});    
-        this.btn_contactos.click(function(e) {
-            _this.ui.hide();
-            PantallaContactos.render();
-		});	
         this.btnSave.click(function(){  
             Traders.saveDataUsuario();
         });        
@@ -94,6 +89,7 @@ var PantallaUsuario = {
 		}else{
 			_this.panel_debo.closest('.seccion_container').closest('li').hide();
 		}
+		
 		
 		
         Traders.onNovedades(function(){

@@ -14,7 +14,13 @@ var PantallaInicio = {
             Traders.login(nombre_usuario, password);
             
             _this.ui.hide();
-            PantallaUsuario.render();
+			BarraSuperior.render();
+			
+			
+			BarraSuperior.ui.find("#solapa_yo").click();
+			
+			//PantallaUsuario.render();
+			
         });
 		
 		this.txtNombreUsuario.keypress(function(e) {
@@ -44,6 +50,8 @@ var PantallaInicio = {
 				_this.botonIngresar.click();
 			}
 		});
+		
+		
     },
     render: function(){
         this.ui.show();

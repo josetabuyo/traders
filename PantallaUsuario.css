@@ -1,6 +1,5 @@
 
 
-
 .producto_en_inventario {
     display: inline-block;
     width: 80px;
@@ -90,86 +89,11 @@
 
 
 
-#btn_contactos, #btn_usuario {
-    display: inline-block;
-    float: right;
-    margin: 2px;
-    margin-right: 5px;
-    cursor: pointer;
-}
-
-#btn_contactos img,
-#btn_usuario img
-{
-    width: 35px;
-    height: 35px;
-    border-radius: 5px;
-}
-
-#pantalla_contactos #panel_contenedor_lista_contactos {
-    position: absolute;
-    top: 40px;
-    left: 0px;
-    bottom: 0px;
-    width: 300px;
-}
-
-#pantalla_contactos #panel_contacto {
-    position: absolute;
-    top:40px;
-    bottom:0px;
-    right: 0px;
-    left: 300px;
-}
-
-#pantalla_contactos #panel_lista_contactos {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 60px;
-}
-
-#pantalla_contactos #panel_alta_contacto {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    height: 60px;
-    
-    display: none;
-}
-
-#pantalla_contactos #panel_datos_contacto {
-    
-}
-
-#pantalla_contactos #lbl_nombre_contacto {
-    
-}
-
-#pantalla_contactos #panel_inventario_contacto {
-        padding:10px;
-}
-
-
-
 .botonera_usuario {
 	position: absolute;
 	top: 10px;
 	left: 120px;
 }
-
-
-
-.cuerpo{
-	border: solid 1px;
-	position: absolute;
-	width: 100%;
-	top: 40px;
-	bottom: 0;
-}
-
 
 .seccion_container{
 	border: solid 1px;
@@ -216,11 +140,12 @@
 }
 
 #panel_trueques_pendientes_container{
-	position: absolute;
+/*	position: absolute;
 	left:50%;
 	top:0;
 	height: 50%;
 	width: 50%;
+*/
 }
 
 
@@ -245,6 +170,13 @@
 	margin-top: -31px;
 }
 
+#btn_add_trueque{
+	float: right;
+	margin-right: 3px;
+	margin-top: -31px;
+}
+
+
 #panel_alta_producto #btn_add_producto{
 	margin-top: -12px;
 }
@@ -258,11 +190,27 @@
 */
 
 
-
-
-.panel_izq{
+ul.panel{
 	position: absolute;
 	width: 50%;
 	top: 0px;
 	bottom: 0px;
 }
+
+
+ul.panel li:last-child{
+	float:none;
+	overflow:hidden;
+}
+
+
+
+.panel_izq{
+	left: 0;
+}
+
+
+.panel_der{
+	left: 50%;
+}
+

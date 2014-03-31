@@ -1,7 +1,7 @@
-var PantallaContactos = {
+var PantallaAmigos = {
     start: function(){
         var _this = this;
-        this.ui =  $("#pantalla_contactos");     
+        this.ui =  $("#pantalla_amigos");     
         
         this.contacto_seleccionado = {
 			nombre:"",
@@ -13,20 +13,22 @@ var PantallaContactos = {
 			}
 		};
         
+		
+		this.btn_add_contacto = this.ui.find("#btn_add_contacto");
+		this.btn_add_contacto.click(function(){
+			
+		});
+		
         this.panel_lista_contactos = this.ui.find("#panel_lista_contactos");
         this.panel_contacto = this.ui.find("#panel_contacto");
         this.lbl_nombre_contacto = this.ui.find("#lbl_nombre_contacto");
         this.panel_inventario_contacto = this.ui.find("#panel_inventario_contacto");
-        this.btn_usuario = this.ui.find("#btn_usuario");
         this.btn_trocar = this.ui.find("#btn_trocar");
-        this.btn_usuario.click(function(e) {
-            _this.ui.hide();
-            PantallaUsuario.render();
-		});	
+		
         this.btn_trocar.click(function(e) {
             _this.ui.hide();
-            PantallaTrueque.contacto = _this.contacto_seleccionado;
-            PantallaTrueque.render();
+            PantallaTrueques.contacto = _this.contacto_seleccionado;
+            PantallaTrueques.render();
 		});	
     },
     render: function(){
