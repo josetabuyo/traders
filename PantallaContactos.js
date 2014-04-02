@@ -14,14 +14,22 @@ var PantallaContactos = {
 		};
         
 		
-		this.btn_add_contacto = this.ui.find("#btn_add_contacto");
-		this.btn_add_contacto.click(function(){
-			
-		});
 		
         this.panel_lista_contactos = this.ui.find("#panel_lista_contactos");
         this.panel_contacto = this.ui.find("#panel_contacto");
         this.lbl_nombre_contacto = this.ui.find("#lbl_nombre_contacto");
+		
+		
+		this.txt_id_contacto_add = this.ui.find("#txt_id_contacto_add");
+		
+		this.btn_add_contacto = this.ui.find("#btn_add_contacto");
+		this.btn_add_contacto.click(function(){
+			Traders._agregarMercader(_this.txt_id_contacto_add, null/*_alias*/);
+			
+			_this.render();
+		});
+		
+		
         this.panel_inventario_contacto = this.ui.find("#panel_inventario_contacto");
         this.btn_trocar = this.ui.find("#btn_trocar");
 		

@@ -11,8 +11,8 @@ var PantallaUsuario = {
 		
         this.btn_add_producto = this.ui.find("#btn_add_producto");
         this.txt_nombre_producto_add = this.ui.find("#txt_nombre_producto_add");
-        this.btnSave = $("#btn_save");
-        this.btnLoad = $("#btn_load");
+        this.btnSave = this.ui.find("#btn_save");
+        this.btnLoad = this.ui.find("#btn_load");
         
         this.btn_add_producto.click(function(){
             Traders.agregarProducto({
@@ -27,11 +27,19 @@ var PantallaUsuario = {
 		});    
         this.btnSave.click(function(){  
             Traders.saveDataUsuario();
-        });        
+        });
+		
         this.btnLoad.click(function(){            
             Traders.loadDataUsuario();
         });
         
+		
+		
+		this.id_usuario = this.ui.find("#id_usuario");
+		
+		this.id_usuario.text(Traders.usuario.id);
+		
+		
         this.txt_nombre_producto_add.focus();
     },
     render: function(){
@@ -53,10 +61,10 @@ var PantallaUsuario = {
 		});
 		
 		///// panel_me_deben
-		if(Traders.usuario.debito.length > 0){
+		if(Traders.usuario.me_deben.length > 0){
 			_this.panel_me_deben.closest('.seccion_container').closest('li').show();
 			
-			_.each(Traders.usuario.debito, function(producto){
+			_.each(Traders.usuario.me_deben, function(producto){
 				var vista = new VistaDeUnProductoEnInventario({
 					producto: producto
 					/*, 
@@ -72,9 +80,9 @@ var PantallaUsuario = {
 		}
 			
 		///// panel_debo
-		if(Traders.usuario.credito.length > 0){
+		if(Traders.usuario.debo.length > 0){
 			_this.panel_debo.closest('.seccion_container').closest('li').show();
-			_.each(Traders.usuario.credito, function(producto){
+			_.each(Traders.usuario.debo, function(producto){
 				var vista = new VistaDeUnProductoEnInventario({
 					producto: producto
 					
