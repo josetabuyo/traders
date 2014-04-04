@@ -78,9 +78,9 @@ var Traders = {
 			vx.send({
 				idRequest: mensaje.idRequest,
 				para: mensaje.de,
-				de: this.usuario.id,
-				nombre: this.usuario.nombre,
-				inventario: this.usuario.inventario
+				de: _this.usuario.id,
+				nombre: _this.usuario.nombre,
+				inventario: _this.usuario.inventario
 			});
 		});
 		
@@ -378,6 +378,8 @@ var Traders = {
 	
 	_agregarMercader: function(idMercader, _alias){
         
+		var _this = this;
+		
 		this._mercaderes.push({
             id: idMercader,
             alias: _alias, // <-- opcional
@@ -461,10 +463,13 @@ var Traders = {
 			de: this.usuario.id,
 			para: idMercader
 		},function(mensaje){
+			
+			console.log('respuesta a trocador.claveAgregada', mensaje);
+			
 			var mercader = _this.mercaderes({id:mensaje.de});
 			
-			mercader.nombre = mensaje.datos.nombre;
-			mercader.inventario = mensaje.datos.inventario;
+			mercader.nombre = mensaje.nombre;
+			mercader.inventario = mensaje.inventario;
 			if(!mercader.alias){
 				mercader.alias = mercader.nombre;
 			}

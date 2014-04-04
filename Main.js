@@ -30,10 +30,12 @@ var onDeviceReady = function() {
     
     PantallaInicio.start();
     BarraSuperior.start();
-    PantallaUsuario.start();
-    PantallaContactos.start();
-    PantallaTrueques.start();
+    
     Traders.onUsuarioLogueado(function(){
+		PantallaUsuario.start();
+		PantallaContactos.start();
+		PantallaTrueques.start();
+	
         PersistidorManual.start(Traders.usuario.id);
     });
     PantallaInicio.render();

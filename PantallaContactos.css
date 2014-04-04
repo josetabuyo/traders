@@ -38,20 +38,22 @@
 	right:3px;
 }
 
+
+/*
 #pantalla_contactos
 #txt_id_contacto_add{
 	position: absolute;
 	top: 2px;
 	right: 31px;
 }
-
+*/
 
 
 #pantalla_contactos
 #panel_contenedor_lista_contactos
 #panel_lista_contactos {
     position: absolute;
-    top: 0px;
+    top: 28px;
     left: 0px;
     right: 0px;
     bottom: 60px;

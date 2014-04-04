@@ -35,9 +35,19 @@ var PantallaUsuario = {
         
 		
 		
-		this.id_usuario = this.ui.find("#id_usuario");
+		this.btn_compartir_id = this.ui.find("#btn_compartir_id");
 		
-		this.id_usuario.text(Traders.usuario.id);
+		this.btn_compartir_id.click(function(){
+			
+			
+			alertify.prompt("Compartí tu Id", function (e, str) {
+				if (e) {
+					clipboardCopy(Traders.usuario.id);
+				} else {
+					
+				}
+			}, Traders.usuario.id);
+		});
 		
 		
         this.txt_nombre_producto_add.focus();
