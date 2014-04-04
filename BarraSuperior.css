@@ -3,6 +3,9 @@
 	height: 20px;
 	display: none;
 	padding: 10px 10px 10px 10px ;
+	position: absolute;
+	left:5px;
+	right:5px;
 }
 
 .solapa {

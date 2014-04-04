@@ -26,20 +26,11 @@ ul {
 	
     position: absolute;
     top: 40px;
-    bottom: 0px;
-	width: 100%;
+    bottom: 5px;
+	left:5px;
+	right:5px;
 }
 
-#pantalla_inicio{
-	top:0;
-    display: visible;
-}
-
-#pantalla_inicio .barra_superior{
-	position: relative;
-    background-color: rgb(231, 231, 231);
-    height: 59px;
-}
 
 
 .titulo_pantalla{
@@ -50,43 +41,36 @@ ul {
     bottom: 10px;
 }
 
-#pantalla_inicio  .titulo_pantalla{
-    bottom: 18px;
-}
 
-
-#pantalla_inicio .barra_superior #controles_login{
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    bottom: 5px;
-    vertical-align: bottom;
-}
-
-#pantalla_inicio .barra_superior #controles_login .control_login{
-    display:inline-block;
+.producto_en_inventario {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background-color: gray;
+    margin: 2px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    transition: all .5s;
+    cursor: pointer;
+    padding: 5px;
     position: relative;
 }
 
-#pantalla_inicio .barra_superior #controles_login #comentarios_login{
-    display: inline-block;
-    width: 272px;
-    margin-right: 11px;
-    font-size: 14px;
-    font-style: italic;
-    color: red;
-    /* margin-top: 10px; */
-    vertical-align: sub;
+
+.producto_en_inventario:hover {
+    border:3px solid yellow;
 }
 
-#pantalla_inicio .barra_superior #controles_login .label_login{
-    
+.producto_seleccionado_para_trueque{
+    background-color: yellow;
 }
 
-#pantalla_inicio .barra_superior #controles_login .input_login{
-    width: 150px;
-    
+.producto_seleccionado_para_trueque:hover{
+    border: 3px solid gray;
 }
+
+
 
 
 .producto_en_inventario {
@@ -115,15 +99,6 @@ ul {
 .producto_seleccionado_para_trueque:hover{
     border: 3px solid gray;
 }
-
-
-/*
-#btn_load,
-#btn_save {
-    float: right;
-    margin:5px;
-}
-*/
 
 .producto_en_inventario #btn_eliminar {
     position: absolute;
@@ -176,23 +151,6 @@ ul {
 .mercader_seleccionado{
     background-color: rgb(231, 231, 231);
 }
-
-
-/* Pantalla de inicio */
-#boton_ingresar {
-    margin-bottom: 9px;
-}
-
-#indicador_fuerza {
-    height: 22px;
-    width: 22px;
-    position: absolute;
-    right: 4px;
-    top: 4px;
-    background-color: red;
-    border-radius: 5px;
-}
-
 
 
 

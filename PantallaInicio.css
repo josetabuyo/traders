@@ -1,0 +1,72 @@
+
+#pantalla_inicio{
+	top:0;
+    display: visible;
+}
+
+#pantalla_inicio
+.barra_superior{
+	position: relative;
+    background-color: rgb(231, 231, 231);
+    height: 59px;
+}
+
+
+#pantalla_inicio
+.titulo_pantalla{
+    bottom: 18px;
+}
+
+
+#pantalla_inicio
+.barra_superior #controles_login{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    bottom: 5px;
+    vertical-align: bottom;
+}
+
+#pantalla_inicio
+.barra_superior #controles_login .control_login{
+    display:inline-block;
+    position: relative;
+}
+
+#pantalla_inicio
+.barra_superior #controles_login #comentarios_login{
+    display: inline-block;
+    width: 272px;
+    margin-right: 11px;
+    font-size: 14px;
+    font-style: italic;
+    color: red;
+    /* margin-top: 10px; */
+    vertical-align: sub;
+}
+
+#pantalla_inicio
+.barra_superior #controles_login .label_login{
+    
+}
+
+#pantalla_inicio
+.barra_superior #controles_login .input_login{
+    width: 150px;
+}
+
+#pantalla_inicio
+#boton_ingresar {
+    margin-bottom: 9px;
+}
+
+#pantalla_inicio
+#indicador_fuerza {
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    background-color: red;
+    border-radius: 5px;
+}

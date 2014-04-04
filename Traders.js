@@ -283,6 +283,9 @@ var Traders = {
 		
 		this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
 		
+		this._mercaderes = datos.mercaderes;
+		
+		
 		
 		this.saveDataUsuario();
 		
@@ -302,7 +305,9 @@ var Traders = {
 		
 		var _datos = {
 			usuario: 					this.usuario,
+			mercaderes:					this.mercaderes(),
 			maxIdDeProductoGenerado: 	this._maxIdDeProductoGenerado
+			
 		};
 		
 		if(typeof(Storage)!=="undefined"){
@@ -333,14 +338,10 @@ var Traders = {
 		if(typeof(Storage)!=="undefined"){
 			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
 			var sDatos = localStorage.getItem(this.usuario.id);
-			
-			vx.enviarMensaje({
-				tipoDeMensaje:"vortex.persistencia.datos",
-				de: this.usuario.id,
-				para: this.usuario.id,
-				datos: JSON.parse(sDatos)
-			});
-		}else{
+				
+				this.setDataUsuario(JSON.parse(sDatos));
+
+			}else{
 			
 			vx.send({
 				tipoDeMensaje:"vortex.persistencia.obtenerDatos",
