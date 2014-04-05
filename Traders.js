@@ -70,18 +70,43 @@ var Traders = {
 			tipoDeMensaje:"trocador.claveAgregada",
 			para: this.usuario.id
 		},function(mensaje){
-			/*
-				TO DO:
-				- por ahora acepta autamáticamente, luego ver de poner un avido en la pantalla para que confirme al mejor estilo facebook
-				- analizar si con que uno solo agregue la public alcanza para hacer todo el lazo, por ahora va doble, me agregas la public y yo la tuya
-			*/
+			
+			_this._mercaderes.push({
+				id: mensaje.de,
+				alias: null,
+				nombre: null,
+				inventario: [],
+				trueque: {
+					suyo: [],
+					mio: [],
+					estado: "cero"
+				}
+			});
+			
+			var mercader = _this.mercaderes({id: mensaje.de});
+			
+			
+			
+			mercader.nombre = mensaje.datoSeguro.nombre;
+			mercader.inventario = mensaje.datoSeguro.inventario;
+			if(!mercader.alias){
+				mercader.alias = mercader.nombre;
+			}
+			
+			_this._onNovedades();
+			
+			
+			
 			vx.send({
 				idRequest: mensaje.idRequest,
 				para: mensaje.de,
 				de: _this.usuario.id,
-				nombre: _this.usuario.nombre,
-				inventario: _this.usuario.inventario
+				datoSeguro: {
+					nombre: _this.usuario.nombre,
+					inventario: _this.usuario.inventario
+				}
 			});
+			
 		});
 		
 		
@@ -281,9 +306,15 @@ var Traders = {
 		
 		this.usuario = ClonadorDeObjetos.extend(this.usuario, datos.usuario);
 		
-		this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
 		
-		this._mercaderes = datos.mercaderes;
+		if(datos.maxIdDeProductoGenerado){
+			this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
+		}
+		
+		if(datos.mercaderes){
+			console.log('datos.mercaderes', datos.mercaderes);
+			this._mercaderes = datos.mercaderes;
+		}
 		
 		
 		
@@ -381,6 +412,8 @@ var Traders = {
         
 		var _this = this;
 		
+		console.log('this._mercaderes  ', this._mercaderes);
+		
 		this._mercaderes.push({
             id: idMercader,
             alias: _alias, // <-- opcional
@@ -462,15 +495,18 @@ var Traders = {
 		vx.send({
 			tipoDeMensaje:"trocador.claveAgregada",
 			de: this.usuario.id,
-			para: idMercader
-		},function(mensaje){
+			para: idMercader,
+			datoSeguro: {
+				nombre: this.usuario.nombre,
+				inventario: this.usuario.inventario
+			}
 			
-			console.log('respuesta a trocador.claveAgregada', mensaje);
+		},function(mensaje){
 			
 			var mercader = _this.mercaderes({id:mensaje.de});
 			
-			mercader.nombre = mensaje.nombre;
-			mercader.inventario = mensaje.inventario;
+			mercader.nombre = mensaje.datoSeguro.nombre;
+			mercader.inventario = mensaje.datoSeguro.inventario;
 			if(!mercader.alias){
 				mercader.alias = mercader.nombre;
 			}
