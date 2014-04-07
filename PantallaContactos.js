@@ -23,8 +23,6 @@ var PantallaContactos = {
 		//this.txt_id_contacto_add = this.ui.find("#txt_id_contacto_add");
 		
 		this.btn_add_contacto = this.ui.find("#btn_add_contacto");
-		
-		
 		this.btn_add_contacto.click(function(e){
 			
 			alertify.prompt("Ingrese el id del usuario", function (e, str) {
@@ -38,6 +36,7 @@ var PantallaContactos = {
 			
 			_this.render();
 		});
+		
 		
 		
         this.panel_inventario_contacto = this.ui.find("#panel_inventario_contacto");
@@ -57,6 +56,18 @@ var PantallaContactos = {
         _.each(Traders.mercaderes(), function(contacto){
             var vista_contacto = $("#plantillas .mercader_en_lista").clone();
             vista_contacto.find("#nombre").text(contacto.nombre);
+			
+			
+			
+			var btn_eliminar = vista_contacto.find("#btn_eliminar");
+			btn_eliminar.click(function(e){
+				Traders._quitarMercader(contacto.id);
+				
+				_this.render();
+			});
+			
+			
+			
             vista_contacto.click(function(){
                 _this.contacto_seleccionado = contacto;
                 _this.render();

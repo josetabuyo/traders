@@ -23,7 +23,7 @@
     font-weight: bold;
 }
 
-#btn_eliminar: hover {
+.producto_en_inventario #btn_eliminar: hover {
     background-color: white;
     color:black;
 }

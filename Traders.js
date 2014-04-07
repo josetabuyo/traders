@@ -556,7 +556,7 @@ var Traders = {
         
 		
 		
-    }
+    },
 	
 	/*
     _agregarMercader: function(id, nombre, inventario){
@@ -577,6 +577,12 @@ var Traders = {
         });
     }
 	*/
+	
+	_quitarMercader: function(id){
+			this._mercaderes = $.grep(this._mercaderes, function(item){
+            return item.id != id;
+        });
+	}
 	
 	
 };

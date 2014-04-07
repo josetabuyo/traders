@@ -75,3 +75,11 @@
 }
 
 
+#pantalla_contactos
+.mercader_en_lista #btn_eliminar{
+	position: absolute;
+	right: 10px;
+	top: 8px;
+}
+
+
