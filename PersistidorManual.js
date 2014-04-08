@@ -11,7 +11,7 @@ var PersistidorManual = {
 			
 			alertify.prompt("Copia esto al portapeles", function (e, str) {
 				if (e) {
-					clipboardCopy(JSON.stringify(mensaje.datos));
+					clipboardCopy(JSON.stringify(mensaje.dato));
 				} else {
 					
 				}
@@ -22,25 +22,30 @@ var PersistidorManual = {
         
 		
 		vx.when({
-		
 			tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-			de: id_usuario
-			
+			de: id_usuario,
+			para: id_usuario
 		},function(mensaje){
 			
 			alertify.prompt("Ingrese sus datos guardados", function (e, str) {
 				if (e) {
-					vx.enviarMensaje({
+					
+					vx.send({
 						tipoDeMensaje:"vortex.persistencia.datos",
+						idRequest: mensaje.idRequest,
 						de: id_usuario,
 						para: id_usuario,
-						datos:JSON.parse(str)
+						dato: JSON.parse(str)
 					});
+					
 				} else {
+					
 					// user clicked "cancel"
-					vx.enviarMensaje({
+					vx.send({
 						tipoDeMensaje:"vortex.persistencia.noHayDatos",
-						para:id_usuario
+						idRequest: mensaje.idRequest,
+						de: id_usuario,
+						para: id_usuario
 					});
 				}
 			}, "");

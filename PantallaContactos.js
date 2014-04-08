@@ -27,7 +27,7 @@ var PantallaContactos = {
 			
 			alertify.prompt("Ingrese el id del usuario", function (e, str) {
 				if (e) {
-					Traders._agregarMercader(str, null); //_alias
+					Traders.agregarMercader(str);
 					
 				} else {
 					// user clicked "cancel"
@@ -61,7 +61,7 @@ var PantallaContactos = {
 			
 			var btn_eliminar = vista_contacto.find("#btn_eliminar");
 			btn_eliminar.click(function(e){
-				Traders._quitarMercader(contacto.id);
+				Traders.quitarMercader(contacto.id);
 				
 				_this.render();
 			});

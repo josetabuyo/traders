@@ -8,8 +8,19 @@ var Traders = {
 	_onNovedades:function(){},
     _onUsuarioLogueado:function(){},
 	
-    onNovedades:function(callback){
-        this._onNovedades = callback;
+    onNovedades:function(){
+		
+		if(arguments.length==1){
+		
+			this._onNovedades = arguments[0];
+			
+		}else{
+			
+			saveDataUsuario();
+			
+			this._onNovedades();
+		}
+		
     },
     onUsuarioLogueado:function(callback){
         this._onUsuarioLogueado = callback;
@@ -62,7 +73,8 @@ var Traders = {
 			de: this.usuario.id,
 			para: this.usuario.id
 		}, function(mensaje){
-			_this.setDataUsuario(mensaje.datos);
+			
+			_this.setDataUsuario(mensaje.dato);
         });
 		
 		
@@ -70,10 +82,28 @@ var Traders = {
 			tipoDeMensaje:"trocador.claveAgregada",
 			para: this.usuario.id
 		},function(mensaje){
+			// le completo los datos
+			vx.send({
+				idRequest: mensaje.idRequest,
+				para: mensaje.de,
+				de: _this.usuario.id,
+				datoSeguro: {
+					mercader: {
+						nombre: _this.usuario.nombre,
+						inventario: _this.usuario.inventario
+					}
+				}
+			});
+			//
 			
+			
+			// lo agrego
+			_this.agregarMercader(mensaje.datoSeguro.mercader);
+			
+			
+			/*
 			_this._mercaderes.push({
 				id: mensaje.de,
-				alias: null,
 				nombre: null,
 				inventario: [],
 				trueque: {
@@ -83,144 +113,29 @@ var Traders = {
 				}
 			});
 			
+			
 			var mercader = _this.mercaderes({id: mensaje.de});
 			
 			
 			
 			mercader.nombre = mensaje.datoSeguro.nombre;
 			mercader.inventario = mensaje.datoSeguro.inventario;
-			if(!mercader.alias){
-				mercader.alias = mercader.nombre;
-			}
 			
-			_this._onNovedades();
+			*/
 			
 			
+			_this.onNovedades();
 			
-			vx.send({
-				idRequest: mensaje.idRequest,
-				para: mensaje.de,
-				de: _this.usuario.id,
-				datoSeguro: {
-					nombre: _this.usuario.nombre,
-					inventario: _this.usuario.inventario
-				}
-			});
+			
+			
+			
 			
 		});
 		
 		
-		/*
-        vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje:"trocador.inventario"
-            },
-            callback: function(mensaje){
-                if(mensaje.de == _this.usuario.id) return;
-                var mercader = _this.mercaderes({id:mensaje.de});
-                mercader.inventario = mensaje.datos.inventario;
-                _this._onNovedades();
-            }
-        }, this.claveRSA); 
-		
-		vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje:"trocador.avisoDeIngreso"
-            },
-            callback: function(mensaje){
-                if(mensaje.de == _this.usuario.id) 
-                    return;
-                _this._agregarMercader(mensaje.de, mensaje.datos.nombre, mensaje.datos.inventario);
-                vx.enviarMensajeSeguro({
-                    tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
-                    de: _this.usuario.id,
-                    para: mensaje.de,                 
-                    datoSeguro: {
-                        nombre: _this.usuario.nombre,  
-                        inventario:_this.usuario.inventario
-                    }
-                }, _this.claveRSA);
-                _this._onNovedades();
-            }
-        }, this.claveRSA);
-        
-		
-        vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
-                para: this.usuario.id
-            },
-            callback: function(mensaje){
-                _this._agregarMercader(mensaje.de, mensaje.datos.nombre, mensaje.datos.inventario);
-                _this._onNovedades();
-            }
-        }, this.claveRSA);
-        vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje:"trocador.avisoDeNuevoProducto"
-            },
-            callback: function(mensaje){
-                if(mensaje.de == _this.usuario.id) return;
-                var mercader = _this.mercaderes({id:mensaje.de});
-                _this._agregarProductoAlInventarioDe(mensaje.datos.producto, mercader);
-                _this._onNovedades();
-            }
-        }, this.claveRSA);  
-        
-        vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje:"trocador.avisoDeBajaDeProducto"
-            },
-            callback: function(mensaje){
-                if(mensaje.de == _this.usuario.id) return;
-                var mercader = _this.mercaderes({id:mensaje.de});
-                _this._quitarProductoDelInventarioDe(mensaje.datos.id_producto, mercader);
-                _this._onNovedades();
-            }
-        }, this.claveRSA);  
-        
-        vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje:"trocador.propuestaDeTrueque",
-                para: this.usuario.id
-            },
-            callback: function(mensaje){
-                var mercader = _this.mercaderes({id:mensaje.de});
-                mercader.trueque.mio = mensaje.datos.pido;
-                mercader.trueque.suyo = mensaje.datos.doy;            
-                mercader.trueque.estado = "recibido";                
-                _this._onNovedades();
-            }
-        }, this.claveRSA);  
-        
-        vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje:"trocador.aceptacionDeTrueque",
-                para: this.usuario.id
-            },
-            callback: function(mensaje){
-                var mercader = _this.mercaderes({id:mensaje.de});
-                mercader.trueque.mio = mensaje.datos.pido;
-                mercader.trueque.suyo = mensaje.datos.doy;      
-                _this._concretarTruequeCon(mercader);
-                _this._onNovedades();
-            }
-        }, this.claveRSA);
-        */
-		
 		
 		/* Vemos */
         setTimeout(function(){
-            /*
-			vx.enviarMensajeSeguro({
-                tipoDeMensaje: "trocador.avisoDeIngreso",
-                de: _this.usuario.id,
-                datoSeguro:{
-                    nombre: _this.usuario.nombre,
-                    inventario:_this.usuario.inventario
-                }
-            }, _this.claveRSA);
-			*/
 			
 			_this.loadDataUsuario();
 			
@@ -238,18 +153,18 @@ var Traders = {
 		}
 		
         mercader.trueque.estado = "borrador";
-        this._onNovedades();
+        this.onNovedades();
     },
     quitarProductoDePropuesta: function(id_mercader, id_producto, mio_o_suyo){
         var mercader = this.mercaderes({id:id_mercader});
         if(mio_o_suyo == "suyo") mercader.trueque.suyo.splice(mercader.trueque.suyo.indexOf(id_producto), 1);
         else mercader.trueque.mio.splice(mercader.trueque.mio.indexOf(id_producto), 1);
         mercader.trueque.estado = "borrador";
-        this._onNovedades();
+        this.onNovedades();
     },
     proponerTruequeA: function(id_mercader){
         var mercader = this.mercaderes({id:id_mercader});
-        vx.enviarMensajeSeguro({
+        vx.send({
             tipoDeMensaje:"trocador.propuestaDeTrueque",
             para: id_mercader,
             de: this.usuario.id,
@@ -257,14 +172,16 @@ var Traders = {
                 pido: mercader.trueque.suyo,
                 doy: mercader.trueque.mio
             }
-        }, this.claveRSA);
+        });
+		
+		
         mercader.trueque.estado = "enviado";
-        this._onNovedades();
+        this.onNovedades();
     },
     aceptarTruequeDe: function(id_mercader){
         var mercader = this.mercaderes({id:id_mercader});
         if(mercader.trueque.estado != "recibido") return;
-        vx.enviarMensajeSeguro({
+        vx.send({
             tipoDeMensaje:"trocador.aceptacionDeTrueque",
             para: id_mercader,
             de: this.usuario.id,
@@ -272,69 +189,69 @@ var Traders = {
                 pido: mercader.trueque.suyo,
                 doy: mercader.trueque.mio
             }
-        }, this.claveRSA);
+        });
+		
         this._concretarTruequeCon(mercader);
-        this._onNovedades();
+        this.onNovedades();
     },
     agregarProducto: function(p){
         var producto = _.clone(p);
         producto.id = this._maxIdDeProductoGenerado;
         this._maxIdDeProductoGenerado+=1;
         this._agregarProductoAlInventarioDe(producto, this.usuario);
-        vx.enviarMensajeSeguro({
+        vx.send({
             tipoDeMensaje:"trocador.avisoDeNuevoProducto",
             de: this.usuario.id,
             datoSeguro: {
                 producto: producto
             }
-        }, this.claveRSA);
-        this._onNovedades();
+        });
+		
+        this.onNovedades();
     },
     quitarProducto: function(id_producto){
         this._quitarProductoDelInventarioDe(id_producto, this.usuario)
-        vx.enviarMensajeSeguro({
+        vx.send({
             tipoDeMensaje:"trocador.avisoDeBajaDeProducto",
             de: this.usuario.id,
             datoSeguro:{
                 id_producto: id_producto
             }
-        }, this.claveRSA);
-        this._onNovedades();
+        });
+        this.onNovedades();
     },
-	setDataUsuario: function(datos){
+	setDataUsuario: function(dato){
 		var _this = this;
 		
-		this.usuario = ClonadorDeObjetos.extend(this.usuario, datos.usuario);
+		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
 		
-		if(datos.maxIdDeProductoGenerado){
-			this.maxIdDeProductoGenerado = datos.maxIdDeProductoGenerado;
+		if(dato.maxIdDeProductoGenerado){
+			this.maxIdDeProductoGenerado = dato.maxIdDeProductoGenerado;
 		}
 		
-		if(datos.mercaderes){
-			console.log('datos.mercaderes', datos.mercaderes);
-			this._mercaderes = datos.mercaderes;
+		if(dato.mercaderes){
+			console.log('dato.mercaderes', dato.mercaderes);
+			this._mercaderes = dato.mercaderes;
 		}
 		
 		
-		
-		this.saveDataUsuario();
-		
-		vx.enviarMensajeSeguro({
+		vx.send({
 			tipoDeMensaje: "trocador.inventario",
 			de: _this.usuario.id,
 			datoSeguro:{
 				inventario:_this.usuario.inventario
 			}
-		}, this.claveRSA);
+		});
 		
-		this._onNovedades();
+		
+		this.onNovedades();
 	},
 	
 	
     saveDataUsuario: function(){
 		
-		var _datos = {
+		var _dato = {
 			usuario: 					this.usuario,
 			mercaderes:					this.mercaderes(),
 			maxIdDeProductoGenerado: 	this._maxIdDeProductoGenerado
@@ -344,7 +261,7 @@ var Traders = {
 		if(typeof(Storage)!=="undefined"){
 			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
 			
-			localStorage.setItem(this.usuario.id, JSON.stringify(_datos));
+			localStorage.setItem(this.usuario.id, JSON.stringify(_dato));
 			
 		}else{
 			
@@ -352,7 +269,7 @@ var Traders = {
 				tipoDeMensaje:"vortex.persistencia.guardarDatos",
 				de: this.usuario.id,
                 para: this.usuario.id,
-				datos: _datos
+				dato: _dato
 			});
 		
 		}
@@ -364,15 +281,13 @@ var Traders = {
         
 		var _this = this;
 		
-		var _datos = {};
-		
 		if(typeof(Storage)!=="undefined"){
 			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
 			var sDatos = localStorage.getItem(this.usuario.id);
-				
-				this.setDataUsuario(JSON.parse(sDatos));
+			
+			this.setDataUsuario(JSON.parse(sDatos));
 
-			}else{
+		}else{
 			
 			vx.send({
 				tipoDeMensaje:"vortex.persistencia.obtenerDatos",
@@ -408,178 +323,150 @@ var Traders = {
     },
 	
 	
-	_agregarMercader: function(idMercader, _alias){
-        
+	agregarMercader: function(){
+		//arguments[] es un array con los argumentos de la funcion
+		
 		var _this = this;
 		
-		console.log('this._mercaderes  ', this._mercaderes);
-		
-		this._mercaderes.push({
-            id: idMercader,
-            alias: _alias, // <-- opcional
-			nombre: null,
-            inventario: [],
-            trueque: {
-                suyo: [],
-                mio: [],
-                estado: "cero"
-            }
-        });
+		var mercader = {}
 		
 		
+		
+        if(typeof(arguments[0]) == 'string'){
+			// es el id
+			mercader = {
+				id: arguments[0],
+				estado: 'SIN_CONFIRMAR',
+				nombre: null,
+				inventario: [],
+				trueque: {
+					suyo: [],
+					mio: [],
+					estado: "cero"
+				}
+			};
+			
+			
+			vx.send({
+				tipoDeMensaje:"trocador.claveAgregada",
+				de: this.usuario.id,
+				para: arguments[0],
+				datoSeguro: {
+					mercader: {
+						id: this.usuario.id,
+						nombre: this.usuario.nombre,
+						inventario: this.usuario.inventario
+					}
+				}
+				
+			},function(mensaje){
+				
+				var mercader = _this.mercaderes({id:mensaje.de});
+				
+				mercader = ClonadorDeObjetos.extend(mercader, mensaje.datoSeguro.mercader);
+				
+				_this.onNovedades();
+				
+			});
+			
+		}else if(typeof(arguments[0]) == 'object'){
+			
+			mercader = arguments[0];
+		}
+		
+		
+		
+		this._mercaderes.push(mercader);
+		
+		/*
+			
+		ojo con esta: mensaje de update y hace esto
+		
+		var mercader = _this.mercaderes({id:mensaje.de});
+		mercader = ClonadorDeObjetos.extend(mercader, mensaje.datoSeguro.mercader);
+		
+		
+		PARA HACER ESTO DEBO PROBAR EL CLONADOR DE OBJETOS CON VECTORES
+		
+		obj:{
+			vec: [],
+			atrib: 'bla'
+		}
+		
+		
+		tambien probar el $.extend
+		
+		
+		*/
+		
+		//publico todos los filtros de él
 		vx.when({
 			tipoDeMensaje:"trocador.inventario",
-			de: idMercader
+			de: mercader.id
 		}, function(mensaje){
 			
-			var mercader = _this.mercaderes({id:mensaje.de});
-			mercader.inventario = mensaje.datos.inventario;
+			mercader.inventario = mensaje.datoSeguro.inventario;
 			
-			_this._onNovedades();
+			_this.onNovedades();
 			
         });
 		
 		
         vx.when({
 			tipoDeMensaje:"trocador.avisoDeNuevoProducto",
-			de: idMercader
-			
+			de: mercader.id
 		}, function(mensaje){
 			
-			var mercader = _this.mercaderes({id:mensaje.de});
-				
-			_this._agregarProductoAlInventarioDe(mensaje.datos.producto, mercader);
+			_this._agregarProductoAlInventarioDe(mensaje.datoSeguro.producto, mercader);
 			
-			_this._onNovedades();
-			
+			_this.onNovedades();
 		});
         
 		
         vx.when({
             tipoDeMensaje:"trocador.avisoDeBajaDeProducto",
-			de: idMercader
+			de: mercader.id
 		}, function(mensaje){
 			
-			var mercader = _this.mercaderes({id:mensaje.de});
-			_this._quitarProductoDelInventarioDe(mensaje.datos.id_producto, mercader);
-			_this._onNovedades();
+			_this._quitarProductoDelInventarioDe(mensaje.datoSeguro.id_producto, mercader);
+			_this.onNovedades();
 		});
 		
 		
 		 vx.when({
 			tipoDeMensaje:"trocador.propuestaDeTrueque",
 			para: this.usuario.id,
-			de: idMercader
+			de: mercader.id
 		}, function(mensaje){
-			var mercader = _this.mercaderes({id:mensaje.de});
 			
-			mercader.trueque.mio = mensaje.datos.pido;
-			mercader.trueque.suyo = mensaje.datos.doy;            
-			mercader.trueque.estado = "recibido";                
-			_this._onNovedades();
+			mercader.trueque.mio = mensaje.datoSeguro.pido;
+			mercader.trueque.suyo = mensaje.datoSeguro.doy;            
+			mercader.trueque.estado = "recibido";
+			
+			_this.onNovedades();
 		});
         
+		
         vx.when({
             tipoDeMensaje:"trocador.aceptacionDeTrueque",
 			para: this.usuario.id,
-			de: idMercader
+			de: mercader.id
 		}, function(mensaje){
-			var mercader = _this.mercaderes({id:mensaje.de});
-			mercader.trueque.mio = mensaje.datos.pido;
-			mercader.trueque.suyo = mensaje.datos.doy;      
+			
+			mercader.trueque.mio = mensaje.datoSeguro.pido;
+			mercader.trueque.suyo = mensaje.datoSeguro.doy;
 			_this._concretarTruequeCon(mercader);
-			_this._onNovedades();
+			
+			_this.onNovedades();
 		});
 		
 		
-		vx.send({
-			tipoDeMensaje:"trocador.claveAgregada",
-			de: this.usuario.id,
-			para: idMercader,
-			datoSeguro: {
-				nombre: this.usuario.nombre,
-				inventario: this.usuario.inventario
-			}
-			
-		},function(mensaje){
-			
-			var mercader = _this.mercaderes({id:mensaje.de});
-			
-			mercader.nombre = mensaje.datoSeguro.nombre;
-			mercader.inventario = mensaje.datoSeguro.inventario;
-			if(!mercader.alias){
-				mercader.alias = mercader.nombre;
-			}
-			
-			_this._onNovedades();
-			
-		});
-		
-		
-		
-		/*
-		vx.when({
-			tipoDeMensaje:"trocador.avisoDeIngreso",
-			de: idMercader
-		}, function(mensaje){
-			
-			_this._agregarMercader(mensaje.de, mensaje.datos.nombre, mensaje.datos.inventario);
-			
-			vx.enviarMensajeSeguro({
-				tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
-				de: _this.usuario.id,
-				para: mensaje.de,                 
-				datoSeguro: {
-					nombre: _this.usuario.nombre,  
-					inventario:_this.usuario.inventario
-				}
-			}, _this.claveRSA);
-			_this._onNovedades();
-		});
-		
-		
-        vx.pedirMensajesSeguros({
-            filtro: {
-                tipoDeMensaje: "trocador.respuestaAAvisoDeIngreso",
-                para: this.usuario.id
-            },
-            callback: function(mensaje){
-                _this._agregarMercader(mensaje.de, mensaje.datos.nombre, mensaje.datos.inventario);
-                _this._onNovedades();
-            }
-        }, this.claveRSA);
-        */
-		
-		
-        
-       
-        
 		
 		
     },
 	
-	/*
-    _agregarMercader: function(id, nombre, inventario){
-        var mercader = this.mercaderes({id:id});
-        if( mercader !== undefined) {
-            mercader.inventario = inventario;
-            return;
-        }
-        this._mercaderes.push({
-            id:id,
-            nombre: nombre,
-            inventario:inventario||[],
-            trueque: {
-                suyo: [],
-                mio: [],
-                estado: "cero"
-            }
-        });
-    }
-	*/
-	
-	_quitarMercader: function(id){
-			this._mercaderes = $.grep(this._mercaderes, function(item){
+	quitarMercader: function(id){
+		this._mercaderes = $.grep(this._mercaderes, function(item){
             return item.id != id;
         });
 	}
