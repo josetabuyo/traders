@@ -77,11 +77,6 @@ var PantallaUsuario = {
 			_.each(Traders.usuario.me_deben, function(producto){
 				var vista = new VistaDeUnProductoEnInventario({
 					producto: producto
-					/*, 
-					alEliminar: function(){
-						Traders.quitarProducto(producto.id);
-					}
-					*/
 				});
 				vista.dibujarEn(_this.panel_me_deben);
 			});
@@ -94,13 +89,10 @@ var PantallaUsuario = {
 			_this.panel_debo.closest('.seccion_container').closest('li').show();
 			_.each(Traders.usuario.debo, function(producto){
 				var vista = new VistaDeUnProductoEnInventario({
-					producto: producto
-					
-					/*, 
+					producto: producto,
 					alEliminar: function(){
 						Traders.quitarProducto(producto.id);
 					}
-					*/
 				});
 				vista.dibujarEn(_this.panel_debo);
 			});
