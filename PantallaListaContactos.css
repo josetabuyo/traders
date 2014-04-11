@@ -1,0 +1,47 @@
+
+/*Pantalla Contactos*/
+
+#pantalla_lista_contactos {
+	border: solid 1px;
+    position: absolute;
+	width: 24.8%;
+	
+	top: 40px;
+	
+	bottom: 3px;
+	display: none;
+	z-index: 1;
+}
+
+#pantalla_lista_contactos
+#lista_contactos {
+    position: absolute;
+    top: 28px;
+    left: 0px;
+    right: 0px;
+    bottom: 60px;
+}
+
+
+#pantalla_lista_contactos
+#panel_alta_contacto {
+	position: absolute;
+	top:0;
+	right:0;
+	
+}
+
+#pantalla_lista_contactos
+#btn_add_contacto{
+	position: absolute;
+	top:3px;
+	right:3px;
+}
+
+
+#pantalla_lista_contactos
+.contacto_en_lista #btn_eliminar{
+	position: absolute;
+	right: 10px;
+	top: 8px;
+}

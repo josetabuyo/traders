@@ -26,7 +26,7 @@ var BarraSuperior = {
 		
 		
 		this.solapa_contactos.click(function(e) {
-			PantallaContactos.render();
+			PantallaContacto.render();
 		});	
 		
 		this.solapa_trueques.click(function(e) {
@@ -43,14 +43,7 @@ var BarraSuperior = {
 		});
 		
     },
-	seleccionar:function(jqSelector){
-		$('div.pantalla').hide();
-		/////TO DO
-		
-		_this.ui.find(jqSelector).removeClass('solapa_selected');
-		jqSelector.addClass('solapa_selected',1000);
-	},
-    render: function(){
+	render: function(){
         this.ui.show();
     }
 };

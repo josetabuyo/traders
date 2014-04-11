@@ -15,11 +15,7 @@ var PantallaInicio = {
             
             _this.ui.hide();
 			BarraSuperior.render();
-			
-			
 			BarraSuperior.ui.find("#solapa_yo").click();
-			
-			//PantallaUsuario.render();
 			
         });
 		

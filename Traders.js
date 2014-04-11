@@ -1,6 +1,6 @@
 var Traders = {
     
-	_mercaderes:[],
+	_contactos:[],
 	
 	
 	nextProductoId: function(){
@@ -41,15 +41,15 @@ var Traders = {
     onUsuarioLogueado:function(callback){
         this._onUsuarioLogueado = callback;
     },  
-    mercaderes:function(p){
-        if(!p) return this._mercaderes;
-        if(p.id) return _.findWhere(this._mercaderes, {id:p.id});
+    contactos:function(p){
+        if(!p) return this._contactos;
+        if(p.id) return _.findWhere(this._contactos, {id:p.id});
         if(p.query){
             if(p.query == "") 
-                return this._mercaderes;
+                return this._contactos;
             else 
-                return _.filter(this._mercaderes, function(mercader){
-                    return mercader.nombre.indexOf(p.query)>=0 || mercader.id == p.query;
+                return _.filter(this._contactos, function(contacto){
+                    return contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
                 });  
         }
     },
@@ -72,7 +72,6 @@ var Traders = {
 		
 		
 		
-        this._onUsuarioLogueado();
         
 		
 		////parche para atajar las respuestas
@@ -104,7 +103,7 @@ var Traders = {
 				para: mensaje.de,
 				de: _this.usuario.id,
 				datoSeguro: {
-					mercader: {
+					contacto: {
 						nombre: _this.usuario.nombre,
 						inventario: _this.usuario.inventario
 					}
@@ -114,7 +113,7 @@ var Traders = {
 			
 			
 			// lo agrego
-			_this.agregarMercader(mensaje.datoSeguro.mercader);
+			_this.agregarContacto(mensaje.datoSeguro.contacto);
 			
 			
 			_this.onNovedades();
@@ -128,60 +127,65 @@ var Traders = {
 			
 			_this.loadDataUsuario();
 			
-        },1000);
+        },20);
+		
+		
+		
+        this._onUsuarioLogueado();
+		
     },
-    agregarProductoAPropuesta: function(id_mercader, id_producto, mio_o_suyo){
-		var mercader = this.mercaderes({
-			id: id_mercader
+    agregarProductoAPropuesta: function(id_contacto, id_producto, mio_o_suyo){
+		var contacto = this.contactos({
+			id: id_contacto
 		});
         
 		if(mio_o_suyo == "suyo"){
-			mercader.trueque.suyo.push(id_producto);
+			contacto.trueque.suyo.push(id_producto);
 		}else{
-			mercader.trueque.mio.push(id_producto);
+			contacto.trueque.mio.push(id_producto);
 		}
 		
-        mercader.trueque.estado = "borrador";
+        contacto.trueque.estado = "borrador";
         this.onNovedades();
     },
-    quitarProductoDePropuesta: function(id_mercader, id_producto, mio_o_suyo){
-        var mercader = this.mercaderes({id:id_mercader});
-        if(mio_o_suyo == "suyo") mercader.trueque.suyo.splice(mercader.trueque.suyo.indexOf(id_producto), 1);
-        else mercader.trueque.mio.splice(mercader.trueque.mio.indexOf(id_producto), 1);
-        mercader.trueque.estado = "borrador";
+    quitarProductoDePropuesta: function(id_contacto, id_producto, mio_o_suyo){
+        var contacto = this.contactos({id:id_contacto});
+        if(mio_o_suyo == "suyo") contacto.trueque.suyo.splice(contacto.trueque.suyo.indexOf(id_producto), 1);
+        else contacto.trueque.mio.splice(contacto.trueque.mio.indexOf(id_producto), 1);
+        contacto.trueque.estado = "borrador";
         this.onNovedades();
     },
-    proponerTruequeA: function(id_mercader){
-        var mercader = this.mercaderes({id:id_mercader});
+    proponerTruequeA: function(id_contacto){
+        var contacto = this.contactos({id:id_contacto});
         vx.send({
             tipoDeMensaje:"trocador.propuestaDeTrueque",
-            para: id_mercader,
+            para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-                pido: mercader.trueque.suyo,
-                doy: mercader.trueque.mio
+                pido: contacto.trueque.suyo,
+                doy: contacto.trueque.mio
             }
         });
 		
 		
-        mercader.trueque.estado = "enviado";
+        contacto.trueque.estado = "enviado";
         this.onNovedades();
     },
-    aceptarTruequeDe: function(id_mercader){
-        var mercader = this.mercaderes({id:id_mercader});
-        if(mercader.trueque.estado != "recibido") return;
+    aceptarTruequeDe: function(id_contacto){
+        var contacto = this.contactos({id:id_contacto});
+        if(contacto.trueque.estado != "recibido") return;
         
 		vx.send({
             tipoDeMensaje:"trocador.aceptacionDeTrueque",
-            para: id_mercader,
+            para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-                pido: mercader.trueque.suyo,
-                doy: mercader.trueque.mio
+                pido: contacto.trueque.suyo,
+                doy: contacto.trueque.mio
             }
         });
 		
-        this._concretarTruequeCon(mercader);
+        this._concretarTruequeCon(contacto);
         this.onNovedades();
     },
     agregarProducto: function(p){
@@ -224,10 +228,10 @@ var Traders = {
 		
 		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
-		if(dato.mercaderes){
+		if(dato.contactos){
 				
-			$.each(dato.mercaderes, function(index, item){
-				_this.agregarMercader(item);
+			$.each(dato.contactos, function(index, item){
+				_this.agregarContacto(item);
 			});
 		}
 		
@@ -249,7 +253,7 @@ var Traders = {
 		
 		var _dato = {
 			usuario: 					this.usuario,
-			mercaderes:					this.mercaderes()
+			contactos:					this.contactos()
 		};
 		
 		if(typeof(Storage)!=="undefined"){
@@ -294,16 +298,16 @@ var Traders = {
 		
     },
 	
-    _quitarProductoDelInventarioDe: function(id_producto, mercader){
+    _quitarProductoDelInventarioDe: function(id_producto, contacto){
 		
-        mercader.inventario = $.grep(mercader.inventario, function(prod){
+        contacto.inventario = $.grep(contacto.inventario, function(prod){
             return prod.id != id_producto;
         });
     },    
-    _concretarTruequeCon: function(mercader){
+    _concretarTruequeCon: function(contacto){
         var _this = this;
         
-		_.each(mercader.trueque.mio, function(id_producto){
+		_.each(contacto.trueque.mio, function(id_producto){
 		
             //_this.quitarProducto(id_producto);
 			//ver de usar delete
@@ -312,20 +316,20 @@ var Traders = {
 			});
         });
 		
-        _.each(mercader.trueque.suyo, function(id_producto){
+        _.each(contacto.trueque.suyo, function(id_producto){
             
 			this.usuario.inventario.push(producto);
 			
-			mercader.inventario = $.grep(mercader.inventario, function(prod){
+			contacto.inventario = $.grep(contacto.inventario, function(prod){
 				return prod.id != id_producto;
 			});
 			
         });
 		
 		
-        mercader.trueque.mio.length = 0;
-        mercader.trueque.suyo.length = 0;   
-        mercader.trueque.estado = "cero";
+        contacto.trueque.mio.length = 0;
+        contacto.trueque.suyo.length = 0;   
+        contacto.trueque.estado = "cero";
 		
 		
 		
@@ -341,25 +345,25 @@ var Traders = {
     },
 	
 	
-	agregarMercader: function(){
+	agregarContacto: function(){
 		//arguments[] es un array con los argumentos de la funcion
 		
 		var _this = this;
 		
-		var mercader = {};
+		var contacto = {};
 		
 		
 		
         if(typeof(arguments[0]) == 'string'){
 			
 			
-			var mercader = _this.mercaderes({id:arguments[0]});
+			var contacto = _this.contactos({id:arguments[0]});
 			
-			if(!mercader){
+			if(!contacto){
 			
 			
 				// es el id
-				mercader = {
+				contacto = {
 					id: arguments[0],
 					estado: 'SIN_CONFIRMAR',
 					nombre: null,
@@ -370,7 +374,7 @@ var Traders = {
 						estado: "cero"
 					}
 				};
-				this._mercaderes.push(mercader);
+				this._contactos.push(contacto);
 			}
 			
 			vx.send({
@@ -378,7 +382,7 @@ var Traders = {
 				de: this.usuario.id,
 				para: arguments[0],
 				datoSeguro: {
-					mercader: {
+					contacto: {
 						id: this.usuario.id,
 						nombre: this.usuario.nombre,
 						inventario: this.usuario.inventario
@@ -387,9 +391,9 @@ var Traders = {
 				
 			},function(mensaje){
 				
-				var mercader = _this.mercaderes({id:mensaje.de});
+				var contacto = _this.contactos({id:mensaje.de});
 				
-				mercader = ClonadorDeObjetos.extend(mercader, mensaje.datoSeguro.mercader);
+				contacto = ClonadorDeObjetos.extend(contacto, mensaje.datoSeguro.contacto);
 				
 				_this.onNovedades();
 				
@@ -400,25 +404,25 @@ var Traders = {
 		}else if(typeof(arguments[0]) == 'object'){
 			
 			
-			var mercader = _this.mercaderes({id:arguments[0].id});
-			if(!mercader){
+			var contacto = _this.contactos({id:arguments[0].id});
+			if(!contacto){
 			
-				mercader=arguments[0];
-				this._mercaderes.push(mercader);
+				contacto=arguments[0];
+				this._contactos.push(contacto);
 			}
 			
 		}
 		
 		
-		console.log('mercader', mercader);
+		console.log('contacto', contacto);
 		
 		
 		/*
 			
 		ojo con esta: mensaje de update y hace esto
 		
-		var mercader = _this.mercaderes({id:mensaje.de});
-		mercader = ClonadorDeObjetos.extend(mercader, mensaje.datoSeguro.mercader);
+		var contacto = _this.contactos({id:mensaje.de});
+		contacto = ClonadorDeObjetos.extend(contacto, mensaje.datoSeguro.contacto);
 		
 		
 		PARA HACER ESTO DEBO PROBAR EL CLONADOR DE OBJETOS CON VECTORES
@@ -437,10 +441,10 @@ var Traders = {
 		//publico todos los filtros de él
 		vx.when({
 			tipoDeMensaje:"trocador.inventario",
-			de: mercader.id
+			de: contacto.id
 		}, function(mensaje){
 			
-			mercader.inventario = mensaje.datoSeguro.inventario;
+			contacto.inventario = mensaje.datoSeguro.inventario;
 			
 			_this.onNovedades();
 			
@@ -449,16 +453,16 @@ var Traders = {
 		
         vx.when({
 			tipoDeMensaje:"trocador.avisoDeNuevoProducto",
-			de: mercader.id
+			de: contacto.id
 		}, function(mensaje){
 			
-			//_this._agregarProductoAlInventarioDe(mensaje.datoSeguro.producto, mercader);
+			//_this._agregarProductoAlInventarioDe(mensaje.datoSeguro.producto, contacto);
 			
 			
-			if(_.findWhere(mercader.inventario, {id: mensaje.datoSeguro.producto.id})!== undefined) return;
+			if(_.findWhere(contacto.inventario, {id: mensaje.datoSeguro.producto.id})!== undefined) return;
 			
 			
-			mercader.inventario.push(mensaje.datoSeguro.producto);
+			contacto.inventario.push(mensaje.datoSeguro.producto);
 			
 			_this.onNovedades();
 		});
@@ -466,10 +470,10 @@ var Traders = {
 		
         vx.when({
             tipoDeMensaje:"trocador.avisoDeBajaDeProducto",
-			de: mercader.id
+			de: contacto.id
 		}, function(mensaje){
 			
-			_this._quitarProductoDelInventarioDe(mensaje.datoSeguro.id_producto, mercader);
+			_this._quitarProductoDelInventarioDe(mensaje.datoSeguro.id_producto, contacto);
 			_this.onNovedades();
 		});
 		
@@ -477,12 +481,12 @@ var Traders = {
 		 vx.when({
 			tipoDeMensaje:"trocador.propuestaDeTrueque",
 			para: this.usuario.id,
-			de: mercader.id
+			de: contacto.id
 		}, function(mensaje){
 			
-			mercader.trueque.mio = mensaje.datoSeguro.pido;
-			mercader.trueque.suyo = mensaje.datoSeguro.doy;            
-			mercader.trueque.estado = "recibido";
+			contacto.trueque.mio = mensaje.datoSeguro.pido;
+			contacto.trueque.suyo = mensaje.datoSeguro.doy;            
+			contacto.trueque.estado = "recibido";
 			
 			_this.onNovedades();
 		});
@@ -491,23 +495,23 @@ var Traders = {
         vx.when({
             tipoDeMensaje:"trocador.aceptacionDeTrueque",
 			para: this.usuario.id,
-			de: mercader.id
+			de: contacto.id
 		}, function(mensaje){
 			
-			mercader.trueque.mio = mensaje.datoSeguro.pido;
-			mercader.trueque.suyo = mensaje.datoSeguro.doy;
-			_this._concretarTruequeCon(mercader);
+			contacto.trueque.mio = mensaje.datoSeguro.pido;
+			contacto.trueque.suyo = mensaje.datoSeguro.doy;
+			_this._concretarTruequeCon(contacto);
 			
 			_this.onNovedades();
 		});
 		
 		
-		
+		_this.onNovedades();
 		
     },
 	
-	quitarMercader: function(id){
-		this._mercaderes = $.grep(this._mercaderes, function(item){
+	quitarContacto: function(id){
+		this._contactos = $.grep(this._contactos, function(item){
             return item.id != id;
         });
 	}

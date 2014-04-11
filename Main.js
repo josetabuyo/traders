@@ -33,9 +33,17 @@ var onDeviceReady = function() {
     
     Traders.onUsuarioLogueado(function(){
 		PantallaUsuario.start();
-		PantallaContactos.start();
+		
+		console.log('MAin usuario logueado;');
+		
+		PantallaListaContactos.start();
+		
+		
+		
+		PantallaContacto.start();
 		PantallaTrueques.start();
-	
+		
+		
         PersistidorManual.start(Traders.usuario.id);
     });
     PantallaInicio.render();
