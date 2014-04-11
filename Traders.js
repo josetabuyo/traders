@@ -346,24 +346,32 @@ var Traders = {
 		
 		var _this = this;
 		
-		var mercader = {}
+		var mercader = {};
 		
 		
 		
         if(typeof(arguments[0]) == 'string'){
-			// es el id
-			mercader = {
-				id: arguments[0],
-				estado: 'SIN_CONFIRMAR',
-				nombre: null,
-				inventario: [],
-				trueque: {
-					suyo: [],
-					mio: [],
-					estado: "cero"
-				}
-			};
 			
+			
+			var mercader = _this.mercaderes({id:arguments[0]});
+			
+			if(!mercader){
+			
+			
+				// es el id
+				mercader = {
+					id: arguments[0],
+					estado: 'SIN_CONFIRMAR',
+					nombre: null,
+					inventario: [],
+					trueque: {
+						suyo: [],
+						mio: [],
+						estado: "cero"
+					}
+				};
+				this._mercaderes.push(mercader);
+			}
 			
 			vx.send({
 				tipoDeMensaje:"trocador.claveAgregada",
@@ -385,16 +393,25 @@ var Traders = {
 				
 				_this.onNovedades();
 				
+				
+				
 			});
 			
 		}else if(typeof(arguments[0]) == 'object'){
 			
-			mercader = arguments[0];
+			
+			var mercader = _this.mercaderes({id:arguments[0].id});
+			if(!mercader){
+			
+				mercader=arguments[0];
+				this._mercaderes.push(mercader);
+			}
+			
 		}
 		
 		
+		console.log('mercader', mercader);
 		
-		this._mercaderes.push(mercader);
 		
 		/*
 			

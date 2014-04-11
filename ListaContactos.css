@@ -1,7 +1,6 @@
 
 /*Pantalla Contactos*/
 
-#pantalla_contactos
 #panel_contenedor_lista_contactos {
 	border: solid 1px;
     position: absolute;
@@ -11,7 +10,6 @@
 	bottom: 0px;
 }
 
-#pantalla_contactos
 #panel_contenedor_lista_contactos
 #panel_lista_contactos {
     position: absolute;
@@ -19,18 +17,6 @@
     left: 0px;
     right: 0px;
     bottom: 60px;
-}
-
-
-#pantalla_contactos
-#panel_contacto {
-	border: solid 1px;
-    position: absolute;
-    top:0px;
-    bottom:0px;
-	width: 50%;
-	height: 100%;
-    left: 50%;
 }
 
 

@@ -180,6 +180,16 @@ ul {
     background-color: lime;
 }
 
+.titulo_panel {
+	height: 45px;
+}
+
+
+.descripcion_titulo{
+	font-size: 35px;
+	padding: 13px 10px 0px 10px;
+}
+
 
 #pantalla_trueque #avatar_contacto {
     position: absolute;

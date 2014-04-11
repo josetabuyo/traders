@@ -43,10 +43,7 @@
 				TO DO:
 				<ul>
 				
-					<li> Mejorar interfaz div de datos de usuario, usar template
-					</li>
-					
-					<li> Revisar mock de pantalla de trueque
+					<li> Separar lista de contactos para reutilizar en Trueques
 					</li>
 					
 					<li> Hacer pantalla de trueque
@@ -96,8 +93,6 @@
 							<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
 							<div class="botonera_usuario">
 								<input id="btn_compartir_id" type="button" value="Compartir Id"/>
-								<input id="btn_load" type="button" value="Load"/>
-								<input id="btn_save" type="button" value="Save"/>
 							</div>
 						</div>
 					</li>
@@ -156,9 +151,6 @@
             </div>
 			
 			
-			
-			
-			
             <div id="pantalla_contactos" class="pantalla">
                 
                 <div id="panel_contenedor_lista_contactos">
@@ -171,19 +163,22 @@
                 </div>
 				
                 <div id="panel_contacto">
-                    <div id="panel_datos_contacto" class="datos_usuario">
-                        <img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
-                        <div id="lbl_nombre_contacto" class="lbl_nombre_usuario">  </div>
-                        <div>
-                            <input id="btn_trocar" type="button" value="Trocar" class="btn"/>
-                        </div> 
-                    </div> 
-                    <div class="titulo_panel">
-                        Tiene
-                    </div>
-                    <div id="panel_inventario_contacto">
-                    
-                    </div> 
+				
+					<div class="datos_usuario">
+						<img class="avatar_usuario" src="avatar.png"/>
+						<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
+						<div class="botonera_usuario">
+							<input id="btn_trocar" type="button" value="Trocar"/>
+						</div>
+					</div>
+					
+					<div class="titulo_panel">
+						<div class="descripcion_titulo">Tiene</div>
+					</div>
+					
+					<div id="panel_inventario_contacto">
+					</div>
+					
                 </div>
 				
 				
@@ -211,7 +206,7 @@
                 <div id="panel_inventario_contacto" class="panel_inventario"></div>
             </div>
         </div>
-    </body>    
+    </body>
     
     <div id="plantillas">
         <div class="mercader_en_lista">
