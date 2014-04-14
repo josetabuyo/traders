@@ -20,7 +20,9 @@ var PantallaContacto = {
 		
 		
 		PantallaListaContactos.onSelect(function(){
-			_this.render();
+			if(_this.ui.is(':visible')){
+				_this.render();
+			}
 		});
 		
 		
@@ -50,9 +52,9 @@ var PantallaContacto = {
 		
         this.btn_trocar.click(function(e) {
             _this.ui.hide();
-            PantallaTrueques.contacto = PantallaListaContactos.contacto_seleccionado;
+            PantallaTrueque.contacto = PantallaListaContactos.contacto_seleccionado;
 			
-            PantallaTrueques.render();
+            PantallaTrueque.render();
 		});	
     },
 	
@@ -60,7 +62,7 @@ var PantallaContacto = {
         var _this = this;
         
 		
-		PantallaListaContactos.render();
+		//PantallaListaContactos.render();
 		
         
         this.lbl_nombre_contacto.text(PantallaListaContactos.contacto_seleccionado.nombre);

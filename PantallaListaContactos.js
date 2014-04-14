@@ -37,15 +37,19 @@ var PantallaListaContactos = {
     },
 	
 	
-	_onSelect:function(){},
+	_onSelect:[],
 	
     onSelect: function(){
 		var _this = this;
 		
 		if(arguments.length==1){
-			this._onSelect = arguments[0];
+			
+			this._onSelect.push(arguments[0]);
+			
 		}else{
-			this._onSelect();
+			_.each(this._onSelect, function(evento){
+				evento();
+			});
 		}
 		
 	},

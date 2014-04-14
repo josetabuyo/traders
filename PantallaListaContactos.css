@@ -4,11 +4,10 @@
 #pantalla_lista_contactos {
 	border: solid 1px;
     position: absolute;
-	width: 24.8%;
+	width: 24.6%;
+    right: 3px;
 	
-	top: 40px;
-	
-	bottom: 3px;
+	bottom: 0px;
 	display: none;
 	z-index: 1;
 }
@@ -44,4 +43,34 @@
 	position: absolute;
 	right: 10px;
 	top: 8px;
+}
+
+#pantalla_lista_contactos
+.contacto_en_lista{
+    font-size: 25px;
+    vertical-align: bottom;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: all .5s ease;
+    cursor: pointer;
+    margin: 5px;
+    position: relative;
+}
+
+#pantalla_lista_contactos
+.contacto_en_lista:hover{
+    background-color: rgb(231, 231, 231);
+}
+
+#pantalla_lista_contactos
+.contacto_en_lista #nombre{
+    position: absolute;
+    left: 5px;
+    top: 8px;
+}
+
+#pantalla_lista_contactos
+.contacto_seleccionado{
+    background-color: rgb(231, 231, 231);
 }

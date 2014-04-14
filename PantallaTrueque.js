@@ -1,4 +1,4 @@
-var PantallaTrueques = {    
+var PantallaTrueque = {    
     start: function(){
         var _this = this;
         this.contacto = {

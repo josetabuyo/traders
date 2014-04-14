@@ -45,30 +45,6 @@
 
 
 
-
-.avatar_usuario {
-    height: 100px;
-    width: 100px;
-    border-radius: 10px;
-    margin:10px;
-}
-
-.lbl_nombre_usuario {
-    display: inline-block;
-    font-size: 45px;
-    font-weight: bold;
-    vertical-align: bottom;
-    margin-bottom: 24px;
-}
-
-
-
-.botonera_usuario {
-	position: absolute;
-	top: 10px;
-	left: 120px;
-}
-
 .seccion_container{
 	border: solid 1px;
 	/*position: absolute;
@@ -76,14 +52,7 @@
 }
 
 
-.datos_usuario {
-    background-color: rgb(248, 248, 248); 
-    /*position: absolute;
-	top: 0;
-	height: 120px;
-	width: 50%;
-	*/
-}
+
 
 #panel_inventario_container{
 	/*left:0;

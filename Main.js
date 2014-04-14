@@ -41,7 +41,7 @@ var onDeviceReady = function() {
 		
 		
 		PantallaContacto.start();
-		PantallaTrueques.start();
+		PantallaTrueque.start();
 		
 		
         PersistidorManual.start(Traders.usuario.id);

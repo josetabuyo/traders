@@ -1,14 +1,10 @@
 
 /*Pantalla Contactos*/
-
-#pantalla_contacto
-#panel_contacto {
+#pantalla_contacto{
 	border: solid 1px;
     position: absolute;
-    top:0px;
     bottom:0px;
-	width: 75%;
-	height: 100%;
+	/*height: 100%;*/
     left: 25%;
 }
 
@@ -21,14 +17,6 @@
 }
 */
 
-
-
-
-
-#pantalla_contacto
-#lbl_nombre_contacto {
-    
-}
 
 #pantalla_contacto
 #panel_inventario_contacto {

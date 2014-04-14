@@ -26,15 +26,17 @@ var BarraSuperior = {
 		
 		
 		this.solapa_contactos.click(function(e) {
+			PantallaListaContactos.render();
 			PantallaContacto.render();
 		});	
 		
 		this.solapa_trueques.click(function(e) {
-			PantallaTrueques.render();
+			PantallaListaContactos.render();
+			PantallaTrueque.render();
 		});	
 		
 		this.solapa_productos.click(function(e) {
-			PantallaTrueques.render();
+			PantallaTrueque.render();
 		});	
 		
 		
