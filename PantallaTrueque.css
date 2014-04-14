@@ -7,50 +7,205 @@
 }
 
 #pantalla_trueque
-.chk_acuerdo{
-    display: inline-block;
+	.chk_acuerdo{
+    
+	/*display: inline-block;*/
+    
+	position: absolute;
+	
     width: 50px;
     height: 50px;
     border: 2px solid black;
     border-radius: 10px;
-    position: absolute;
-    bottom: 10px;
+    bottom: 24px;
     transition: all .5s ease;
 }
 
 #pantalla_trueque
-#chk_usuario_de_acuerdo {
-    left: 50%;
-    margin-left: -55px;
+	#chk_usuario_de_acuerdo {
+    right: 50%;
+    margin-left: -60px;
     cursor: pointer;
 }
 
 #pantalla_trueque
-#chk_contacto_de_acuerdo {
+	#chk_contacto_de_acuerdo {
     left: 50%;
     margin-left: 5px;
 }
 
 #pantalla_trueque
-.checkeado{
+	.checkeado{
     background-color: lime;
 }
 
 
 #pantalla_trueque
-#avatar_contacto {
+	#avatar_contacto {
     position: absolute;
     right: 0px;
 }
 
 #pantalla_trueque
-#lbl_nombre_contacto{
+	#lbl_nombre_contacto{
     float: right;
     position: absolute;
     right: 0px;
     bottom: 0px;
     margin-right: 124px;
 }
+
+
+#pantalla_trueque
+	.propuestas
+		.titulo_panel{
+		
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+	top: -20px;
+	left:0;
+	right:0;
+	width:125px;
+	height:20px;
+	
+	border: solid 1px;
+	padding: 10px 10px 10px 10px;
+	background-color: rgb(255,255,255);
+	text-align: center;
+	font-size: 22px;
+	z-index: 1;
+}
+
+
+
+/*
+
+		.
+
+		.trueque_productos_usuario
+		.trueque_productos_contacto
+			*/
+
+			
+#pantalla_trueque
+	.participantes_trueque{
+	
+	position: absolute;
+	width:100%;
+	height:120px;
+	top:0px;
+	
+	border: solid 1px;
+	
+}
+
+
+#pantalla_trueque
+	.propuestas
+		.treque_por{
+		
+	position: absolute;
+	
+	margin-left: auto;
+	margin-right: auto;
+	
+	
+	top: 45%;
+	left:0;
+	right:0;
+	
+	width:20px;
+	height:20px;
+	
+	background-color: rgb(255,255,255);
+	text-align: center;
+	font-size: 22px;
+	z-index: 1;
+}
+
+#pantalla_trueque
+	.propuestas{
+	
+	position: absolute;
+	width:100%;
+	top:120px;
+	bottom:30%;
+	
+	border: solid 1px;
+	
+}
+
+#pantalla_trueque
+	.productos{
+	
+	position: absolute;
+	width: 100%;
+	height: 30%;
+	bottom: 0;
+	
+	border: solid 1px;
+	
+}
+
+#pantalla_trueque
+	.propuestas 
+		#propuesta_usuario{
+	
+	position: absolute;
+	top: 0px;
+	left:0px;
+	width:50%;
+	height:100%;
+	
+	border: solid 1px;
+}
+
+#pantalla_trueque
+	.propuestas 
+		#propuesta_contacto{
+	
+	position: absolute;
+	top: 0px;
+	left:50%;
+	width:50%;
+	height:100%;
+	
+	border: solid 1px;
+}
+/*
+#propuesta_contacto">
+	.trueque_productos_usuario">
+	</div>
+	.treque_por">
+		X
+	</div>
+	.trueque_productos_contacto">
+	</div>
+</div>
+</div>
+
+
+
+.productos">
+.titulo_panel">
+	Productos
+</div>
+
+
+*/
+#panel_inventario_usuario" class="panel_inventario"></div>
+#panel_inventario_contacto" class="panel_inventario"></div>
+</div>
+
+
+
+
+
+
+
+
+
 
 #pantalla_trueque
 #panel_inventario_usuario {
