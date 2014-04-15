@@ -9,8 +9,9 @@
     margin:5px;
 }
 */
-
-.producto_en_inventario #btn_eliminar {
+#pantalla_usuario
+	.producto_en_inventario
+		#btn_eliminar {
     position: absolute;
     top:5px;
     left:5px;
@@ -23,12 +24,16 @@
     font-weight: bold;
 }
 
-.producto_en_inventario #btn_eliminar: hover {
+#pantalla_usuario
+	.producto_en_inventario
+		#btn_eliminar: hover {
     background-color: white;
     color:black;
 }
 
-.producto_en_inventario #nombre {
+#pantalla_usuario
+	.producto_en_inventario
+		#nombre {
     position: absolute;
     top:50%;
     left:5px;
@@ -37,24 +42,10 @@
 }
 
 
-.botonera_usuario {
-	position: absolute;
-	top: 10px;
-	left: 120px;
-}
 
 
-
-.seccion_container{
-	border: solid 1px;
-	/*position: absolute;
-	bottom: 0px;*/
-}
-
-
-
-
-#panel_inventario_container{
+#pantalla_usuario
+	#panel_inventario_container{
 	/*left:0;
 	top: 120px;
 	height: 25%;
@@ -62,8 +53,8 @@
 	*/
 }
 
-
-#panel_me_deben_container{
+#pantalla_usuario
+	#panel_me_deben_container{
 	/*
 	left:0%;
 	top:50%;
@@ -73,16 +64,16 @@
 	*/
 }
 
-
-#panel_debo_container{
+#pantalla_usuario
+	#panel_debo_container{
 	/*left:50%;
 	top:50%;
 	height: 50%;
 	width: 50%;
 	*/
 }
-
-#panel_trueques_pendientes_container{
+#pantalla_usuario
+	#panel_trueques_pendientes_container{
 /*	position: absolute;
 	left:50%;
 	top:0;
@@ -92,25 +83,27 @@
 }
 
 
-
-#panel_inventario {
+#pantalla_usuario
+	#panel_inventario {
     padding:10px;
 }
 
-#panel_alta_producto {
+#pantalla_usuario
+	#panel_alta_producto {
+	float: right;
+	margin-right: 3px;
+	margin-top: -31px;
+}
+#pantalla_usuario
+	#btn_add_trueque{
 	float: right;
 	margin-right: 3px;
 	margin-top: -31px;
 }
 
-#btn_add_trueque{
-	float: right;
-	margin-right: 3px;
-	margin-top: -31px;
-}
-
-
-#panel_alta_producto #btn_add_producto{
+#pantalla_usuario
+	#panel_alta_producto
+		#btn_add_producto{
 	margin-top: -12px;
 }
 /*
@@ -122,28 +115,30 @@
 }
 */
 
-
-ul.panel{
+#pantalla_usuario
+	ul.panel{
 	position: absolute;
 	width: 50%;
 	top: 0px;
 	bottom: 0px;
 }
 
-
-ul.panel li:last-child{
+#pantalla_usuario
+	ul.panel li:last-child{
+	
 	float:none;
 	overflow:hidden;
 }
 
 
-
-.panel_izq{
+#pantalla_usuario
+	.panel_izq{
 	left: 0;
 }
 
-
-.panel_der{
+#pantalla_usuario
+	.panel_der
+{
 	left: 50%;
 }
 

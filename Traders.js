@@ -134,36 +134,54 @@ var Traders = {
         this._onUsuarioLogueado();
 		
     },
+	
+	
+	
+	
     agregarProductoAPropuesta: function(id_contacto, id_producto, mio_o_suyo){
 		var contacto = this.contactos({
 			id: id_contacto
 		});
         
 		if(mio_o_suyo == "suyo"){
-			contacto.trueque.suyo.push(id_producto);
+			//contacto.trueque.propuestas.suyo.push(id_producto);
+			contacto.trueque.propuestas.usuario.suyo.push(id_producto);
 		}else{
-			contacto.trueque.mio.push(id_producto);
+			contacto.trueque.propuestas.usuario.mio.push(id_producto);
 		}
 		
         contacto.trueque.estado = "borrador";
         this.onNovedades();
     },
     quitarProductoDePropuesta: function(id_contacto, id_producto, mio_o_suyo){
-        var contacto = this.contactos({id:id_contacto});
-        if(mio_o_suyo == "suyo") contacto.trueque.suyo.splice(contacto.trueque.suyo.indexOf(id_producto), 1);
-        else contacto.trueque.mio.splice(contacto.trueque.mio.indexOf(id_producto), 1);
+        
+		var contacto = this.contactos({id:id_contacto});
+		
+        if(mio_o_suyo == "suyo"){
+			contacto.trueque.propuestas.usuario.suyo = $.grep(contacto.trueque.propuestas.usuario.suyo, function(prod){
+				return prod.id != id_producto;
+			});
+			
+        }else{
+			contacto.trueque.propuestas.usuario.mio = $.grep(contacto.trueque.propuestas.usuario.mio, function(prod){
+				return prod.id != id_producto;
+			});
+		}
+		
+		
         contacto.trueque.estado = "borrador";
         this.onNovedades();
     },
     proponerTruequeA: function(id_contacto){
         var contacto = this.contactos({id:id_contacto});
+		
         vx.send({
             tipoDeMensaje:"trocador.propuestaDeTrueque",
             para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-                pido: contacto.trueque.suyo,
-                doy: contacto.trueque.mio
+                pido: contacto.trueque.propuestas.usuario.suyo,
+                doy: contacto.trueque.propuestas.usuario.mio
             }
         });
 		
@@ -180,8 +198,8 @@ var Traders = {
             para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-                pido: contacto.trueque.suyo,
-                doy: contacto.trueque.mio
+				pido: contacto.trueque.propuestas.usuario.suyo,
+                doy: contacto.trueque.propuestas.usuario.mio
             }
         });
 		
@@ -298,25 +316,18 @@ var Traders = {
 		
     },
 	
-    _quitarProductoDelInventarioDe: function(id_producto, contacto){
-		
-        contacto.inventario = $.grep(contacto.inventario, function(prod){
-            return prod.id != id_producto;
-        });
-    },    
     _concretarTruequeCon: function(contacto){
         var _this = this;
         
-		_.each(contacto.trueque.mio, function(id_producto){
-		
-            //_this.quitarProducto(id_producto);
+		_.each(contacto.trueque.propuestas.usuario.mio, function(id_producto){
+		    //_this.quitarProducto(id_producto);
 			//ver de usar delete
 			this.usuario.inventario = $.grep(this.usuario.inventario, function(prod){
 				return prod.id != id_producto;
 			});
         });
 		
-        _.each(contacto.trueque.suyo, function(id_producto){
+        _.each(contacto.trueque.propuestas.usuario.suyo, function(id_producto){
             
 			this.usuario.inventario.push(producto);
 			
@@ -326,12 +337,12 @@ var Traders = {
 			
         });
 		
-		
-        contacto.trueque.mio.length = 0;
-        contacto.trueque.suyo.length = 0;   
+		//TO DO: historiar, no borrar, guardar muchos trueques
+        contacto.trueque.propuestas.usuario.mio.length = 0;
+        contacto.trueque.propuestas.usuario.suyo.length = 0;
+		contacto.trueque.propuestas.contacto.mio.length = 0;
+        contacto.trueque.propuestas.contacto.suyo.length = 0;
         contacto.trueque.estado = "cero";
-		
-		
 		
 		// informo a la comunidad mi inventario actualizado
 		vx.send({
@@ -346,7 +357,10 @@ var Traders = {
 	
 	
 	agregarContacto: function(){
-		//arguments[] es un array con los argumentos de la funcion
+		//****	arguments[] ****
+		// forma 1: idContacto 	string
+		// forma 2: contacto 	object
+		//**********************
 		
 		var _this = this;
 		
@@ -369,9 +383,18 @@ var Traders = {
 					nombre: null,
 					inventario: [],
 					trueque: {
-						suyo: [],
-						mio: [],
-						estado: "cero"
+						estado: "cero",
+						
+						propuestas:{
+							usuario:{
+								suyo: [],
+								mio: []
+							},
+							contacto:{
+								suyo: [],
+								mio: []
+							}
+						}
 					}
 				};
 				this._contactos.push(contacto);
@@ -414,9 +437,7 @@ var Traders = {
 		}
 		
 		
-		console.log('contacto', contacto);
-		
-		
+				
 		/*
 			
 		ojo con esta: mensaje de update y hace esto
@@ -473,7 +494,10 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			_this._quitarProductoDelInventarioDe(mensaje.datoSeguro.id_producto, contacto);
+			contacto.inventario = $.grep(contacto.inventario, function(prod){
+				return prod.id != mensaje.datoSeguro.id_producto;
+			});
+			
 			_this.onNovedades();
 		});
 		
@@ -484,8 +508,8 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			contacto.trueque.mio = mensaje.datoSeguro.pido;
-			contacto.trueque.suyo = mensaje.datoSeguro.doy;            
+			contacto.trueque.propuestas.contacto.mio = mensaje.datoSeguro.pido;
+			contacto.trueque.propuestas.contacto.suyo = mensaje.datoSeguro.doy;
 			contacto.trueque.estado = "recibido";
 			
 			_this.onNovedades();
@@ -498,8 +522,9 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			contacto.trueque.mio = mensaje.datoSeguro.pido;
-			contacto.trueque.suyo = mensaje.datoSeguro.doy;
+			contacto.trueque.propuestas.contacto.mio = mensaje.datoSeguro.pido;
+			contacto.trueque.propuestas.contacto.suyo = mensaje.datoSeguro.doy;
+			
 			_this._concretarTruequeCon(contacto);
 			
 			_this.onNovedades();

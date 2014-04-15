@@ -15,9 +15,6 @@ var PantallaContacto = {
 			}
 		};
         */
-		console.log('PantallaContacto, SATAR');
-		
-		
 		
 		PantallaListaContactos.onSelect(function(){
 			if(_this.ui.is(':visible')){

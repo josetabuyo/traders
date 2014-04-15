@@ -34,8 +34,6 @@ var onDeviceReady = function() {
     Traders.onUsuarioLogueado(function(){
 		PantallaUsuario.start();
 		
-		console.log('MAin usuario logueado;');
-		
 		PantallaListaContactos.start();
 		
 		
