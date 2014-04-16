@@ -3,19 +3,6 @@ var PantallaContacto = {
         var _this = this;
         this.ui =  $("#pantalla_contacto");     
         
-		
-		/*
-        this.contacto_seleccionado = {
-			nombre:"",
-			id:"",
-			inventario:[],
-			trueque: {
-				mio:[],
-				suyo:[]
-			}
-		};
-        */
-		
 		PantallaListaContactos.onSelect(function(){
 			if(_this.ui.is(':visible')){
 				_this.render();
@@ -60,18 +47,18 @@ var PantallaContacto = {
         
 		
 		//PantallaListaContactos.render();
-		
+		var _contacto = PantallaListaContactos.contacto_seleccionado;
         
-        this.lbl_nombre_contacto.text(PantallaListaContactos.contacto_seleccionado.nombre);
+        this.lbl_nombre_contacto.text(_contacto.nombre);
         this.panel_inventario_contacto.empty();
-        _.each(PantallaListaContactos.contacto_seleccionado.inventario, function(producto){
+        _.each(_contacto.inventario, function(producto){
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
             });
             vista.dibujarEn(_this.panel_inventario_contacto);
         });
         
-        if(PantallaListaContactos.contacto_seleccionado.id == "") this.panel_contacto.hide();
+        if(_contacto.id == "") this.panel_contacto.hide();
         else this.panel_contacto.show();
         
         Traders.onNovedades(function(){
