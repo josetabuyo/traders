@@ -143,9 +143,11 @@ var Traders = {
 			id: id_contacto
 		});
         
+		console.log('agregarProductoAPropuesta', contacto);
+		
 		if(mio_o_suyo == "suyo"){
 			//contacto.trueque.propuestas.suyo.push(id_producto);
-			contacto.trueque.propuestas.usuario.suyo.push(id_producto);
+			contacto.trueque.propuestas.usuario.suyo.push(id_producto); 
 		}else{
 			contacto.trueque.propuestas.usuario.mio.push(id_producto);
 		}

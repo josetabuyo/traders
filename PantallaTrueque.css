@@ -50,9 +50,10 @@
 	#lbl_nombre_contacto{
     
 	position: absolute;
-    right: 100px;
-    bottom: 0px;
-	z-index: 2;
+	top: 75px;
+	left: 50%;
+    right: 115px;
+	text-align: right;
 }
 
 

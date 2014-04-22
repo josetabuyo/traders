@@ -63,6 +63,8 @@ var PantallaTrueque = {
 		 var _this = this;
 		 
 		
+		console.log('_contacto.trueque', _contacto.trueque);
+		
         _.each(_contacto.trueque.propuestas.usuario.mio, function(producto){
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
