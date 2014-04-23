@@ -53,7 +53,7 @@ var Traders = {
                 });  
         }
     },
-    login: function(_nombre, password){
+	login: function(_nombre, password){
         var _this = this;
 		
 		

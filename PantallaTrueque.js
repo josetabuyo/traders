@@ -65,22 +65,29 @@ var PantallaTrueque = {
 		
 		console.log('_contacto.trueque', _contacto.trueque);
 		
-        _.each(_contacto.trueque.propuestas.usuario.mio, function(producto){
+        _.each(_contacto.trueque.propuestas.usuario.mio, function(id_producto){
+			
+			var _producto = _.findWhere(_this.usuario.inventario, {id: id_producto});
+			
             var vista = new VistaDeUnProductoEnInventario({
-                producto: producto
+                producto: _producto
             });
             vista.dibujarEn(_this.ui.propuestas.usuario.mio);
         });
 		
 		 
-        _.each(_contacto.trueque.propuestas.usuario.suyo, function(producto){
+        _.each(_contacto.trueque.propuestas.usuario.suyo, function(id_producto){
+			var _producto = _.findWhere(contacto.inventario, {id: id_producto});
+			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
             });
             vista.dibujarEn(_this.ui.propuestas.usuario.suyo);
         });
 		
-		_.each(_contacto.trueque.propuestas.contacto.mio, function(producto){
+		_.each(_contacto.trueque.propuestas.contacto.mio, function(id_producto){
+			var _producto = _.findWhere(_this.usuario.inventario, {id: id_producto});
+			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
             });
@@ -88,7 +95,9 @@ var PantallaTrueque = {
         });
 		
 		 
-        _.each(_contacto.trueque.propuestas.contacto.suyo, function(producto){
+        _.each(_contacto.trueque.propuestas.contacto.suyo, function(id_producto){
+			var _producto = _.findWhere(contacto.inventario, {id: id_producto});
+			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
             });
@@ -98,9 +107,10 @@ var PantallaTrueque = {
 		
 		
 		
-		_.each(_usuario.inventario, function(producto){
-            var vista = new VistaDeUnProductoEnInventario({
-                producto: producto, 
+		_.each(_usuario.inventario, function(_producto){
+		
+			var vista = new VistaDeUnProductoEnInventario({
+                producto: _producto,
                 seleccionadoParaTrueque: _contacto.trueque.propuestas.usuario.mio.indexOf(producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
                     Traders.agregarProductoAPropuesta(_contacto.id, producto.id, "mio");
@@ -116,9 +126,10 @@ var PantallaTrueque = {
 		
 		
 		
-        _.each(_contacto.inventario, function(producto){
+        _.each(_contacto.inventario, function(_producto){
+			
             var vista = new VistaDeUnProductoEnInventario({
-                producto: producto, 
+                producto: _producto, 
                 seleccionadoParaTrueque: _contacto.trueque.propuestas.contacto.suyo.indexOf(producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
                     Traders.agregarProductoAPropuesta(_contacto.id, producto.id, "suyo");  
