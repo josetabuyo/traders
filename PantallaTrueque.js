@@ -63,11 +63,11 @@ var PantallaTrueque = {
 		 var _this = this;
 		 
 		
-		console.log('_contacto.trueque', _contacto.trueque);
+		console.log('_contacto', _contacto);
 		
         _.each(_contacto.trueque.propuestas.usuario.mio, function(id_producto){
 			
-			var _producto = _.findWhere(_this.usuario.inventario, {id: id_producto});
+			var _producto = _.findWhere(Traders.usuario.inventario, {id: id_producto});
 			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: _producto
@@ -77,29 +77,29 @@ var PantallaTrueque = {
 		
 		 
         _.each(_contacto.trueque.propuestas.usuario.suyo, function(id_producto){
-			var _producto = _.findWhere(contacto.inventario, {id: id_producto});
+			var _producto = _.findWhere(_contacto.inventario, {id: id_producto});
 			
             var vista = new VistaDeUnProductoEnInventario({
-                producto: producto
+                producto: _producto
             });
             vista.dibujarEn(_this.ui.propuestas.usuario.suyo);
         });
 		
 		_.each(_contacto.trueque.propuestas.contacto.mio, function(id_producto){
-			var _producto = _.findWhere(_this.usuario.inventario, {id: id_producto});
+			var _producto = _.findWhere(Traders.usuario.inventario, {id: id_producto});
 			
             var vista = new VistaDeUnProductoEnInventario({
-                producto: producto
+                producto: _producto
             });
             vista.dibujarEn(_this.ui.propuestas.contacto.mio);
         });
 		
 		 
         _.each(_contacto.trueque.propuestas.contacto.suyo, function(id_producto){
-			var _producto = _.findWhere(contacto.inventario, {id: id_producto});
+			var _producto = _.findWhere(_contacto.inventario, {id: id_producto});
 			
             var vista = new VistaDeUnProductoEnInventario({
-                producto: producto
+                producto: _producto
             });
             vista.dibujarEn(_this.ui.propuestas.contacto.suyo);
         });
@@ -111,12 +111,12 @@ var PantallaTrueque = {
 		
 			var vista = new VistaDeUnProductoEnInventario({
                 producto: _producto,
-                seleccionadoParaTrueque: _contacto.trueque.propuestas.usuario.mio.indexOf(producto.id)>-1,
+                seleccionadoParaTrueque: _contacto.trueque.propuestas.usuario.mio.indexOf(_producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoAPropuesta(_contacto.id, producto.id, "mio");
+                    Traders.agregarProductoAPropuesta(_contacto.id, _producto.id, "mio");
                 },
                 alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoDePropuesta(_contacto.id, producto.id, "mio");
+					Traders.quitarProductoDePropuesta(_contacto.id, _producto.id, "mio");
                 }
             });
             vista.dibujarEn(_this.panel_inventario_usuario);
@@ -130,12 +130,12 @@ var PantallaTrueque = {
 			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: _producto, 
-                seleccionadoParaTrueque: _contacto.trueque.propuestas.contacto.suyo.indexOf(producto.id)>-1,
+                seleccionadoParaTrueque: _contacto.trueque.propuestas.contacto.suyo.indexOf(_producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoAPropuesta(_contacto.id, producto.id, "suyo");  
+                    Traders.agregarProductoAPropuesta(_contacto.id, _producto.id, "suyo");  
                 },
                 alDesSeleccionarParaTrueque: function(){
-                    Traders.quitarProductoDePropuesta(_contacto.id, producto.id, "suyo");
+                    Traders.quitarProductoDePropuesta(_contacto.id, _producto.id, "suyo");
                 }
             });
             vista.dibujarEn(_this.panel_inventario_contacto);

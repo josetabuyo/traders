@@ -153,7 +153,8 @@ var Traders = {
 		}
 		
         contacto.trueque.estado = "borrador";
-        this.onNovedades();
+        
+		this.proponerTruequeA(id_contacto);
     },
     quitarProductoDePropuesta: function(id_contacto, id_producto, mio_o_suyo){
         
@@ -172,7 +173,7 @@ var Traders = {
 		
 		
         contacto.trueque.estado = "borrador";
-        this.onNovedades();
+        this.proponerTruequeA(id_contacto);
     },
     proponerTruequeA: function(id_contacto){
         var contacto = this.contactos({id:id_contacto});
@@ -504,7 +505,7 @@ var Traders = {
 		});
 		
 		
-		 vx.when({
+		vx.when({
 			tipoDeMensaje:"trocador.propuestaDeTrueque",
 			para: this.usuario.id,
 			de: contacto.id
@@ -516,7 +517,7 @@ var Traders = {
 			
 			_this.onNovedades();
 		});
-        
+		        
 		
         vx.when({
             tipoDeMensaje:"trocador.aceptacionDeTrueque",
@@ -541,6 +542,8 @@ var Traders = {
 		this._contactos = $.grep(this._contactos, function(item){
             return item.id != id;
         });
+		
+		_this.onNovedades();
 	}
 	
 	
