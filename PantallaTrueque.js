@@ -36,9 +36,9 @@ var PantallaTrueque = {
 		
         this.chk_usuario_de_acuerdo.click(function(){
             if(_contacto.trueque.estado == "recibido")
-                Traders.aceptarTruequeDe(_contacto.id);
+                Traders.aceptarTruequeDe(_contacto);
             else
-                Traders.proponerTruequeA(_contacto.id);
+                Traders.proponerTruequeA(_contacto);
         });
     },
     render: function(){
@@ -113,10 +113,10 @@ var PantallaTrueque = {
                 producto: _producto,
                 seleccionadoParaTrueque: _contacto.trueque.propuestas.usuario.mio.indexOf(_producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoAPropuesta(_contacto.id, _producto.id, "mio");
+                    Traders.agregarProductoATrueque(_contacto.id, _producto.id, "mio");
                 },
                 alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoDePropuesta(_contacto.id, _producto.id, "mio");
+					Traders.quitarProductoDeTrueque(_contacto.id, _producto.id, "mio");
                 }
             });
             vista.dibujarEn(_this.panel_inventario_usuario);
@@ -132,10 +132,10 @@ var PantallaTrueque = {
                 producto: _producto, 
                 seleccionadoParaTrueque: _contacto.trueque.propuestas.contacto.suyo.indexOf(_producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoAPropuesta(_contacto.id, _producto.id, "suyo");  
+                    Traders.agregarProductoATrueque(_contacto.id, _producto.id, "suyo");  
                 },
                 alDesSeleccionarParaTrueque: function(){
-                    Traders.quitarProductoDePropuesta(_contacto.id, _producto.id, "suyo");
+                    Traders.quitarProductoDeTrueque(_contacto.id, _producto.id, "suyo");
                 }
             });
             vista.dibujarEn(_this.panel_inventario_contacto);

@@ -36,7 +36,14 @@ var PantallaContacto = {
 		
         this.btn_trocar.click(function(e) {
             _this.ui.hide();
-            PantallaTrueque.contacto = PantallaListaContactos.contacto_seleccionado;
+			
+            
+			// TO DO:
+			// var trueque = Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
+			// PantallaTrueque.trueque = trueque;
+			
+			Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
+			PantallaTrueque.contacto = PantallaListaContactos.contacto_seleccionado;
 			
             PantallaTrueque.render();
 		});	
@@ -52,10 +59,12 @@ var PantallaContacto = {
         this.lbl_nombre_contacto.text(_contacto.nombre);
         this.panel_inventario_contacto.empty();
         _.each(_contacto.inventario, function(producto){
+			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
             });
             vista.dibujarEn(_this.panel_inventario_contacto);
+			
         });
         
         if(_contacto.id == "") this.panel_contacto.hide();
