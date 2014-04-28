@@ -21,19 +21,7 @@ var Traders = {
 	usuario: {},
 	
 	
-	_trueques:[],
-    trueques:function(p){
-        if(!p) return this._trueques;
-        if(p.id) return _.findWhere(this._trueques, {id:p.id});
-        if(p.query){
-            if(p.query == "") 
-                return this._trueques;
-            else 
-                return _.filter(this._trueques, function(_trueque){
-                    return _trueque.contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
-                });  
-        }
-    },
+	
 	
 	_onNovedades:function(){},
     _onUsuarioLogueado:function(){},
@@ -54,6 +42,22 @@ var Traders = {
     },
     onUsuarioLogueado:function(callback){
         this._onUsuarioLogueado = callback;
+    },
+	
+	
+	
+	_trueques:[],
+    trueques:function(p){
+        if(!p) return this._trueques;
+        if(p.id) return _.findWhere(this._trueques, {id:p.id});
+        if(p.query){
+            if(p.query == "") 
+                return this._trueques;
+            else 
+                return _.filter(this._trueques, function(_trueque){
+                    return _trueque.contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
+                });  
+        }
     },
 	
 	_contactos:[],
@@ -270,72 +274,89 @@ var Traders = {
 		var trueque = {
 			estado: "cero",
 			contacto: contacto,
-			propuestas:{
-				turno: 'usuario',
-				usuario:{
-					suyo: [],
-					mio: []
-				},
-				contacto:{
-					suyo: [],
-					mio: []
+			ofertas:[
+				{
+					ofertante: 'usuario',
+					estado: 'sin_enviar',
+					pido: [],
+					doy: []
 				}
-			}
+			]
 		};
 		
 		this._trueques.push(trueque);
 		
 	},
 	
-	proponerTruequeA: function(contacto){
+	agregarProductoTrueque: function(trueque, producto, pido_doy){
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		if(oferta.ofertante == 'usuario'){
+			oferta[pido_doy].push(producto);
+		}else{
+			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
+			
+			nuevaOferta.ofertante = 'usuario';
+			nuevaOferta.estado = 'sin_enviar';
+			
+			nuevaOferta[pido_doy].push(producto);
+			trueque.ofertas.push(nuevaOferta);
+		}
+		
+		this.onNovedades();
+    },
+	
+	
+    quitarProductoTrueque: function(trueque, producto, pido_doy){
         
+		
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		if(oferta.ofertante == 'usuario'){
+			
+			oferta[pido_doy] = $.grep(oferta[pido_doy], function(prod){
+				return prod.id != producto.id;
+			});
+			
+		}else{
+			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
+			
+			nuevaOferta.ofertante = 'usuario';
+			nuevaOferta.estado = 'sin_enviar';
+			
+			nuevaOferta[pido_doy] = $.grep(nuevaOferta[pido_doy], function(prod){
+				return prod.id != producto.id;
+			});
+			
+			trueque.ofertas.push(nuevaOferta);
+		}
+		
+		
+		this.onNovedades();
+		
+    },
+	
+	
+	
+	enviarOferta: function(trueque){
+        
+		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		_oferta.estado = 'enviada';
+		
         vx.send({
-            tipoDeMensaje:"traders.trueque.propuesta",
+            tipoDeMensaje:"traders.trueque.oferta",
             para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-                propuesta: contacto.trueque.propuestas.usuario
+                oferta: _oferta
             }
         });
 		
 		
-        contacto.trueque.estado = "enviado";
         this.onNovedades();
     },
 	
-	agregarProductoATrueque: function(trueque, id_producto, mio_o_suyo){
-		
-		if(mio_o_suyo == "suyo"){
-			//contacto.trueque.propuestas.suyo.push(id_producto);
-			trueque.propuestas.usuario.suyo.push(id_producto);
-		}else{
-			trueque.propuestas.usuario.mio.push(id_producto);
-		}
-		
-        contacto.trueque.estado = "borrador";
-        
-		this.proponerTruequeA(contacto);
-    },
-    quitarProductoDeTrueque: function(id_contacto, id_producto, mio_o_suyo){
-        
-		var contacto = this.contactos({id:id_contacto});
-		
-        if(mio_o_suyo == "suyo"){
-			contacto.trueque.propuestas.usuario.suyo = $.grep(contacto.trueque.propuestas.usuario.suyo, function(prod){
-				return prod.id != id_producto;
-			});
-			
-        }else{
-			contacto.trueque.propuestas.usuario.mio = $.grep(contacto.trueque.propuestas.usuario.mio, function(prod){
-				return prod.id != id_producto;
-			});
-		}
-		
-		
-        contacto.trueque.estado = "borrador";
-        this.proponerTruequeA(contacto);
-    },
-    
     
 	aceptarTruequeDe: function(contacto){
 		
@@ -527,10 +548,19 @@ var Traders = {
 		
 		
 		vx.when({
-			tipoDeMensaje:"traders.trueque.propuesta",
+			tipoDeMensaje:"traders.trueque.oferta",
 			para: this.usuario.id,
 			de: contacto.id
 		}, function(mensaje){
+			
+			
+			var _oferta = mensaje.datoSeguro.oferta;
+			
+			_oferta.ofertante = 'contacto';
+			_oferta.estado = 'recibida';
+			
+			nuevaOferta[pido_doy].push(producto);
+			trueque.ofertas.push(nuevaOferta);
 			
 			
 			
