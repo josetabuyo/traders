@@ -46,10 +46,24 @@ var Traders = {
 	
 	
 	
+	nextTruequeId: function(){
+		
+		var maxValue = -1;
+		
+		_.each(this.trueques(), function(_trueque){
+			if(_trueque.id > maxValue){
+				maxValue = _trueque.id;
+			}
+		});
+		
+		maxValue++;
+		
+		return maxValue;
+		
+	},
 	_trueques:[],
     trueques:function(p){
         if(!p) return this._trueques;
-        if(p.id) return _.findWhere(this._trueques, {id:p.id});
         if(p.query){
             if(p.query == "") 
                 return this._trueques;
@@ -58,6 +72,8 @@ var Traders = {
                     return _trueque.contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
                 });  
         }
+        
+		return _.findWhere(this._trueques, p);
     },
 	
 	_contactos:[],
@@ -272,6 +288,7 @@ var Traders = {
 	
 	nuevoTrueque: function(contacto){
 		var trueque = {
+			id: this.nextTruequeId(),
 			estado: "cero",
 			contacto: contacto,
 			ofertas:[
@@ -349,7 +366,8 @@ var Traders = {
             para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-                oferta: _oferta
+				trueque: {id : trueque.id},
+				oferta: _oferta
             }
         });
 		
@@ -553,6 +571,10 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
+			var trueque = this.trueques({
+				
+				id: mensaje.datoSeguro.trueque.id
+			})
 			
 			var _oferta = mensaje.datoSeguro.oferta;
 			
