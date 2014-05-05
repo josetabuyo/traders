@@ -5,16 +5,9 @@ var PantallaListaContactos = {
 		
         this.ui =  $("#pantalla_lista_contactos");     
         
-        this.contacto_seleccionado = {
-			nombre:"",
-			id:"",
-			inventario:[],
-			trueque: {
-				mio:[],
-				suyo:[]
-			}
-		};
+        this.contacto_seleccionado = {};
         
+		
         this.lista_contactos = this.ui.find("#lista_contactos");
 		
 		this.btn_add_contacto = this.ui.find("#btn_add_contacto");
@@ -44,7 +37,14 @@ var PantallaListaContactos = {
 		
 		if(arguments.length==1){
 			
-			this._onSelect.push(arguments[0]);
+			if(typeof(arguments[0]) != "function"){
+				this._onSelect.push(arguments[0]);
+			} else if(typeof(arguments[0]) != "object"){
+				
+				this.contacto_seleccionado = arguments[0];
+				this.lista_contactos.find('.contacto_en_lista').removeClass("contacto_seleccionado");
+				$contacto_en_lista.addClass("contacto_seleccionado");
+			}
 			
 		}else{
 			_.each(this._onSelect, function(evento){
@@ -65,15 +65,20 @@ var PantallaListaContactos = {
         
 		var _this = this;
         
+		
+		if(!this.contacto_seleccionado){
+			this.contacto_seleccionado = Traders.contactos()[0];
+		}
+		
         this.lista_contactos.empty();
 		
         _.each(Traders.contactos(), function(contacto){
-            var vista_contacto = $("#plantillas .contacto_en_lista").clone();
-            vista_contacto.find("#nombre").text(contacto.nombre);
+            var $contacto_en_lista = $("#plantillas .contacto_en_lista").clone();
+            $contacto_en_lista.find("#nombre").text(contacto.nombre);
 			
 			
 			
-			var btn_eliminar = vista_contacto.find("#btn_eliminar");
+			var btn_eliminar = $contacto_en_lista.find("#btn_eliminar");
 			btn_eliminar.click(function(e){
 				Traders.quitarContacto(contacto.id);
 				
@@ -81,15 +86,19 @@ var PantallaListaContactos = {
 			});
 			
 			
-            vista_contacto.click(function(){
+            $contacto_en_lista.click(function(){
+				
 				_this.contacto_seleccionado = contacto;
+				_this.lista_contactos.find('.contacto_en_lista').removeClass("contacto_seleccionado");
+				$contacto_en_lista.addClass("contacto_seleccionado");
 				
 				_this.onSelect();
             });
 			
-            _this.lista_contactos.append(vista_contacto);
+            _this.lista_contactos.append($contacto_en_lista);
+			
             if(_this.contacto_seleccionado.id==contacto.id){
-                vista_contacto.addClass("contacto_seleccionado");
+                $contacto_en_lista.addClass("contacto_seleccionado");
             }
         
 		});

@@ -31,7 +31,7 @@ var BarraSuperior = {
 		});	
 		
 		this.solapa_trueques.click(function(e) {
-			PantallaListaContactos.render();
+			PantallaListaTrueques.render();
 			PantallaTrueque.render();
 		});	
 		

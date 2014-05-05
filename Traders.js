@@ -61,20 +61,7 @@ var Traders = {
 		return maxValue;
 		
 	},
-	_trueques:[],
-    trueques:function(p){
-        if(!p) return this._trueques;
-        if(p.query){
-            if(p.query == "") 
-                return this._trueques;
-            else 
-                return _.filter(this._trueques, function(_trueque){
-                    return _trueque.contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
-                });  
-        }
-        
-		return _.findWhere(this._trueques, p);
-    },
+	
 	
 	_contactos:[],
     contactos:function(p){
@@ -214,8 +201,12 @@ var Traders = {
 		
 		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
+		
+		if(dato.trueques){
+			this._trueques = dato.trueques;
+		}
+		
 		if(dato.contactos){
-				
 			$.each(dato.contactos, function(index, item){
 				_this.agregarContacto(item);
 			});
@@ -239,7 +230,8 @@ var Traders = {
 		
 		var _dato = {
 			usuario: 					this.usuario,
-			contactos:					this.contactos()
+			contactos:					this.contactos(),
+			trueques:					this.trueques()
 		};
 		
 		if(typeof(Storage)!=="undefined"){
@@ -285,8 +277,49 @@ var Traders = {
     },
 	
 	
+	_trueques:[],
+    trueques:function(p){
+        if(!p){
+		
+			return this._trueques;
+		
+		}else if(p.query){
+		
+			return _.filter(this._trueques, function(_trueque){
+				return _trueque.contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
+			});
+			
+        }else if(p.contacto){
+			
+			return _.filter(this._trueques, function(_trueque){
+				return _trueque.contacto.id == p.contacto.id;
+			});
+			
+		} else {
+			return _.findWhere(this._trueques, p);
+		}
+    },
 	
-	nuevoTrueque: function(contacto){
+	nuevoTrueque: function(){
+		//****	arguments[] ****
+		// forma 1: idContacto 	string
+		// forma 2: contacto 	object
+		//**********************
+		
+		var _this = this;
+		
+		var contacto = {};
+		
+        if(typeof(arguments[0]) == 'string'){
+			
+			var contacto = _this.contactos({id:arguments[0]});
+			
+		}else if(typeof(arguments[0]) == 'object'){
+			contacto=arguments[0];
+		}
+		
+		
+		/*DEF: trueque*/
 		var trueque = {
 			id: this.nextTruequeId(),
 			estado: "cero",
@@ -295,28 +328,39 @@ var Traders = {
 				{
 					ofertante: 'usuario',
 					estado: 'sin_enviar',
-					pido: [],
-					doy: []
+					doy: [],
+					recibo: []
 				}
 			]
 		};
 		
 		this._trueques.push(trueque);
 		
+		this.onNovedades();
+		
+		
+		
+		return trueque;
+		
 	},
 	
-	agregarProductoTrueque: function(trueque, producto, pido_doy){
+	agregarProductoTrueque: function(trueque, producto, recibo_doy){
+		
+		if(typeof(trueque) == 'string'){
+			var trueque = _this.trueque({id:trueque});
+		}
+		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
 		if(oferta.ofertante == 'usuario'){
-			oferta[pido_doy].push(producto);
+			oferta[recibo_doy].push(producto);
 		}else{
 			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
 			
 			nuevaOferta.ofertante = 'usuario';
 			nuevaOferta.estado = 'sin_enviar';
 			
-			nuevaOferta[pido_doy].push(producto);
+			nuevaOferta[recibo_doy].push(producto);
 			trueque.ofertas.push(nuevaOferta);
 		}
 		
@@ -324,14 +368,17 @@ var Traders = {
     },
 	
 	
-    quitarProductoTrueque: function(trueque, producto, pido_doy){
-        
+    quitarProductoTrueque: function(trueque, producto, recibo_doy){
+		
+		if(typeof(trueque) == 'string'){
+			var trueque = _this.trueque({id:trueque});
+		}
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
 		if(oferta.ofertante == 'usuario'){
 			
-			oferta[pido_doy] = $.grep(oferta[pido_doy], function(prod){
+			oferta[recibo_doy] = $.grep(oferta[recibo_doy], function(prod){
 				return prod.id != producto.id;
 			});
 			
@@ -341,7 +388,7 @@ var Traders = {
 			nuevaOferta.ofertante = 'usuario';
 			nuevaOferta.estado = 'sin_enviar';
 			
-			nuevaOferta[pido_doy] = $.grep(nuevaOferta[pido_doy], function(prod){
+			nuevaOferta[recibo_doy] = $.grep(nuevaOferta[recibo_doy], function(prod){
 				return prod.id != producto.id;
 			});
 			
@@ -356,7 +403,10 @@ var Traders = {
 	
 	
 	enviarOferta: function(trueque){
-        
+		if(typeof(trueque) == 'string'){
+			var trueque = _this.trueque({id:trueque});
+		}
+		
 		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
 		_oferta.estado = 'enviada';
@@ -385,7 +435,7 @@ var Traders = {
             para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-				pido: contacto.trueque.propuestas.usuario.suyo,
+				recibo: contacto.trueque.propuestas.usuario.suyo,
                 doy: contacto.trueque.propuestas.usuario.mio
             }
         });
@@ -572,22 +622,20 @@ var Traders = {
 		}, function(mensaje){
 			
 			var trueque = this.trueques({
-				
 				id: mensaje.datoSeguro.trueque.id
 			})
+			
+			if(!trueque){
+				trueque = this.nuevoTrueque(mensaje.de)
+			}
+			
 			
 			var _oferta = mensaje.datoSeguro.oferta;
 			
 			_oferta.ofertante = 'contacto';
 			_oferta.estado = 'recibida';
 			
-			nuevaOferta[pido_doy].push(producto);
-			trueque.ofertas.push(nuevaOferta);
-			
-			
-			
-			contacto.trueque.propuestas.usuario = mensaje.datoSeguro.propuesta;
-			contacto.trueque.estado = "recibido";
+			trueque.ofertas.push(_oferta);
 			
 			_this.onNovedades();
 		});
@@ -599,7 +647,7 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			contacto.trueque.propuestas.contacto.mio = mensaje.datoSeguro.pido;
+			contacto.trueque.propuestas.contacto.mio = mensaje.datoSeguro.recibo;
 			contacto.trueque.propuestas.contacto.suyo = mensaje.datoSeguro.doy;
 			
 			_this._concretarTruequeCon(contacto);
@@ -617,7 +665,7 @@ var Traders = {
             return item.id != id;
         });
 		
-		_this.onNovedades();
+		this.onNovedades();
 	}
 	
 	

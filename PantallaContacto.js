@@ -37,15 +37,18 @@ var PantallaContacto = {
         this.btn_trocar.click(function(e) {
             _this.ui.hide();
 			
-            
-			// TO DO:
-			// var trueque = Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
-			// PantallaTrueque.trueque = trueque;
+			// TO DO: agregar los productos seleccionados al trueque
 			
-			Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
-			PantallaTrueque.contacto = PantallaListaContactos.contacto_seleccionado;
+			var trueque = Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
 			
-            PantallaTrueque.render();
+			
+			console.log('nuevo truque nuevonuevo', trueque);
+			
+			PantallaListaTrueques.trueque_seleccionado = trueque;
+			
+			
+			BarraSuperior.solapa_trueques.click();
+			
 		});	
     },
 	

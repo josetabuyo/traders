@@ -35,17 +35,21 @@ var onDeviceReady = function() {
 		PantallaUsuario.start();
 		
 		PantallaListaContactos.start();
-		
-		
-		
 		PantallaContacto.start();
+		
+		
+		PantallaListaTrueques.start();
 		PantallaTrueque.start();
 		
 		
         PersistidorManual.start(Traders.usuario.id);
+		
     });
+
     PantallaInicio.render();
+
 };
+
 
 
 

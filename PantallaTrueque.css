@@ -1,4 +1,5 @@
-#pantalla_trueque{
+#pantalla_trueque
+{
 	border: solid 1px;
     position: absolute;
     bottom:0px;
@@ -6,82 +7,48 @@
     left: 25%;
 }
 
-#pantalla_trueque
-	.chk_acuerdo{
-    
-	/*display: inline-block;*/
-    
-	position: absolute;
-	
-    width: 50px;
-    height: 50px;
-    border: 2px solid black;
-    border-radius: 10px;
-    bottom: 24px;
-    transition: all .5s ease;
-}
 
 #pantalla_trueque
-	#chk_usuario_de_acuerdo {
-    right: 50%;
-    margin-left: -60px;
-    cursor: pointer;
-}
-
-#pantalla_trueque
-	#chk_contacto_de_acuerdo {
-    left: 50%;
-    margin-left: 5px;
-}
-
-#pantalla_trueque
-	.checkeado{
-    background-color: lime;
+	.datos_persona
+{
+	width: 50%;
 }
 
 
 #pantalla_trueque
-	#avatar_contacto {
+	.datos_usuario
+{
     position: absolute;
-    right: 0px;
+	top: 0px;
+    left: 0px;
 }
 
 #pantalla_trueque
-	#lbl_nombre_contacto{
-    
+	.datos_contacto
+{
+
 	position: absolute;
-	top: 75px;
-	left: 50%;
-    right: 115px;
-	text-align: right;
+	bottom: 0px;
+	left: 0px;
+    
 }
 
 
 #pantalla_trueque
-	.titulo_panel{
+	#oferta{
 	
 	position: absolute;
-	margin-left: auto;
-	margin-right: auto;
-	top: -20px;
-	left:0;
-	right:0;
-	width:125px;
-	height:20px;
+	width:50%;
+	top:120px;
+	bottom:120px;
 	
 	border: solid 1px;
-	padding: 10px 10px 10px 10px;
-	background-color: rgb(255,255,255);
-	text-align: center;
-	font-size: 22px;
-	z-index: 1;
+	
 }
 
-
-
 #pantalla_trueque
-	.propuestas
-		.trueque_productos_usuario{
+	#oferta
+		.oferta_doy{
 	
 	position: absolute;
 	width:100%;
@@ -93,8 +60,8 @@
 }
 
 #pantalla_trueque
-	.propuestas
-		.trueque_productos_contacto{
+	#oferta
+		.oferta_recibo{
 	
 	position: absolute;
 	width:100%;
@@ -104,22 +71,9 @@
 	border: solid 1px;
 	
 }
-		
-#pantalla_trueque
-	.participantes_trueque{
-	
-	position: absolute;
-	width:100%;
-	height:120px;
-	top:0px;
-	
-	border: solid 1px;
-	
-}
-
 
 #pantalla_trueque
-	.propuestas
+	#oferta
 		.treque_por{
 		
 	position: absolute;
@@ -141,91 +95,31 @@
 	z-index: 1;
 }
 
-#pantalla_trueque
-	.propuestas{
-	
-	position: absolute;
-	width:100%;
-	top:120px;
-	bottom:30%;
-	
-	border: solid 1px;
-	
-}
-
-#pantalla_trueque
-	.productos{
-	
-	position: absolute;
-	width: 100%;
-	height: 30%;
-	bottom: 0;
-	
-	border: solid 1px;
-	
-}
-
-#pantalla_trueque
-	.propuestas 
-		#propuesta_usuario{
-	
-	position: absolute;
-	top: 0px;
-	left:0px;
-	width:50%;
-	height:100%;
-	
-	border: solid 1px;
-}
-
-#pantalla_trueque
-	.propuestas 
-		#propuesta_contacto{
-	
-	position: absolute;
-	top: 0px;
-	left:50%;
-	width:50%;
-	height:100%;
-	
-	border: solid 1px;
-}
-
-
-
 
 
 #pantalla_trueque
-#panel_inventario_usuario {
+	#inventario_usuario 
+{
     position: absolute;
     width: 50%;
-	height: 100%;
-    left: 0px;
-    top: 0px;
-	border: solid 1px;
-}
-
-#pantalla_trueque
-#panel_inventario_contacto {
-
-	position: absolute;
-    width: 50%;
-	height: 100%;
+	height: 50%;
     left: 50%;
     top: 0px;
+	padding: 5px;
 	border: solid 1px;
 }
 
-#pantalla_trueque
-#titulo_panel_inventario_usuario {
-    position: absolute;
-}
 
 #pantalla_trueque
-#titulo_panel_inventario_contacto {
-    position: absolute;
-    right: 10px;
-    margin-left: 0px;
+	#inventario_contacto 
+{
+	position: absolute;
+    width: 50%;
+	height: 50%;
+    left: 50%;
+    top: 50%;
+	padding: 5px;
+	border: solid 1px;
 }
 
 

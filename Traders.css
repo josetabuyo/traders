@@ -126,7 +126,10 @@ ul {
 .datos_usuario {
     background-color: rgb(248, 248, 248);
 }
-
+.datos_persona{
+    background-color: rgb(248, 248, 248);
+	height: 120px;
+}
 
 
 .avatar_usuario {

@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="PantallaUsuario.css" />
         <link rel="stylesheet" href="PantallaListaContactos.css" />
         <link rel="stylesheet" href="PantallaContacto.css" />
+		<link rel="stylesheet" href="PantallaListaTrueques.css" />
         <link rel="stylesheet" href="PantallaTrueque.css" />
 		
 		
@@ -160,6 +161,7 @@
 				</div>
 			</div>
 			
+			
             <div id="pantalla_contacto" class="pantalla">
                 <div id="panel_contacto">
 					<div class="datos_usuario">
@@ -178,72 +180,54 @@
 					</div>
 					
                 </div>
-				
-				
             </div>
 			
 			
+			<div id="pantalla_lista_trueques" class="pantalla">
+				<div id="lista_trueques">
+				</div>
+				<div id="panel_alta_trueque">
+					<input id="btn_add_trueque" type="button" value="+"/>
+				</div>
+			</div>
+			
             <div id="pantalla_trueque" class="pantalla">
 				
-				<div id="panel_inventario_container" class="seccion_container">
-				
-                <div class="participantes_trueque datos_usuario">
+				<div class="datos_usuario datos_persona">
 					<img class="avatar_usuario" src="avatar.png"/>
-					
-					<div id="lbl_nombre_usuario" class="lbl_nombre_usuario">  </div>
-					
-					<div id="chk_usuario_de_acuerdo" class="chk_acuerdo"></div>
-					
-					<div id="chk_contacto_de_acuerdo" class="chk_acuerdo"></div>
-					
-					<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"> tetetet </div>
-					
-					<img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
-                </div>
+					<div class="lbl_nombre_usuario"></div>
+					<div class="botonera_usuario">
+						<input id="btn_aceptar" type="button" value="Aceptar"/>
+						<input id="btn_ofertar" type="button" value="Ofertar"/>
+					</div>
+				</div>
 				
 				
-				<div class="propuestas">
-					<div class="titulo_panel">
-						Propuestas
+				<div class="datos_contacto datos_persona">
+					<img class="avatar_usuario" src="avatar.png"/>
+					<div class="lbl_nombre_usuario"></div>
+					<div class="botonera_usuario">
+						<input id="btn_mensaje" type="button" value="Enviar mensaje"/>
 					</div>
-					<div id="propuesta_usuario">
-						<div class="trueque_productos_usuario">
-						</div>
-						<div class="treque_por">
-							X
-						</div>
-						<div class="trueque_productos_contacto">
-						</div>
-					</div>
-					<div id="propuesta_contacto">
-						<div class="trueque_productos_usuario">
-						</div>
-						<div class="treque_por">
-							X
-						</div>
-						<div class="trueque_productos_contacto">
-						</div>
-					</div>
-                </div>
+				</div>
 				
-				<div class="productos">
-					<div class="titulo_panel">
-						Productos
-					</div>
-					<div id="panel_inventario_usuario" class="panel_inventario"></div>
-					<div id="panel_inventario_contacto" class="panel_inventario"></div>
-                </div>
 				
-				<!--
-                <div id="titulo_panel_inventario_usuario" class="titulo_panel">
-                    Tengo
-                </div>
-                <div id="panel_inventario_usuario" class="panel_inventario"></div>
-                <div id="titulo_panel_inventario_contacto" class="titulo_panel">
-                    Tiene
-                </div>
-				<div id="panel_inventario_contacto" class="panel_inventario"></div>
-				-->
+				<div id="oferta">
+					<div class="oferta_doy">
+					</div>
+					
+					<div class="treque_por"> X </div>
+					
+					<div class="oferta_recibo">
+					</div>
+				</div>
+				
+				<div id="inventario_usuario" class="panel_inventario">
+				</div>
+				
+				<div id="inventario_contacto" class="panel_inventario">
+				</div>
+				
             </div>
         </div>
     </body>
@@ -253,6 +237,12 @@
             <div id="nombre"></div>
 			<div id="btn_eliminar">x</div>
         </div>
+		
+		<div class="trueque_en_lista">
+            <div id="nombre"></div>
+			<div id="btn_eliminar">x</div>
+        </div>
+		
         <div class="producto_en_inventario">
             <div id="nombre"></div>
             <div id="btn_eliminar">x</div>
@@ -286,6 +276,7 @@
     <script type="text/javascript" src="PantallaUsuario.js"></script> 
     <script type="text/javascript" src="PantallaListaContactos.js"></script> 
     <script type="text/javascript" src="PantallaContacto.js"></script> 
+    <script type="text/javascript" src="PantallaListaTrueques.js"></script> 
 	<script type="text/javascript" src="PantallaTrueque.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
     <script type="text/javascript" src="PersistidorManual.js"></script> 
