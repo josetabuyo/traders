@@ -15,7 +15,8 @@ var PantallaListaContactos = {
 			
 			alertify.prompt("Ingrese el id del usuario", function (e, str) {
 				if (e) {
-					Traders.agregarContacto(str);
+					var contacto = Traders.agregarContacto(str);
+					_this.add(contacto);
 				} else {
 					// user clicked "cancel"
 				}
@@ -24,11 +25,45 @@ var PantallaListaContactos = {
 			_this.render();
 		});
 		
+		/*Traders.onNovedades(function(){
+            _this.render();
+        });
+		*/
 		
 		this.hide();
 		
     },
 	
+	add: function(contacto){
+		var _this = this;
+		
+		var $contacto_en_lista = $("#plantillas .contacto_en_lista").clone();
+		
+		$contacto_en_lista.find("#nombre").text(contacto.nombre);
+		
+		var btn_eliminar = $contacto_en_lista.find("#btn_eliminar");
+		btn_eliminar.click(function(e){
+			Traders.quitarContacto(contacto.id);
+			
+			$contacto_en_lista.remove();
+		});
+		
+		
+		$contacto_en_lista.click(function(){
+			
+			_this.contacto_seleccionado = contacto;
+			_this.lista_contactos.find('.contacto_en_lista').removeClass("contacto_seleccionado");
+			
+			$(this).addClass("contacto_seleccionado");
+			
+			
+			_this.onSelect();
+		});
+		
+		
+		this.lista_contactos.append($contacto_en_lista);
+		
+	},
 	
 	_onSelect:[],
 	
@@ -37,13 +72,11 @@ var PantallaListaContactos = {
 		
 		if(arguments.length==1){
 			
-			if(typeof(arguments[0]) != "function"){
+			if(typeof(arguments[0]) == "function"){
 				this._onSelect.push(arguments[0]);
-			} else if(typeof(arguments[0]) != "object"){
+			} else if(typeof(arguments[0]) == "object"){
 				
 				this.contacto_seleccionado = arguments[0];
-				this.lista_contactos.find('.contacto_en_lista').removeClass("contacto_seleccionado");
-				$contacto_en_lista.addClass("contacto_seleccionado");
 			}
 			
 		}else{
@@ -73,40 +106,11 @@ var PantallaListaContactos = {
         this.lista_contactos.empty();
 		
         _.each(Traders.contactos(), function(contacto){
-            var $contacto_en_lista = $("#plantillas .contacto_en_lista").clone();
-            $contacto_en_lista.find("#nombre").text(contacto.nombre);
-			
-			
-			
-			var btn_eliminar = $contacto_en_lista.find("#btn_eliminar");
-			btn_eliminar.click(function(e){
-				Traders.quitarContacto(contacto.id);
-				
-				_this.render();
-			});
-			
-			
-            $contacto_en_lista.click(function(){
-				
-				_this.contacto_seleccionado = contacto;
-				_this.lista_contactos.find('.contacto_en_lista').removeClass("contacto_seleccionado");
-				$contacto_en_lista.addClass("contacto_seleccionado");
-				
-				_this.onSelect();
-            });
-			
-            _this.lista_contactos.append($contacto_en_lista);
-			
-            if(_this.contacto_seleccionado.id==contacto.id){
-                $contacto_en_lista.addClass("contacto_seleccionado");
-            }
-        
+			_this.add(contacto);
 		});
         
         
-        Traders.onNovedades(function(){
-            _this.render();
-        });  
+       
         
 		
         this.show();

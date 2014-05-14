@@ -199,6 +199,9 @@ var Traders = {
 	setDataUsuario: function(dato){
 		var _this = this;
 		
+		
+		console.log(' . . . . . dato .  ..  ..  ..  .. ', dato);
+		
 		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
 		
@@ -550,7 +553,7 @@ var Traders = {
 		}
 		
 		
-				
+		
 		/*
 			
 		ojo con esta: mensaje de update y hace esto
@@ -566,11 +569,10 @@ var Traders = {
 			atrib: 'bla'
 		}
 		
-		
 		tambien probar el $.extend
 		
-		
 		*/
+		
 		
 		//publico todos los filtros de él
 		vx.when({
@@ -657,6 +659,9 @@ var Traders = {
 		
 		
 		_this.onNovedades();
+		
+		
+		return contacto;
 		
     },
 	
