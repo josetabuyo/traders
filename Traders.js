@@ -199,9 +199,6 @@ var Traders = {
 	setDataUsuario: function(dato){
 		var _this = this;
 		
-		
-		console.log(' . . . . . dato .  ..  ..  ..  .. ', dato);
-		
 		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
 		

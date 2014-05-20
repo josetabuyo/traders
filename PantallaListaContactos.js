@@ -16,6 +16,8 @@ var PantallaListaContactos = {
 			alertify.prompt("Ingrese el id del usuario", function (e, str) {
 				if (e) {
 					var contacto = Traders.agregarContacto(str);
+					
+					
 					_this.add(contacto);
 				} else {
 					// user clicked "cancel"
@@ -25,10 +27,11 @@ var PantallaListaContactos = {
 			_this.render();
 		});
 		
-		/*Traders.onNovedades(function(){
+		
+		Traders.onNovedades(function(){
             _this.render();
         });
-		*/
+		
 		
 		this.hide();
 		
