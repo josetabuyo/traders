@@ -63,7 +63,7 @@ var PantallaListaContactos = {
 			_this.onSelect();
 		});
 		
-		
+		console.log('add contacto', contacto);
 		this.lista_contactos.append($contacto_en_lista);
 		
 	},

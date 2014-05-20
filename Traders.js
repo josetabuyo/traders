@@ -133,7 +133,7 @@ var Traders = {
 				}
 			});
 			//
-			
+			console.log('when traders.claveAgregada -------> mensaje', mensaje);
 			
 			// lo agrego
 			_this.agregarContacto(mensaje.datoSeguro.contacto);
@@ -530,6 +530,13 @@ var Traders = {
 				var contacto = _this.contactos({id:mensaje.de});
 				
 				contacto = ClonadorDeObjetos.extend(contacto, mensaje.datoSeguro.contacto);
+				
+				
+				contacto.estado = 'CONFIRMADO';
+				
+				console.log('................contacto', contacto);
+				console.log(' respuesta al send................mensaje', mensaje);
+				
 				
 				_this.onNovedades();
 				
