@@ -32,7 +32,7 @@ var BarraSuperior = {
 		
 		this.solapa_trueques.click(function(e) {
 			PantallaListaTrueques.render();
-			PantallaTrueque.render();
+			//PantallaTrueque.render();
 		});	
 		
 		this.solapa_productos.click(function(e) {

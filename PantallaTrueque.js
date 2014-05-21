@@ -4,9 +4,7 @@ var PantallaTrueque = {
         this.ui =  $("#pantalla_trueque");
         
 		PantallaListaTrueques.onSelect(function(){
-			if(_this.ui.is(':visible')){
-				_this.render();
-			}
+			_this.render();
 		});
 		
 		Traders.onNovedades(function(){
@@ -16,14 +14,18 @@ var PantallaTrueque = {
         });
 		
 		
-		/*
-        this.chk_usuario_de_acuerdo.click(function(){
-            if(_contacto.trueque.estado == "recibido")
-                Traders.aceptarTruequeDe(_contacto);
-            else
-                Traders.proponerTruequeA(_contacto);
+		
+		
+		var $btn_ofertar = this.ui.find('#btn_ofertar');
+		
+		
+        $btn_ofertar.click(function(){
+            var trueque = PantallaListaTrueques.trueque_seleccionado;
+			
+			
+			Traders.enviarOferta(trueque);
         });
-		*/
+		
 		
     },
     render: function(){

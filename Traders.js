@@ -378,20 +378,32 @@ var Traders = {
 	
     quitarProductoTrueque: function(trueque, producto, recibo_doy){
 		
+		var _this = this;
+		
 		if(typeof(trueque) == 'string'){
 			var trueque = _this.trueque({id:trueque});
 		}
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
+		console.log('quitarProductoTrueque ================================');
+		
 		if(oferta.ofertante == 'usuario'){
 			
-			oferta[recibo_doy] = $.grep(oferta[recibo_doy], function(prod){
-				return prod.id != producto.id;
+			console.log('recibo_doy', recibo_doy);
+			console.log('oferta[recibo_doy]', oferta[recibo_doy]);
+			
+			oferta[recibo_doy] = $.grep(oferta[recibo_doy], function(producto_id){
+				console.log('producto_id', producto_id);
+				console.log('producto', producto); 
+				
+				return producto_id != producto;
 			});
 			
 		}else{
 			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
+			console.log('oferta', oferta);
+			console.log('nuevaOferta', nuevaOferta);
 			
 			nuevaOferta.ofertante = 'usuario';
 			nuevaOferta.estado = 'sin_enviar';
@@ -421,7 +433,7 @@ var Traders = {
 		
         vx.send({
             tipoDeMensaje:"traders.trueque.oferta",
-            para: id_contacto,
+            para: trueque.contacto.id,
             de: this.usuario.id,
             datoSeguro:{
 				trueque: {id : trueque.id},
@@ -636,12 +648,12 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			var trueque = this.trueques({
+			var trueque = _this.trueques({
 				id: mensaje.datoSeguro.trueque.id
 			})
 			
 			if(!trueque){
-				trueque = this.nuevoTrueque(mensaje.de)
+				trueque = _this.nuevoTrueque(mensaje.de)
 			}
 			
 			

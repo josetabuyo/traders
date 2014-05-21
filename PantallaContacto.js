@@ -31,8 +31,8 @@ var PantallaContacto = {
 			
 			var trueque = Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
 			
-			PantallaListaTrueques.add(trueque);
 			PantallaListaTrueques.trueque_seleccionado = trueque;
+			PantallaListaTrueques.add(trueque);
 			
 			
 			BarraSuperior.solapa_trueques.click();

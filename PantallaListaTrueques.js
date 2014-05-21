@@ -52,6 +52,10 @@ var PantallaListaTrueques = {
 			_this.onSelect();
 		});
 		
+		if(this.trueque_seleccionado == trueque){
+			 $trueque_en_lista.click();
+		}
+		
 		this.lista_trueques.append($trueque_en_lista);
 		
 	},
@@ -89,6 +93,8 @@ var PantallaListaTrueques = {
 		if(!this.trueque_seleccionado){
 			this.trueque_seleccionado = Traders.trueques()[0];
 		}
+		
+		
 		
 		this.lista_trueques.empty();
 		
