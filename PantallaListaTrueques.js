@@ -100,14 +100,3 @@ var PantallaListaTrueques = {
         this.show();
     }
 };
-
-
-var vItemTrueque = {
-	trueque: null,
-	ui: null,
-	select: function(){
-		this.ui.siblings().removeClass("trueque_seleccionado");
-		this.ui.addClass("trueque_seleccionado");
-		PantallaListaTrueques.trueque_seleccionado = this.trueque;
-	}
-};

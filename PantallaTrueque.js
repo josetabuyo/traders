@@ -33,7 +33,6 @@ var PantallaTrueque = {
 		var usuario = Traders.usuario;
 		var trueque = PantallaListaTrueques.trueque_seleccionado;
 		
-		console.log('truequetruequetruequetrueque', trueque);
 		
 		var contacto = trueque.contacto;
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
@@ -62,7 +61,7 @@ var PantallaTrueque = {
 		var $oferta_recibo = this.ui.find("#oferta .oferta_recibo");
 		$oferta_recibo.empty();
         _.each(oferta.recibo, function(id_producto){
-			var producto = _.findWhere(_contacto.inventario, {id: id_producto});
+			var producto = _.findWhere(contacto.inventario, {id: id_producto});
 			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
@@ -78,10 +77,11 @@ var PantallaTrueque = {
                 producto: producto,
                 seleccionadoParaTrueque: oferta.doy.indexOf(producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoATrueque(trueque, producto.id, "doy");
+					
+					Traders.agregarProductoTrueque(trueque, producto.id, "doy");
                 },
                 alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoDeTrueque(trueque, producto.id, "doy");
+					Traders.quitarProductoTrueque(trueque, producto.id, "doy");
                 }
             });
             vista.dibujarEn($inventario_usuario);
@@ -96,10 +96,10 @@ var PantallaTrueque = {
                 producto: producto,
                 seleccionadoParaTrueque: oferta.recibo.indexOf(producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoATrueque(trueque, producto.id, "recibo");
+                    Traders.agregarProductoTrueque(trueque, producto.id, "recibo");
                 },
                 alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoDeTrueque(trueque, producto.id, "recibo");
+					Traders.quitarProductoTrueque(trueque, producto.id, "recibo");
                 }
             });
             vista.dibujarEn($inventario_contacto);

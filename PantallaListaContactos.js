@@ -18,7 +18,7 @@ var PantallaListaContactos = {
 					var contacto = Traders.agregarContacto(str);
 					
 					
-					_this.add(contacto);
+					//_this.add(contacto);
 				} else {
 					// user clicked "cancel"
 				}

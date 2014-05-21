@@ -349,11 +349,16 @@ var Traders = {
 	
 	agregarProductoTrueque: function(trueque, producto, recibo_doy){
 		
+		console.log('.:.:.:.:..:.:.::.:.trueque',trueque);
+		console.log('.:.:.:.:..:.:.::.:.producto',producto);
+		
 		if(typeof(trueque) == 'string'){
 			var trueque = _this.trueque({id:trueque});
 		}
 		
-		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
+		
+		
 		
 		if(oferta.ofertante == 'usuario'){
 			oferta[recibo_doy].push(producto);
@@ -675,7 +680,13 @@ var Traders = {
 		return contacto;
 		
     },
-	
+	quitarTrueque: function(id){
+		this._trueques = $.grep(this._trueques, function(item){
+            return item.id != id;
+        });
+		
+		this.onNovedades();
+	},
 	quitarContacto: function(id){
 		this._contactos = $.grep(this._contactos, function(item){
             return item.id != id;
