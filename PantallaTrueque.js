@@ -9,6 +9,12 @@ var PantallaTrueque = {
 			}
 		});
 		
+		Traders.onNovedades(function(){
+			if(_this.ui.is(':visible')){
+				_this.render();
+			}
+        });
+		
 		
 		/*
         this.chk_usuario_de_acuerdo.click(function(){
@@ -99,11 +105,6 @@ var PantallaTrueque = {
             vista.dibujarEn($inventario_contacto);
         });
         
-		
-		Traders.onNovedades(function(){
-            _this.render();
-        });
-		
         this.ui.show();
     }    
 };

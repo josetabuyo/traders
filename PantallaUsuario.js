@@ -50,6 +50,13 @@ var PantallaUsuario = {
 		});
 		
 		
+		Traders.onNovedades(function(){
+			if(_this.ui.is(':visible')){
+				_this.render();
+			}
+        });
+		
+		
         this.txt_nombre_producto_add.focus();
     },
     render: function(){
@@ -102,9 +109,7 @@ var PantallaUsuario = {
 		
 		
 		
-        Traders.onNovedades(function(){
-            _this.render();
-        });
+       
         this.ui.show();      
     }
 };

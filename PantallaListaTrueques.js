@@ -15,9 +15,47 @@ var PantallaListaTrueques = {
 		});
 		*/
 		
+		Traders.onNovedades(function(){
+			if(_this.ui.is(':visible')){
+				_this.render();
+			}
+        });
+		
+		
 		this.hide();
 		
     },
+	
+	add: function(trueque){
+		var _this = this;
+		
+		var $trueque_en_lista = $("#plantillas .trueque_en_lista").clone();
+		
+		$trueque_en_lista.find("#nombre").text(trueque.contacto.nombre);
+		
+		var btn_eliminar = $trueque_en_lista.find("#btn_eliminar");
+		btn_eliminar.click(function(e){
+			Traders.quitarTrueque(trueque.id);
+			
+			$trueque_en_lista.remove();
+		});
+		
+		
+		$trueque_en_lista.click(function(){
+			
+			_this.trueque_seleccionado = trueque;
+			_this.lista_trueques.find('.trueque_en_lista').removeClass("trueque_seleccionado");
+			
+			$(this).addClass("trueque_seleccionado");
+			
+			
+			_this.onSelect();
+		});
+		
+		this.lista_trueques.append($trueque_en_lista);
+		
+	},
+	
 	
 	
 	_onSelect:[],
@@ -52,53 +90,12 @@ var PantallaListaTrueques = {
 			this.trueque_seleccionado = Traders.trueques()[0];
 		}
 		
-		
 		this.lista_trueques.empty();
 		
-		
-		
         _.each(Traders.trueques(), function(trueque){
-		
-			var vTrueque = $.extend(true, {}, vItemTrueque, {
-				trueque: trueque,
-				ui: $("#plantillas .trueque_en_lista").clone()
-			});
-			
-			// TO DO: mejorar vista de trueque
-			vTrueque.ui.find("#nombre").text(trueque.contacto.nombre);
-			
-			var $btn_eliminar = $trueque_en_lista.find("#btn_eliminar");
-			$btn_eliminar.click(function(e){
-				Traders.quitarTrueque(trueque.id);
-				
-				_this.render();
-			});
-			
-			
-            $trueque_en_lista.click(function(){
-				_this.trueque_seleccionado = trueque;
-                $trueque_en_lista.addClass("trueque_seleccionado");
-				
-				_this.onSelect();
-            });
-			
-			
-			
-            _this.lista_trueques.append($trueque_en_lista);
-			
-			
-            if(_this.trueque_seleccionado.id==trueque.id){
-                $trueque_en_lista.addClass("trueque_seleccionado");
-            }
-			
-			
+			_this.add(trueque);
 		});
-        
-        
-        Traders.onNovedades(function(){
-            _this.render();
-        });  
-        
+		
 		
         this.show();
     }

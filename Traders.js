@@ -23,27 +23,30 @@ var Traders = {
 	
 	
 	
-	_onNovedades:function(){},
     _onUsuarioLogueado:function(){},
 	
-    onNovedades:function(){
+	
+	
+	_onNovedades:[],
+	onNovedades: function(){
+		var _this = this;
 		
 		if(arguments.length==1){
-		
-			this._onNovedades = arguments[0];
+			this._onNovedades.push(arguments[0]);
 			
 		}else{
-			
 			this.saveDataUsuario();
 			
-			this._onNovedades();
+			_.each(this._onNovedades, function(evento){
+				evento();
+			});
 		}
 		
-    },
+	},
+	
     onUsuarioLogueado:function(callback){
         this._onUsuarioLogueado = callback;
     },
-	
 	
 	
 	nextTruequeId: function(){
@@ -527,15 +530,16 @@ var Traders = {
 				
 			},function(mensaje){
 				
+				console.log(' respuesta al send de traders.claveAgregada ................mensaje', mensaje);
+				
 				var contacto = _this.contactos({id:mensaje.de});
 				
 				contacto = ClonadorDeObjetos.extend(contacto, mensaje.datoSeguro.contacto);
-				
-				
 				contacto.estado = 'CONFIRMADO';
 				
+				
+				
 				console.log('................contacto', contacto);
-				console.log(' respuesta al send................mensaje', mensaje);
 				
 				
 				_this.onNovedades();
@@ -660,6 +664,9 @@ var Traders = {
 			
 			_this.onNovedades();
 		});
+		
+		
+		
 		
 		
 		_this.onNovedades();

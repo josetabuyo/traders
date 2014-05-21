@@ -29,13 +29,19 @@ var PantallaListaContactos = {
 		
 		
 		Traders.onNovedades(function(){
-            _this.render();
+			if(_this.ui.is(':visible')){
+				_this.render();
+			}
         });
 		
 		
 		this.hide();
 		
     },
+	
+	
+	
+	
 	
 	add: function(contacto){
 		var _this = this;
@@ -63,7 +69,6 @@ var PantallaListaContactos = {
 			_this.onSelect();
 		});
 		
-		console.log('add contacto', contacto);
 		this.lista_contactos.append($contacto_en_lista);
 		
 	},

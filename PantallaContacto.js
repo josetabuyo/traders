@@ -10,6 +10,12 @@ var PantallaContacto = {
 		});
 		
 		
+        Traders.onNovedades(function(){
+			if(_this.ui.is(':visible')){
+				_this.render();
+			}
+        });
+		
 		
         this.panel_contacto = this.ui.find("#panel_contacto");
         this.lbl_nombre_contacto = this.ui.find("#lbl_nombre_contacto");
@@ -25,9 +31,7 @@ var PantallaContacto = {
 			
 			var trueque = Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
 			
-			
-			console.log('nuevo truque nuevonuevo', trueque);
-			
+			PantallaListaTrueques.add(trueque);
 			PantallaListaTrueques.trueque_seleccionado = trueque;
 			
 			
@@ -57,9 +61,6 @@ var PantallaContacto = {
         if(_contacto.id == "") this.panel_contacto.hide();
         else this.panel_contacto.show();
         
-        Traders.onNovedades(function(){
-            _this.render();
-        });  
         
         this.ui.show();
     }
