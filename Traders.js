@@ -135,8 +135,6 @@ var Traders = {
 					}
 				}
 			});
-			//
-			console.log('when traders.claveAgregada -------> mensaje', mensaje);
 			
 			// lo agrego
 			_this.agregarContacto(mensaje.datoSeguro.contacto);
@@ -299,7 +297,15 @@ var Traders = {
 			});
 			
 		} else {
-			return _.findWhere(this._trueques, p);
+			console.log('a lo trueque 1 1 1 11 111  11 a los.... a re ');
+			
+			console.log('this._trueques', this._trueques);
+			console.log('p', p);
+			console.log('_.findWhere(this._trueques, p)', _.findWhere(this._trueques, p));
+			
+			return _.findWhere(this._trueques, {id: p.id});
+			
+			
 		}
     },
 	
@@ -349,8 +355,6 @@ var Traders = {
 	
 	agregarProductoTrueque: function(trueque, producto, recibo_doy){
 		
-		console.log('.:.:.:.:..:.:.::.:.trueque',trueque);
-		console.log('.:.:.:.:..:.:.::.:.producto',producto);
 		
 		if(typeof(trueque) == 'string'){
 			var trueque = _this.trueque({id:trueque});
@@ -386,24 +390,15 @@ var Traders = {
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
-		console.log('quitarProductoTrueque ================================');
-		
 		if(oferta.ofertante == 'usuario'){
 			
-			console.log('recibo_doy', recibo_doy);
-			console.log('oferta[recibo_doy]', oferta[recibo_doy]);
 			
 			oferta[recibo_doy] = $.grep(oferta[recibo_doy], function(producto_id){
-				console.log('producto_id', producto_id);
-				console.log('producto', producto); 
-				
 				return producto_id != producto;
 			});
 			
 		}else{
 			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
-			console.log('oferta', oferta);
-			console.log('nuevaOferta', nuevaOferta);
 			
 			nuevaOferta.ofertante = 'usuario';
 			nuevaOferta.estado = 'sin_enviar';
@@ -547,16 +542,11 @@ var Traders = {
 				
 			},function(mensaje){
 				
-				console.log(' respuesta al send de traders.claveAgregada ................mensaje', mensaje);
-				
 				var contacto = _this.contactos({id:mensaje.de});
 				
 				contacto = ClonadorDeObjetos.extend(contacto, mensaje.datoSeguro.contacto);
 				contacto.estado = 'CONFIRMADO';
 				
-				
-				
-				console.log('................contacto', contacto);
 				
 				
 				_this.onNovedades();
@@ -648,11 +638,19 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
+			
+			
+			console.log('mensaje ', mensaje);
+			
 			var trueque = _this.trueques({
 				id: mensaje.datoSeguro.trueque.id
-			})
+			});
+			
+			
+			console.log('trueque', trueque);
 			
 			if(!trueque){
+				
 				trueque = _this.nuevoTrueque(mensaje.de)
 			}
 			
