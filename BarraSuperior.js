@@ -8,9 +8,6 @@ var BarraSuperior = {
 		this.solapa_contactos 	= this.ui.find("#solapa_contactos");
 		this.solapa_trueques 	= this.ui.find("#solapa_trueques");
 		this.solapa_productos 	= this.ui.find("#solapa_productos");
-		this.solapa_cerrar 		= this.ui.find("#solapa_cerrar");
-		
-		
 		
 		
 		
@@ -38,11 +35,6 @@ var BarraSuperior = {
 		this.solapa_productos.click(function(e) {
 			PantallaTrueque.render();
 		});	
-		
-		
-		this.solapa_cerrar.click(function(e) {
-			alert('cerrar la sesion');
-		});
 		
     },
 	render: function(){

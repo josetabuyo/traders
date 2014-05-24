@@ -418,11 +418,18 @@ var Traders = {
 	
 	
 	enviarOferta: function(trueque){
+	
 		if(typeof(trueque) == 'string'){
 			var trueque = _this.trueque({id:trueque});
 		}
 		
 		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		
+		if(_oferta.estado == 'enviada'){
+			alert('Ya hiciste tu oferta, esperá la respuesta.');
+			return;
+		}
 		
 		_oferta.estado = 'enviada';
 		
@@ -639,18 +646,13 @@ var Traders = {
 		}, function(mensaje){
 			
 			
-			
-			console.log('mensaje ', mensaje);
-			
 			var trueque = _this.trueques({
-				id: mensaje.datoSeguro.trueque.id
-			});
+				id: mensaje.datoSeguro.trueque.id,
+				contacto: {id: mensaje.de}
+			})[0];
 			
-			
-			console.log('trueque', trueque);
 			
 			if(!trueque){
-				
 				trueque = _this.nuevoTrueque(mensaje.de)
 			}
 			
@@ -659,6 +661,12 @@ var Traders = {
 			
 			_oferta.ofertante = 'contacto';
 			_oferta.estado = 'recibida';
+			
+			
+			var aux_doy = _oferta.doy;
+			_oferta.doy = _oferta.recibo;
+			_oferta.recibo = aux_doy;
+			
 			
 			trueque.ofertas.push(_oferta);
 			
