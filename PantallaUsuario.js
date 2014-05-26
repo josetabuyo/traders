@@ -16,6 +16,7 @@ var PantallaUsuario = {
         
         this.btn_add_producto.click(function(){
             Traders.agregarProducto({
+				propietario: Traders.usuario.id,
                 nombre:_this.txt_nombre_producto_add.val()
             });
             _this.txt_nombre_producto_add.val("");
@@ -67,16 +68,23 @@ var PantallaUsuario = {
         var _this = this;
 		
 		///// panel_inventario
-		_.each(Traders.usuario.inventario, function(producto){
+		_.each(Traders.productos({
+			
+			propietario: Traders.usuario.id
+			
+			
+		}), function(producto){
+			
 			var vista = new VistaDeUnProductoEnInventario({
 				producto: producto, 
 				alEliminar: function(){
-					Traders.quitarProducto(producto.id);
+					Traders.quitarProducto(producto, true);
 				}
 			});
 			vista.dibujarEn(_this.panel_inventario);
 		});
 		
+		/*
 		///// panel_me_deben
 		if(Traders.usuario.me_deben.length > 0){
 			_this.panel_me_deben.closest('.seccion_container').closest('li').show();
@@ -106,7 +114,7 @@ var PantallaUsuario = {
 		}else{
 			_this.panel_debo.closest('.seccion_container').closest('li').hide();
 		}
-		
+		*/
 		
 		
        

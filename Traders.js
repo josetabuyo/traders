@@ -1,23 +1,6 @@
 var Traders = {
     
 	
-	
-	
-	nextProductoId: function(){
-		
-		var maxValue = -1;
-		
-		_.each(this.usuario.inventario, function(producto){
-			if(producto.id > maxValue){
-				maxValue = producto.id;
-			}
-		});
-		
-		maxValue++;
-		
-		return maxValue;
-		
-	},
 	usuario: {},
 	
 	
@@ -49,21 +32,7 @@ var Traders = {
     },
 	
 	
-	nextTruequeId: function(){
-		
-		var maxValue = -1;
-		
-		_.each(this.trueques(), function(_trueque){
-			if(_trueque.id > maxValue){
-				maxValue = _trueque.id;
-			}
-		});
-		
-		maxValue++;
-		
-		return maxValue;
-		
-	},
+	
 	
 	
 	_contactos:[],
@@ -160,39 +129,58 @@ var Traders = {
 	
 	
 	
-    agregarProducto: function(p){
-		var producto = _.clone(p);
-        
-		producto.id = this.nextProductoId();
+    agregarProducto: function(producto){
+		var _this = this;
 		
-		this.usuario.inventario.push(producto);
+		var _producto = ClonadorDeObjetos.extend(producto,{
+			id: _this.nextProductoId()
+		});
+		
+		
+		this._productos.push(_producto);
 		
 		
         vx.send({
             tipoDeMensaje:"traders.avisoDeNuevoProducto",
             de: this.usuario.id,
             datoSeguro: {
-                producto: producto
+                producto: _producto
             }
         });
 		
         this.onNovedades();
     },
-    quitarProducto: function(id_producto){
+	
+    quitarProducto: function(){
         
-		//ver de usar delete
-		this.usuario.inventario = $.grep(this.usuario.inventario, function(prod){
-            return prod.id != id_producto;
-        });
+		var producto = arguments[0];
+		
+		var flagInformar;
+		
+		if(arguments.length == 2){
+			flagInformar = arguments[1];
+		}
 		
 		
-        vx.send({
-            tipoDeMensaje:"traders.avisoDeBajaDeProducto",
-            de: this.usuario.id,
-            datoSeguro:{
-                id_producto: id_producto
-            }
-        });
+		_.each(this.productos(), function(_producto, i, lista){
+			if(	producto.id == _producto.id &&
+				producto.propietario == _producto.propietario
+			)
+			delete lista[i];
+			break; //solo debería haber 1
+		});
+		
+		
+		if(flagInformar){
+			vx.send({
+				tipoDeMensaje:"traders.producto.baja",
+				de: this.usuario.id,
+				datoSeguro:{
+					producto: producto
+				}
+			});
+		}
+		
         this.onNovedades();
     },
 	setDataUsuario: function(dato){
@@ -216,7 +204,7 @@ var Traders = {
 			tipoDeMensaje: "traders.inventario",
 			de: _this.usuario.id,
 			datoSeguro:{
-				inventario:_this.usuario.inventario
+				inventario: _this.usuario.inventario
 			}
 		});
 		
@@ -275,6 +263,49 @@ var Traders = {
 		
     },
 	
+	_productos:[],
+    productos:function(p){
+        if(!p){
+		
+			return this._productos;
+		
+		}else if(p.query){
+		
+			return _.filter(this._productos, function(_producto){
+				return _producto.nombre.indexOf(p.query)>=0 || _producto.id == p.query;
+			});
+			
+        }else if(p.contacto){
+			
+			return _.filter(this._productos, function(_producto){
+				return _producto.contacto.id == p.contacto.id;
+			});
+			
+		} else {
+			return _.findWhere(this._productos, p);
+		}
+    },
+	nextProductoId: function(){
+		
+		var maxValue = -1;
+		
+		_.each(this.usuario.inventario, function(producto){
+			if(producto.id > maxValue){
+				maxValue = producto.id;
+			}
+		});
+		
+		maxValue++;
+		
+		return maxValue;
+		
+	},
+	
+	
+	
+	
+	
+	
 	
 	_trueques:[],
     trueques:function(p){
@@ -295,18 +326,24 @@ var Traders = {
 			});
 			
 		} else {
-			console.log('a lo trueque 1 1 1 11 111  11 a los.... a re ');
-			
-			console.log('this._trueques', this._trueques);
-			console.log('p', p);
-			console.log('_.findWhere(this._trueques, p)', _.findWhere(this._trueques, p));
-			
-			return _.findWhere(this._trueques, {id: p.id});
-			
-			
+			return _.findWhere(this._trueques, p);
 		}
     },
-	
+	nextTruequeId: function(){
+		
+		var maxValue = -1;
+		
+		_.each(this.trueques(), function(_trueque){
+			if(_trueque.id > maxValue){
+				maxValue = _trueque.id;
+			}
+		});
+		
+		maxValue++;
+		
+		return maxValue;
+		
+	},
 	nuevoTrueque: function(){
 		//****	arguments[] ****
 		// forma 1: idContacto 	string
@@ -485,32 +522,38 @@ var Traders = {
 	
 	
     _concretarTrueque: function(trueque){
-        var _this = this;
+        var Traders = this;
         
 		
 		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
+		// TO DO: ver de loguear en el producto la historia
 		
 		_.each(_oferta.doy, function(id_producto){
-		    _this.quitarProducto(id_producto);
+		    
+			var producto = Traders.productos({
+				id: id_producto,
+				propietario: Traders.usuario.id
+			})[0];
+			
+			producto.propietario = trueque.contacto.id;
+			
         });
 		
 		
 		_.each(_oferta.recibo, function(id_producto){
 		    
-			_this.agregarProducto({
-                nombre: id_producto //MAL TO DO
-            });
+			var producto = Traders.productos({
+				id: id_producto,
+				propietario: trueque.contacto.id
+			})[0];
+			
+			producto.propietario = Traders.usuario.id;
+			
         });
 		
-        
 		
-		//TO DO: historiar, no borrar, guardar muchos trueques
-        contacto.trueque.propuestas.usuario.mio.length = 0;
-        contacto.trueque.propuestas.usuario.suyo.length = 0;
-		contacto.trueque.propuestas.contacto.mio.length = 0;
-        contacto.trueque.propuestas.contacto.suyo.length = 0;
-        contacto.trueque.estado = "cero";
+		trueque.estado = "cerrado";
 		
 		// informo a la comunidad mi inventario actualizado
 		vx.send({
@@ -621,7 +664,17 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
+			
+			//recorro cada uno y si 
+			mensaje.datoSeguro.productos
+			
+			
 			contacto.inventario = mensaje.datoSeguro.inventario;
+			
+			if(_.findWhere(_this.productos(),{
+				id: mensaje.datoSeguro.producto.id,
+				propietario: mensaje.de
+			})!== undefined) return;
 			
 			_this.onNovedades();
 			
@@ -633,26 +686,27 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			//_this._agregarProductoAlInventarioDe(mensaje.datoSeguro.producto, contacto);
+			if(_.findWhere(_this.productos(),{
+				id: mensaje.datoSeguro.producto.id,
+				propietario: mensaje.de
+			})!== undefined) return;
 			
 			
-			if(_.findWhere(contacto.inventario, {id: mensaje.datoSeguro.producto.id})!== undefined) return;
+			var _producto = mensaje.datoSeguro.producto;
 			
 			
-			contacto.inventario.push(mensaje.datoSeguro.producto);
+			_this.agregarProducto(_producto);
 			
 			_this.onNovedades();
 		});
         
 		
         vx.when({
-            tipoDeMensaje:"traders.avisoDeBajaDeProducto",
+            tipoDeMensaje:"traders.producto.baja",
 			de: contacto.id
 		}, function(mensaje){
 			
-			contacto.inventario = $.grep(contacto.inventario, function(prod){
-				return prod.id != mensaje.datoSeguro.id_producto;
-			});
+			_this.quitarProducto(mensaje.datoSeguro.producto, false);
 			
 			_this.onNovedades();
 		});
