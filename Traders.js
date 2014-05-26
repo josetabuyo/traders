@@ -96,8 +96,6 @@ var Traders = {
 			debo: []
         };
 		
-		
-		
         
 		
 		////parche para atajar las respuestas
@@ -448,43 +446,64 @@ var Traders = {
     },
 	
     
-	aceptarTruequeDe: function(contacto){
+	aceptarTrueque: function(trueque){
 		
-        if(contacto.trueque.estado != "recibido") return;
-        
+		
+        if(trueque.estado == "cerrado"){
+			alert('Este trueque ya está cerrado.');
+			return;
+		}
+		
+		trueque.estado = "cerrado";
+		
+		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		
+		if(_oferta.estado != 'recibida'){
+			alert('La oferta tiene modificaciones, deberías ofertar.');
+			return;
+		}
+		
+		//tipoDeMensaje:"traders.aceptacionDeTrueque",
+		
+		
+		
 		vx.send({
-            tipoDeMensaje:"traders.aceptacionDeTrueque",
-            para: id_contacto,
+            tipoDeMensaje:"traders.trueque.aceptar",
+            para: trueque.contacto.id,
             de: this.usuario.id,
             datoSeguro:{
-				recibo: contacto.trueque.propuestas.usuario.suyo,
-                doy: contacto.trueque.propuestas.usuario.mio
+				trueque: {id : trueque.id},
+				oferta: _oferta
             }
         });
 		
-        this._concretarTruequeCon(contacto);
+		
+        this._concretarTrueque(trueque);
         this.onNovedades();
     },
-    _concretarTruequeCon: function(contacto){
+	
+	
+    _concretarTrueque: function(trueque){
         var _this = this;
         
-		_.each(contacto.trueque.propuestas.usuario.mio, function(id_producto){
-		    //_this.quitarProducto(id_producto);
-			//ver de usar delete
-			this.usuario.inventario = $.grep(this.usuario.inventario, function(prod){
-				return prod.id != id_producto;
-			});
+		
+		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		
+		_.each(_oferta.doy, function(id_producto){
+		    _this.quitarProducto(id_producto);
         });
 		
-        _.each(contacto.trueque.propuestas.usuario.suyo, function(id_producto){
-            
-			this.usuario.inventario.push(producto);
-			
-			contacto.inventario = $.grep(contacto.inventario, function(prod){
-				return prod.id != id_producto;
-			});
-			
+		
+		_.each(_oferta.recibo, function(id_producto){
+		    
+			_this.agregarProducto({
+                nombre: id_producto //MAL TO DO
+            });
         });
+		
+        
 		
 		//TO DO: historiar, no borrar, guardar muchos trueques
         contacto.trueque.propuestas.usuario.mio.length = 0;
@@ -675,15 +694,17 @@ var Traders = {
 		        
 		
         vx.when({
-            tipoDeMensaje:"traders.aceptacionDeTrueque",
+            tipoDeMensaje:"traders.trueque.aceptar",
 			para: this.usuario.id,
 			de: contacto.id
 		}, function(mensaje){
 			
+			// TO DO
+			
 			contacto.trueque.propuestas.contacto.mio = mensaje.datoSeguro.recibo;
 			contacto.trueque.propuestas.contacto.suyo = mensaje.datoSeguro.doy;
 			
-			_this._concretarTruequeCon(contacto);
+			_this._concretarTrueque(trueque);
 			
 			_this.onNovedades();
 		});
