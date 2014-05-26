@@ -1,4 +1,3 @@
-//funciona pushear desde codio (borrar esto)
 $(document).ready(function() {  
     //toda esta garcha es para detectar si la aplicacion esta corriendo en un celular o en una pc.
     //En el celular para arrancar la app hay que esperar al evento deviceReady, en la pc solo al documentReady
