@@ -49,8 +49,11 @@ var PantallaTrueque = {
 		$oferta_doy.empty();
 		
         _.each(oferta.doy, function(id_producto){
+			var producto = Traders.productos({
+				propietario: usuario.id, 
+				id: id_producto
+			})[0];
 			
-			var producto = _.findWhere(Traders.usuario.inventario, {id: id_producto});
 			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
@@ -62,8 +65,13 @@ var PantallaTrueque = {
 
 		var $oferta_recibo = this.ui.find("#oferta .oferta_recibo");
 		$oferta_recibo.empty();
+		
+		
         _.each(oferta.recibo, function(id_producto){
-			var producto = _.findWhere(contacto.inventario, {id: id_producto});
+			var producto = Traders.productos({
+				propietario: contacto.id, 
+				id: id_producto
+			})[0];
 			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
@@ -73,8 +81,13 @@ var PantallaTrueque = {
 
 		var $inventario_usuario = this.ui.find("#inventario_usuario");
         $inventario_usuario.empty();
-		_.each(usuario.inventario, function(producto){
 		
+		
+		_.each(Traders.productos({
+			propietario: usuario.id
+		
+		}), function(producto){
+			
 			var vista = new VistaDeUnProductoEnInventario({
                 producto: producto,
                 seleccionadoParaTrueque: oferta.doy.indexOf(producto.id)>-1,
@@ -92,7 +105,12 @@ var PantallaTrueque = {
 		
 		var $inventario_contacto = this.ui.find("#inventario_contacto");
         $inventario_contacto.empty();
-		_.each(contacto.inventario, function(producto){
+		
+		
+		_.each(Traders.productos({
+			propietario: contacto.id
+		
+		}), function(producto){
 		
 			var vista = new VistaDeUnProductoEnInventario({
                 producto: producto,

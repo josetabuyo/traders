@@ -45,11 +45,15 @@ var PantallaContacto = {
         
 		
 		//PantallaListaContactos.render();
-		var _contacto = PantallaListaContactos.contacto_seleccionado;
+		var contacto = PantallaListaContactos.contacto_seleccionado;
         
-        this.lbl_nombre_contacto.text(_contacto.nombre);
+        this.lbl_nombre_contacto.text(contacto.nombre);
         this.panel_inventario_contacto.empty();
-        _.each(_contacto.inventario, function(producto){
+        
+		_.each(Traders.productos({
+			propietario: contacto.id
+		
+		}), function(producto){
 			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
@@ -58,7 +62,7 @@ var PantallaContacto = {
 			
         });
         
-        if(_contacto.id == "") this.panel_contacto.hide();
+        if(contacto.id == "") this.panel_contacto.hide();
         else this.panel_contacto.show();
         
         
