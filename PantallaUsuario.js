@@ -7,7 +7,8 @@ var PantallaUsuario = {
         this.panel_inventario = this.ui.find("#panel_inventario");
         this.panel_me_deben = this.ui.find("#panel_me_deben");
         this.panel_debo = this.ui.find("#panel_debo");
-		this.img_avatar_usuario = this.ui.find(".avatar_usuario");
+		this.img_avatar_usuario = this.ui.find("#avatar_usuario");
+        this.video_para_sacar_foto= this.ui.find("#video_para_sacar_foto")[0];
 		
         this.btn_add_producto = this.ui.find("#btn_add_producto");
         this.txt_nombre_producto_add = this.ui.find("#txt_nombre_producto_add");
@@ -38,27 +39,20 @@ var PantallaUsuario = {
 		this.btn_compartir_id = this.ui.find("#btn_compartir_id");
 		
 		this.btn_compartir_id.click(function(){
-			
-			
 			alertify.prompt("Compartí tu Id", function (e, str) {
 				if (e) {
 					clipboardCopy(Traders.usuario.id);
-				} else {
-					
 				}
 			}, Traders.usuario.id);
 		});
 		
         this.btn_sacar_foto = this.ui.find("#btn_sacar_foto");
 		this.btn_sacar_foto.click(function(){		
-            var video = $('<video id="video" width="320px" height="240px" autoplay></video>')[0];
             var canvas = $('<canvas>')[0];
             var width = 320;
             var height = 240;
             var streaming = false;
             
-            _this.ui.append($(canvas));  
-            _this.ui.append($(video));
             var ctx = canvas.getContext('2d');
             
             var errBack = function(error) {
@@ -77,38 +71,29 @@ var PantallaUsuario = {
                 },
                 function(stream) {
                     if (navigator.mozGetUserMedia) { 
-                        video.mozSrcObject = stream;
+                        _this.video_para_sacar_foto.mozSrcObject = stream;
                     } else {
                         var vendorURL = window.URL || window.webkitURL;
-                        video.src = vendorURL ? vendorURL.createObjectURL(stream) : stream;
+                        _this.video_para_sacar_foto.src = vendorURL ? vendorURL.createObjectURL(stream) : stream;
                     }
-                    video.play();
-                    
-                    
+                    _this.video_para_sacar_foto.play();
+                    $(_this.video_para_sacar_foto).show();
+                    _this.img_avatar_usuario.hide();
                 },
                 function(err) {
                     console.log("An error occured! " + err);
                 }
             );
             
-            video.addEventListener('canplay', function(ev){
-                if (!streaming) {
-                    height = video.videoHeight / (video.videoWidth/width);
-                    video.setAttribute('width', width);
-                    video.setAttribute('height', height);
-                    canvas.setAttribute('width', width);
-                    canvas.setAttribute('height', height);
-                    streaming = true;
-                }   
-            }, false);
-            var btn_sacar_foto2 = this.ui.find("#btn_sacar_foto2");
+            var btn_sacar_foto2 = _this.ui.find("#btn_sacar_foto2");
             btn_sacar_foto2.click(function(){
                 canvas.width = width;
                 canvas.height = height;
-                canvas.getContext('2d').drawImage(video, 0, 0, width, height);
+                canvas.getContext('2d').drawImage(_this.video_para_sacar_foto, 0, 0, width, height);
                 var imagen_serializada = canvas.toDataURL('image/jpeg');
-                console.log(imagen_serializada);   
                 _this.img_avatar_usuario.attr("src", imagen_serializada);
+                $(_this.video_para_sacar_foto).hide();
+                _this.img_avatar_usuario.show();
             });
         });
         

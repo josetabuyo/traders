@@ -85,7 +85,10 @@
 				<ul class="panel panel_izq">
 					<li>
 						<div class="datos_usuario">
-							<img class="avatar_usuario" src="avatar.png"/>
+                            <div id="div_recorte_avatar">
+                                <img id="avatar_usuario" src="avatar.png" class="avatar_usuario" />
+                                <video id="video_para_sacar_foto" autoplay></video>
+                            </div>
 							<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
 							<div class="botonera_usuario">
 								<input id="btn_compartir_id" type="button" value="Compartir Id"/>
@@ -93,20 +96,7 @@
                                 <input id="btn_sacar_foto2" type="button" value="foto2"/>
 							</div>
 						</div>
-					</li>
-					
-					<li>
-						<div id="panel_trueques_pendientes_container" class="seccion_container">
-							<div class="titulo_panel">
-								<div class="descripcion_titulo">Trueques pendientes</div>
-								<input id="btn_add_trueque" type="button" value="+"/>
-							</div>
-							<div id="panel_trueques_pendientes">
-							</div>
-						</div>
-					</li>
-					
-					
+					</li>				
 				</ul>
 				<ul class="panel panel_der">
 					<li>
