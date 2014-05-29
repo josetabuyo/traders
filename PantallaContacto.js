@@ -19,7 +19,7 @@ var PantallaContacto = {
 		
         this.panel_contacto = this.ui.find("#panel_contacto");
         this.lbl_nombre_contacto = this.ui.find("#lbl_nombre_contacto");
-		
+		this.img_avatar_contacto = this.ui.find("#avatar_contacto");
 		
         this.panel_inventario_contacto = this.ui.find("#panel_inventario_contacto");
         this.btn_trocar = this.ui.find("#btn_trocar");
@@ -48,6 +48,7 @@ var PantallaContacto = {
 		var _contacto = PantallaListaContactos.contacto_seleccionado;
         
         this.lbl_nombre_contacto.text(_contacto.nombre);
+		if(_contacto.avatar!="") this.img_avatar_contacto.attr("src", _contacto.avatar);
         this.panel_inventario_contacto.empty();
         _.each(_contacto.inventario, function(producto){
 			
