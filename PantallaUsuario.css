@@ -142,11 +142,15 @@
 	left: 50%;
 }
 
+#avatar_usuario{
+    cursor:pointer;
+}
 
 #video_para_sacar_foto {
     height: 100px;
     width: 133px;
     margin-left: -16px;
+    cursor: pointer;
 }
 
 #div_recorte_avatar{

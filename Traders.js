@@ -1,8 +1,4 @@
 var Traders = {
-    
-	
-	
-	
 	nextProductoId: function(){
 		
 		var maxValue = -1;
@@ -18,16 +14,13 @@ var Traders = {
 		return maxValue;
 		
 	},
-	usuario: {},
 	
-	
-	
+    usuario: {},
 	
     _onUsuarioLogueado:function(){},
 	
-	
-	
 	_onNovedades:[],
+    
 	onNovedades: function(){
 		var _this = this;
 		
@@ -93,7 +86,8 @@ var Traders = {
             nombre: _nombre,
             inventario: [],
 			me_deben: [], 
-			debo: []
+			debo: [],
+            avatar:""
         };
 		
 		
@@ -131,7 +125,8 @@ var Traders = {
 				datoSeguro: {
 					contacto: {
 						nombre: _this.usuario.nombre,
-						inventario: _this.usuario.inventario
+						inventario: _this.usuario.inventario,
+						avatar:_this.usuario.avatar
 					}
 				}
 			});
@@ -236,7 +231,7 @@ var Traders = {
 		};
 		
 		if(typeof(Storage)!=="undefined"){
-			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
+			//no se si usar la clave privada ahi o algo m?seguro que solo yo tenga
 			
 			localStorage.setItem(this.usuario.id, JSON.stringify(_dato));
 			
@@ -259,7 +254,7 @@ var Traders = {
 		var _this = this;
 		
 		if(typeof(Storage)!=="undefined"){
-			//no se si usar la clave privada ahi o algo más seguro que solo yo tenga
+			//no se si usar la clave privada ahi o algo m?seguro que solo yo tenga
 			var sDatos = localStorage.getItem(this.usuario.id);
 			
 			this.setDataUsuario(JSON.parse(sDatos));
@@ -276,7 +271,6 @@ var Traders = {
 		
 		
     },
-	
 	
 	_trueques:[],
     trueques:function(p){
@@ -427,7 +421,7 @@ var Traders = {
 		
 		
 		if(_oferta.estado == 'enviada'){
-			alert('Ya hiciste tu oferta, esperá la respuesta.');
+			alert('Ya hiciste tu oferta, esper?a respuesta.');
 			return;
 		}
 		
@@ -530,7 +524,8 @@ var Traders = {
 					id: arguments[0],
 					estado: 'SIN_CONFIRMAR',
 					nombre: null,
-					inventario: []
+					inventario: [],
+					avatar:""
 				};
 				this._contactos.push(contacto);
 			}
@@ -543,7 +538,8 @@ var Traders = {
 					contacto: {
 						id: this.usuario.id,
 						nombre: this.usuario.nombre,
-						inventario: this.usuario.inventario
+						inventario: this.usuario.inventario,
+						avatar:this.usuario.avatar
 					}
 				}
 				
@@ -596,7 +592,7 @@ var Traders = {
 		*/
 		
 		
-		//publico todos los filtros de él
+		//publico todos los filtros de ?
 		vx.when({
 			tipoDeMensaje:"traders.inventario",
 			de: contacto.id
@@ -711,7 +707,11 @@ var Traders = {
         });
 		
 		this.onNovedades();
-	}
-	
+	},
+	cambiarAvatar: function(imagen_codificada){
+        this.usuario.avatar=imagen_codificada;
+		this.onNovedades();
+    }
+
 	
 };

@@ -34,10 +34,7 @@ var PantallaUsuario = {
             Traders.loadDataUsuario();
         });
         
-		
-		
 		this.btn_compartir_id = this.ui.find("#btn_compartir_id");
-		
 		this.btn_compartir_id.click(function(){
 			alertify.prompt("Compartí tu Id", function (e, str) {
 				if (e) {
@@ -45,15 +42,11 @@ var PantallaUsuario = {
 				}
 			}, Traders.usuario.id);
 		});
-		
-        this.btn_sacar_foto = this.ui.find("#btn_sacar_foto");
-		this.btn_sacar_foto.click(function(){		
-            var canvas = $('<canvas>')[0];
-            var width = 320;
-            var height = 240;
+		var video_stream;
+        this.img_avatar_usuario.click(function(){		            
+            var width = 100;
+            var height = 100;
             var streaming = false;
-            
-            var ctx = canvas.getContext('2d');
             
             var errBack = function(error) {
                     console.log("Video capture error: ", error.code); 
@@ -70,6 +63,7 @@ var PantallaUsuario = {
                     audio: false 
                 },
                 function(stream) {
+                    video_stream = stream;
                     if (navigator.mozGetUserMedia) { 
                         _this.video_para_sacar_foto.mozSrcObject = stream;
                     } else {
@@ -84,30 +78,36 @@ var PantallaUsuario = {
                     console.log("An error occured! " + err);
                 }
             );
-            
-            var btn_sacar_foto2 = _this.ui.find("#btn_sacar_foto2");
-            btn_sacar_foto2.click(function(){
-                canvas.width = width;
-                canvas.height = height;
-                canvas.getContext('2d').drawImage(_this.video_para_sacar_foto, 0, 0, width, height);
-                var imagen_serializada = canvas.toDataURL('image/jpeg');
-                _this.img_avatar_usuario.attr("src", imagen_serializada);
-                $(_this.video_para_sacar_foto).hide();
-                _this.img_avatar_usuario.show();
-            });
+        });
+        
+        $(this.video_para_sacar_foto).click(function(){
+            var canvas = $('<canvas>')[0];
+            var ctx = canvas.getContext('2d');
+            canvas.width = 100;
+            canvas.height = 100;
+            var alto_rec_video = _this.video_para_sacar_foto.videoHeight;
+            var x_rec = (_this.video_para_sacar_foto.videoWidth - alto_rec_video)/2;
+            canvas.getContext('2d').drawImage(_this.video_para_sacar_foto, x_rec, 0, alto_rec_video, alto_rec_video, 0, 0, 100, 100);
+            var imagen_serializada = canvas.toDataURL('image/jpeg');
+            _this.img_avatar_usuario.attr("src", imagen_serializada);
+			Traders.cambiarAvatar(imagen_serializada);
+            $(_this.video_para_sacar_foto).hide();
+            _this.img_avatar_usuario.show();
+            _this.video_para_sacar_foto.pause();
+            video_stream.stop();
         });
         
 		Traders.onNovedades(function(){
 			if(_this.ui.is(':visible')){
 				_this.render();
 			}
-        });
-		
+        });		
 		
         this.txt_nombre_producto_add.focus();
     },
     render: function(){
         this.lbl_nombre_usuario.text(Traders.usuario.nombre);
+		if(Traders.usuario.avatar!="") this.img_avatar_usuario.attr("src", Traders.usuario.avatar);
         this.panel_inventario.empty();
         this.panel_me_deben.empty();
         this.panel_debo.empty();
