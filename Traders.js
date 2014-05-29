@@ -130,24 +130,31 @@ var Traders = {
 	
 	
 	
-    agregarProducto: function(producto){
+    agregarProducto: function(){
 		var Traders = this;
 		
-		var _producto = ClonadorDeObjetos.extend(producto,{
-			id: Traders.nextProductoId()
-		});
+		var producto = arguments[0];
+		
+		var flagInformar;
+		
+		if(arguments.length == 2){
+			flagInformar = arguments[1];
+		}
+		
+		producto.id = Traders.nextProductoId();
 		
 		
-		this._productos.push(_producto);
+		this._productos.push(producto);
 		
-		
-        vx.send({
-            tipoDeMensaje:"traders.productos.alta",
-            de: this.usuario.id,
-            datoSeguro: {
-                producto: _producto
-            }
-        });
+		if(flagInformar){
+			vx.send({
+				tipoDeMensaje:"traders.productos.alta",
+				de: this.usuario.id,
+				datoSeguro: {
+					producto: producto
+				}
+			});
+		}
 		
         this.onNovedades();
     },
@@ -284,13 +291,14 @@ var Traders = {
 				return _producto.nombre.indexOf(p.query)>=0 || _producto.id == p.query;
 			});
 			
-        }else if(p.contacto){
+        } else {
+			console.log('==========================');
+			console.log('Han filtrado los productos');
+			console.log('==========================');
+			console.log('array de _productos', this._productos);
+			console.log('filtro "p"', p);
+			console.log('==========================');
 			
-			return _.filter(this._productos, function(_producto){
-				return _producto.contacto.id == p.contacto.id;
-			});
-			
-		} else {
 			return _.where(this._productos, p);
 		}
     },
@@ -725,7 +733,7 @@ var Traders = {
 			})!== undefined) return;
 			
 			
-			Traders.agregarProducto(_producto);
+			Traders.agregarProducto(_producto, false);
 			
 			Traders.onNovedades();
 		});

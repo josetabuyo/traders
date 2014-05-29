@@ -18,7 +18,7 @@ var PantallaUsuario = {
             Traders.agregarProducto({
 				propietario: Traders.usuario.id,
                 nombre:_this.txt_nombre_producto_add.val()
-            });
+            }, true);
             _this.txt_nombre_producto_add.val("");
         }); 
 		this.txt_nombre_producto_add.keypress(function(e) {
