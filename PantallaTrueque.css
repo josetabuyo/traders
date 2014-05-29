@@ -121,6 +121,11 @@
 	border: solid 1px;
 }
 
+#pantalla_trueque #avatar_contacto,
+#pantalla_trueque #avatar_usuario{
+	margin-top: 5px;
+	margin-left: 5px;
+}
 
 
 

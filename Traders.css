@@ -135,6 +135,8 @@ ul {
 .avatar_usuario {
     height: 100px;
     width: 100px;
+	border-radius: 50%;
+	border: solid black;
 }
 
 .lbl_nombre_usuario {

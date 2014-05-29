@@ -43,6 +43,8 @@ var PantallaTrueque = {
         this.ui.find("#lbl_nombre_usuario").text(usuario.nombre);
 		this.ui.find("#lbl_nombre_contacto").text(contacto.nombre);
 		
+		if(usuario.avatar!="") this.ui.find("#avatar_usuario").attr("src", usuario.avatar);
+		if(contacto.avatar!="") this.ui.find("#avatar_contacto").attr("src", contacto.avatar);
 		
 		
 		var $oferta_doy = this.ui.find("#oferta .oferta_doy");

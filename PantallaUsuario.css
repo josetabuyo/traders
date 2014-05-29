@@ -144,6 +144,8 @@
 
 #avatar_usuario{
     cursor:pointer;
+	margin-left: -2px;
+	margin-top: -3px;
 }
 
 #video_para_sacar_foto {
