@@ -684,9 +684,13 @@ var Traders = {
 			_this.onNovedades();
 		});
 		
-		
-		
-		
+		vx.when({
+			tipoDeMensaje:"traders.avisoDeCambioDeAvatar",
+			de: contacto.id
+		}, function(mensaje){
+			contacto.avatar = mensaje.datoSeguro.avatar;
+			_this.onNovedades();
+		});
 		
 		_this.onNovedades();
 		
@@ -710,6 +714,14 @@ var Traders = {
 	},
 	cambiarAvatar: function(imagen_codificada){
         this.usuario.avatar=imagen_codificada;
+		vx.send({
+            tipoDeMensaje:"traders.avisoDeCambioDeAvatar",
+            de: this.usuario.id,
+            datoSeguro: {
+                avatar: imagen_codificada
+            }
+        });
+		
 		this.onNovedades();
     }
 
