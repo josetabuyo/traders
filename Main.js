@@ -17,17 +17,10 @@ $(document).ready(function() {
 var onDeviceReady = function() {     
     vx.start({verbose:false});
     
-//    vx.conectarPorHTTP({
-//        //url:'http://router-vortex.herokuapp.com',
-//        url:'http://localhost:3000',
-//        intervalo_polling: 50
-//    }); 
-    
-    vx.conectarPorWebSockets({
-        url:'https://router-vortex.herokuapp.com' 
-        //url:'http://localhost:3000'
-    });   
-    
+	//'https://router-vortex.herokuapp.com' 
+	// url:'http://router-vortex.herokuapp.com',
+	// url:'http://localhost:3000',
+	
     PantallaInicio.start();
     BarraSuperior.start();
     
@@ -37,10 +30,11 @@ var onDeviceReady = function() {
 		PantallaListaContactos.start();
 		PantallaContacto.start();
 		
-		
 		PantallaListaTrueques.start();
 		PantallaTrueque.start();
 		
+		PantallaListaConexiones.start();
+
 		
         PersistidorManual.start(Traders.usuario.id);
 		

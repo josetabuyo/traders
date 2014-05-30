@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="PantallaContacto.css" />
 		<link rel="stylesheet" href="PantallaListaTrueques.css" />
         <link rel="stylesheet" href="PantallaTrueque.css" />
+        <link rel="stylesheet" href="PantallaListaConexiones.css" />
 		
 		
 		
@@ -75,8 +76,8 @@
 				<div id="solapa_productos" class="solapa">
 					Productos
 				</div>
-				<div id="solapa_cerrar" class="solapa">
-					Red
+				<div id="solapa_vortex" class="solapa">
+					Conexiones
 				</div>
 				
 			</div>
@@ -214,16 +215,25 @@
 				</div>
 				
             </div>
+			
+			<div id="pantalla_lista_conexiones" class="pantalla">
+				<div id="panel_alta_conexion">
+					<input id="btn_add_conexion" type="button" value="+"/>
+				</div>
+				<div id="lista_conexiones">
+				</div>
+			</div>
+			
         </div>
     </body>
     
     <div id="plantillas">
-        <div class="contacto_en_lista">
+        <div class="contacto_en_lista item_en_lista">
             <div id="nombre"></div>
 			<div id="btn_eliminar">x</div>
         </div>
 		
-		<div class="trueque_en_lista">
+		<div class="trueque_en_lista item_en_lista">
             <div id="nombre"></div>
 			<div id="btn_eliminar">x</div>
         </div>
@@ -231,7 +241,13 @@
         <div class="producto_en_inventario">
             <div id="nombre"></div>
             <div id="btn_eliminar">x</div>
-        </div>        
+        </div>   
+		
+		<div class="conexion_en_lista item_en_lista">
+			<input id="rad_activar" name="selectores_conexion" type="radio"/>
+            <div id="url"></div>
+			<div id="btn_eliminar">x</div>
+        </div>
     </div>
     
     <script type="text/javascript" src="jquery-1.10.2.min.js"></script> 
@@ -260,6 +276,7 @@
     <script type="text/javascript" src="BarraSuperior.js"></script> 
     <script type="text/javascript" src="PantallaUsuario.js"></script> 
     <script type="text/javascript" src="PantallaListaContactos.js"></script> 
+	<script type="text/javascript" src="PantallaListaConexiones.js"></script> 
     <script type="text/javascript" src="PantallaContacto.js"></script> 
     <script type="text/javascript" src="PantallaListaTrueques.js"></script> 
 	<script type="text/javascript" src="PantallaTrueque.js"></script> 

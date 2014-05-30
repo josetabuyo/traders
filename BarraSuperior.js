@@ -8,6 +8,7 @@ var BarraSuperior = {
 		this.solapa_contactos 	= this.ui.find("#solapa_contactos");
 		this.solapa_trueques 	= this.ui.find("#solapa_trueques");
 		this.solapa_productos 	= this.ui.find("#solapa_productos");
+		this.solapa_vortex 		= this.ui.find("#solapa_vortex");
 		
 		
 		
@@ -19,8 +20,7 @@ var BarraSuperior = {
 		
 		this.solapa_yo.click(function(e) {
 			PantallaUsuario.render();
-		});
-		
+		});		
 		
 		this.solapa_contactos.click(function(e) {
 			PantallaListaContactos.render();
@@ -33,7 +33,11 @@ var BarraSuperior = {
 		});	
 		
 		this.solapa_productos.click(function(e) {
-			PantallaTrueque.render();
+			//PantallaTrueque.render();
+		});	
+
+		this.solapa_vortex.click(function(e) {
+			PantallaListaConexiones.render();
 		});	
 		
     },

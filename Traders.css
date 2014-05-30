@@ -140,18 +140,13 @@ ul {
 }
 
 .lbl_nombre_usuario {
-	
 	position: absolute;
 	top: 80px;
 	left: 115px;
-	
-	
 	font-size: 45px;
     font-weight: bold;
     vertical-align: bottom;
 }
-
-
 
 .botonera_usuario {
 	position: absolute;
@@ -164,4 +159,27 @@ ul {
 	border: solid 1px;
 	/*position: absolute;
 	bottom: 0px;*/
+}
+
+.item_en_lista{
+	font-size: 25px;
+	vertical-align: bottom;
+	height: 21px;
+	border: 1px solid black;
+	border-radius: 5px;
+	transition: all .5s ease;
+	cursor: pointer;
+	margin: 5px;
+	position: relative;
+	padding: 10px;
+}
+
+.item_en_lista:hover{
+    background-color: rgb(231, 231, 231);
+}
+
+.item_en_lista #btn_eliminar{
+	position: absolute;
+	right: 10px;
+	top: 8px;
 }

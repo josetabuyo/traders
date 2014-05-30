@@ -195,28 +195,38 @@ var Traders = {
 	setDataUsuario: function(dato){
 		var _this = this;
 		
-		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
+		if(dato) {
+			this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
-		
-		if(dato.trueques){
 			this._trueques = dato.trueques;
-		}
 		
-		if(dato.contactos){
 			$.each(dato.contactos, function(index, item){
 				_this.agregarContacto(item);
 			});
+
+			this._conexiones = dato.conexiones;
+			this.id_conexion_activa = dato.id_conexion_activa;
+		}
+		else{
+			this._trueques = [];
+			var conexion = this.agregarConexion("https://router-vortex.herokuapp.com");
+			this.id_conexion_activa = conexion.id;
 		}
 		
+
+		vx.conectarPorWebSockets({
+			url:this.conexionActiva().url
+		}); 
 		
-		vx.send({
-			tipoDeMensaje: "traders.inventario",
-			de: _this.usuario.id,
-			datoSeguro:{
-				inventario:_this.usuario.inventario
-			}
-		});
-		
+		setTimeout(function(){
+			vx.send({
+				tipoDeMensaje: "traders.inventario",
+				de: _this.usuario.id,
+				datoSeguro:{
+					inventario:_this.usuario.inventario
+				}
+			});
+		}, 200);
 		
 		this.onNovedades();
 	},
@@ -227,7 +237,9 @@ var Traders = {
 		var _dato = {
 			usuario: 					this.usuario,
 			contactos:					this.contactos(),
-			trueques:					this.trueques()
+			trueques:					this.trueques(),
+			conexiones:					this.conexiones(),
+			id_conexion_activa:			this.id_conexion_activa
 		};
 		
 		if(typeof(Storage)!=="undefined"){
@@ -723,7 +735,57 @@ var Traders = {
         });
 		
 		this.onNovedades();
-    }
-
+    },
 	
+	_conexiones:[],
+    conexiones:function(p){
+        if(!p) 
+			return this._conexiones;
+        if(p.id!==undefined) 
+			return _.findWhere(this._conexiones, {id:p.id});
+    },
+	
+	nextConexionId: function(){
+		var maxValue = -1;
+		
+		_.each(this._conexiones, function(conexion){
+			if(conexion.id > maxValue){
+				maxValue = conexion.id;
+			}
+		});
+		
+		maxValue++;
+		
+		return maxValue;
+	},
+	
+	agregarConexion:function(url){
+		var conexion = {
+			id: this.nextConexionId(),
+			url: url
+		}; 
+		this._conexiones.push(conexion);
+		this.onNovedades();
+		return conexion;		
+	},
+	
+	quitarConexion:function(id){
+		this._conexiones = $.grep(this._conexiones, function(item){
+            return item.id != id;
+        });
+		
+		this.onNovedades();		
+	},
+	
+	activarConexion: function(id_conexion){
+		this.id_conexion_activa = id_conexion;
+		vx.conectarPorWebSockets({
+			url:this.conexionActiva().url
+		}); 
+		this.onNovedades();
+	},
+	
+	conexionActiva: function(){
+		return this.conexiones({id:this.id_conexion_activa})
+	}
 };

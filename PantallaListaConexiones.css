@@ -1,0 +1,16 @@
+.conexion_en_lista {
+}
+
+.conexion_en_lista #chk_activar {
+	
+}
+
+.conexion_en_lista #url {
+	display: inline-block;
+}
+
+.conexion_en_lista #btn_eliminar {
+	position: absolute;
+	right: 10px;
+	top: 8px;
+}
