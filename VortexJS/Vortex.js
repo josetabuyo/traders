@@ -34,16 +34,19 @@ var Vortex = Vx = vX = vx = {
         this.router = new NodoRouter();
         this.claveRSAComun = cryptico.generateRSAKey("VORTEXCAPO", 1024);                               //ATA
 		
-		
-		
         this.clavePublicaComun = cryptico.publicKeyString(this.claveRSAComun);                          //PINGO
         this.portales = [];
         this.keys = [];
 		
 		this.lastRequest = 0;
-		
+		this.conexion_web;
     },
     conectarPorHTTP: function(p){
+		if(this.conexion_web){
+			this.conexion_web.alDesconectar = function(){};
+			this.conexion_web.desconectarDe(this.router);
+			this.adaptadorWebSockets = {};
+		}
         var _this = this;
         p.verbose = this.verbose;
         p.alDesconectar = function(){
@@ -51,8 +54,15 @@ var Vortex = Vx = vX = vx = {
         }
         this.adaptadorHTTP = new NodoClienteHTTP(p);
         this.router.conectarBidireccionalmenteCon(this.adaptadorHTTP);
+		
+		this.conexion_web = this.adaptadorHTTP;
     },
     conectarPorWebSockets: function(p){
+		if(this.conexion_web){
+			this.conexion_web.alDesconectar = function(){};
+			this.conexion_web.desconectarDe(this.router);
+			this.adaptadorHTTP = {};
+		}
         var _this = this;
         var socket = io.connect(p.url);    
         this.adaptadorWebSockets = new NodoConectorSocket({
@@ -64,6 +74,7 @@ var Vortex = Vx = vX = vx = {
             }
         });    
         this.router.conectarBidireccionalmenteCon(this.adaptadorWebSockets);
+		this.conexion_web = this.adaptadorWebSockets;
     },
     conectarPorBluetoothConArduino: function(p){
         this.adaptadorArduino = new NodoAdaptadorBluetoothArduino(p);

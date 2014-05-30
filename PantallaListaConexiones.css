@@ -9,8 +9,27 @@
 	display: inline-block;
 }
 
-.conexion_en_lista #btn_eliminar {
+#pantalla_lista_conexiones
+#btn_add_conexion{
 	position: absolute;
-	right: 10px;
-	top: 8px;
+	top:3px;
+	right:3px;
+}
+
+#pantalla_lista_conexiones
+	#panel_alta_conexion
+{
+	position: absolute;
+	top:0;
+	right:0;
+	
+}
+
+#pantalla_lista_conexiones
+#lista_conexiones {
+    position: absolute;
+    top: 28px;
+    left: 0px;
+    right: 0px;
+    bottom: 60px;
 }
