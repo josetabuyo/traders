@@ -167,11 +167,27 @@ var Traders = {
 			flagInformar = arguments[1];
 		}
 		
+		this._productos = $.grep(this._productos, function(_producto){
+			return !(_producto.id == producto.id && _producto.propietario == producto.propietario);
+		});
 		
+<<<<<<< HEAD
 		this._productos = $.grep(this._productos, function(item){
             return !(item.id == producto.id && item.propietario == producto.propietario);
         });
 		
+=======
+		/*
+		_.each(this.productos(), function(_producto, i, lista){
+			if(	producto.id == _producto.id &&
+				producto.propietario == _producto.propietario
+			)
+			delete lista[i];
+			
+			return false;
+		});
+		*/
+>>>>>>> cefaaaf62d1c66695419e89a8ca7e019459018f4
 		
 		if(flagInformar){
 			vx.send({
@@ -595,7 +611,11 @@ var Traders = {
 		var lista_insert = _.difference(productos, lista_original);
 		
 		var lista_delete = _.difference(lista_original, productos);
-				
+		
+		console.log('lista_insert', lista_insert);
+		console.log('lista_delete', lista_delete);
+		
+		
 		_.each(lista_insert, function(_producto){
 			Traders.agregarProducto(_producto, false);
 		});
