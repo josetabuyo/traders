@@ -1,5 +1,5 @@
 var RepositorioDeConexiones = {
-	start:function(id_usuario){
+	start: function(id_usuario){
 		this.id_usuario = id_usuario;
 		var datos_guardados = localStorage.getItem(this.id_usuario + "_conexiones");
 		if(datos_guardados)	{
@@ -19,15 +19,15 @@ var RepositorioDeConexiones = {
 	_items:[],
 	_next_item_id: function(){
 		var maxValue = -1;		
-		_.each(this._items, function(item){
-			if(item.id > maxValue){
+		_.each(this._items, function(item) {
+			if (item.id > maxValue) {
 				maxValue = item.id;
 			}
-		});		
-		maxValue++;		
+		});
+		maxValue++;
 		return maxValue;
 	},
-	add:function(item){
+	add: function(item){
 		item.id = this._next_item_id();
 		this._items.push(item);
 		localStorage.setItem(this.id_usuario + "_conexiones", JSON.stringify(this._items));
@@ -38,7 +38,7 @@ var RepositorioDeConexiones = {
 	onAdd: function(callback){
 		this._on_add_item = callback;
 	},
-	remove:function(id){
+	remove: function(id){
 		this._items = $.grep(this._items, function(item){
             return item.id != id;
         });
@@ -48,13 +48,9 @@ var RepositorioDeConexiones = {
 	onRemove: function(callback){
 		this._on_remove_item = callback;
 	},
-	find:function(query){
+	find: function(query){
 		if(!query) return this._items;     
 		return _.findWhere(this._items, query);
-	},
-	_on_conexion_activada:function(){},
-	onConexionActivada: function(callback){
-		this._on_conexion_activada = callback;
 	},
 	conexionActiva: function(){
 		return this.find({activa:true});
@@ -75,4 +71,8 @@ var RepositorioDeConexiones = {
 		localStorage.setItem(this.id_usuario + "_conexiones", JSON.stringify(this._items));
 		this._on_conexion_activada(conexion_activa);
 	},
+	_on_conexion_activada:function(){},
+	onConexionActivada: function(callback){
+		this._on_conexion_activada = callback;
+	}
 }
