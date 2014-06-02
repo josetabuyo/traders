@@ -36,17 +36,15 @@ var Traders = {
 	
 	
 	_contactos:[],
-    contactos:function(p){
-        if(!p) return this._contactos;
-        if(p.id) return _.findWhere(this._contactos, {id:p.id});
-        if(p.query){
-            if(p.query == "") 
-                return this._contactos;
-            else 
-                return _.filter(this._contactos, function(contacto){
-                    return contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
-                });  
-        }
+    contactos:function(){
+        
+		if(typeof(arguments[0]) == 'string'){
+			return _.where(this._contactos, {id: arguments[0]});
+		}else if(typeof(arguments[0]) == 'object'){
+			return _.where(this._contactos, arguments[0]);
+		}else{
+			return this._contactos;
+		}
     },
 	login: function(_nombre, password){
         var Traders = this;
@@ -170,14 +168,9 @@ var Traders = {
 		}
 		
 		
-		_.each(this.productos(), function(_producto, i, lista){
-			if(	producto.id == _producto.id &&
-				producto.propietario == _producto.propietario
-			)
-			delete lista[i];
-			
-			return false;
-		});
+		this._productos = $.grep(this._productos, function(item){
+            return !(item.id == producto.id && item.propietario == producto.propietario);
+        });
 		
 		
 		if(flagInformar){
@@ -197,7 +190,7 @@ var Traders = {
 		
 		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
-		
+		console.log('dato.productos', dato.productos);
 		if(dato.productos){
 			this._productos = dato.productos;
 		}
@@ -292,14 +285,12 @@ var Traders = {
 			});
 			
         } else {
-			console.log('==========================');
-			console.log('Han filtrado los productos');
-			console.log('==========================');
-			console.log('array de _productos', this._productos);
-			console.log('filtro "p"', p);
-			console.log('==========================');
 			
-			return _.where(this._productos, p);
+			if(this._productos.length > 0){
+				return _.where(this._productos, p);
+			}else{
+				return [];
+			}
 		}
     },
 	nextProductoId: function(){
@@ -329,6 +320,7 @@ var Traders = {
 	
 	_trueques:[],
     trueques:function(p){
+		var Traders = this;
         if(!p){
 		
 			return this._trueques;
@@ -336,13 +328,16 @@ var Traders = {
 		}else if(p.query){
 		
 			return _.filter(this._trueques, function(_trueque){
-				return _trueque.contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
+				
+				var contacto = Traders.contactos(trueque.contraparte)[0];
+				
+				return contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
 			});
 			
         }else if(p.contacto){
 			
 			return _.filter(this._trueques, function(_trueque){
-				return _trueque.contacto.id == p.contacto.id;
+				return _trueque.contraparte == p.contacto.id;
 			});
 			
 		} else {
@@ -376,7 +371,7 @@ var Traders = {
 		
         if(typeof(arguments[0]) == 'string'){
 			
-			var contacto = Traders.contactos({id:arguments[0]});
+			var contacto = Traders.contactos({id:arguments[0]})[0];
 			
 		}else if(typeof(arguments[0]) == 'object'){
 			contacto=arguments[0];
@@ -387,7 +382,7 @@ var Traders = {
 		var trueque = {
 			id: this.nextTruequeId(),
 			estado: "cero",
-			contacto: contacto,
+			contraparte: contacto.id,
 			ofertas:[
 				{
 					ofertante: 'usuario',
@@ -490,7 +485,7 @@ var Traders = {
 		
         vx.send({
             tipoDeMensaje:"traders.trueque.oferta",
-            para: trueque.contacto.id,
+            para: trueque.contraparte,
             de: this.usuario.id,
             datoSeguro:{
 				trueque: {id : trueque.id},
@@ -527,7 +522,7 @@ var Traders = {
 		
 		vx.send({
             tipoDeMensaje:"traders.trueque.aceptar",
-            para: trueque.contacto.id,
+            para: trueque.contraparte,
             de: this.usuario.id,
             datoSeguro:{
 				trueque: {id : trueque.id},
@@ -556,7 +551,7 @@ var Traders = {
 				propietario: Traders.usuario.id
 			})[0];
 			
-			producto.propietario = trueque.contacto.id;
+			producto.propietario = trueque.contraparte;
 			
         });
 		
@@ -565,7 +560,7 @@ var Traders = {
 		    
 			var producto = Traders.productos({
 				id: id_producto,
-				propietario: trueque.contacto.id
+				propietario: trueque.contraparte
 			})[0];
 			
 			producto.propietario = Traders.usuario.id;
@@ -625,7 +620,7 @@ var Traders = {
         if(typeof(arguments[0]) == 'string'){
 			
 			
-			var contacto = Traders.contactos({id:arguments[0]});
+			var contacto = Traders.contactos({id:arguments[0]})[0];
 			
 			if(!contacto){
 			
@@ -656,7 +651,7 @@ var Traders = {
 				
 			},function(mensaje){
 				
-				var contacto = Traders.contactos({id:mensaje.de});
+				var contacto = Traders.contactos({id:mensaje.de})[0];
 				
 				contacto = ClonadorDeObjetos.extend(contacto, mensaje.datoSeguro.contacto);
 				contacto.estado = 'CONFIRMADO';
@@ -674,7 +669,7 @@ var Traders = {
 		}else if(typeof(arguments[0]) == 'object'){
 			
 			
-			var contacto = Traders.contactos({id:arguments[0].id});
+			var contacto = Traders.contactos({id:arguments[0].id})[0];
 			if(!contacto){
 			
 				contacto=arguments[0];
@@ -683,27 +678,6 @@ var Traders = {
 			
 		}
 		
-		
-		
-		/*
-			
-		ojo con esta: mensaje de update y hace esto
-		
-		var contacto = Traders.contactos({id:mensaje.de});
-		contacto = ClonadorDeObjetos.extend(contacto, mensaje.datoSeguro.contacto);
-		
-		
-		PARA HACER ESTO DEBO PROBAR EL CLONADOR DE OBJETOS CON VECTORES
-		
-		obj:{
-			vec: [],
-			atrib: 'bla'
-			atrib: 'bla'
-		}
-		
-		tambien probar el $.extend
-		
-		*/
 		
 		
 		//publico todos los filtros de él

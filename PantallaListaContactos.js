@@ -15,6 +15,7 @@ var PantallaListaContactos = {
 			
 			alertify.prompt("Ingrese el id del usuario", function (e, str) {
 				if (e) {
+					
 					var contacto = Traders.agregarContacto(str);
 					
 					
@@ -112,6 +113,9 @@ var PantallaListaContactos = {
 		}
 		
         this.lista_contactos.empty();
+		
+		
+		console.log('Traders.contactos() para la render de tu madere lista', Traders.contactos());
 		
         _.each(Traders.contactos(), function(contacto){
 			_this.add(contacto);

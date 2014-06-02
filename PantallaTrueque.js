@@ -32,12 +32,15 @@ var PantallaTrueque = {
 		var _this = this;
 		
 		
+		
 		var usuario = Traders.usuario;
 		var trueque = PantallaListaTrueques.trueque_seleccionado;
 		
 		
-		var contacto = trueque.contacto;
+		var contacto = Traders.contactos(trueque.contraparte)[0];
+		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
+		
 		
 		
         this.ui.find("#lbl_nombre_usuario").text(usuario.nombre);

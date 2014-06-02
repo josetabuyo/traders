@@ -31,7 +31,9 @@ var PantallaListaTrueques = {
 		
 		var $trueque_en_lista = $("#plantillas .trueque_en_lista").clone();
 		
-		$trueque_en_lista.find("#nombre").text(trueque.contacto.nombre);
+		var contacto = Traders.contactos(trueque.contraparte)[0];
+		
+		$trueque_en_lista.find("#nombre").text(contacto.nombre);
 		
 		var btn_eliminar = $trueque_en_lista.find("#btn_eliminar");
 		btn_eliminar.click(function(e){
