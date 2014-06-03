@@ -32,7 +32,12 @@ var Traders = {
     },
 	
 	
-	
+	reset: function(){
+		this._contactos = [];
+		this._productos = [];
+		this._trueques = [];
+		this.saveDataUsuario();
+	},
 	
 	
 	_contactos:[],
@@ -112,6 +117,29 @@ var Traders = {
 		
 		
 		
+		vx.when({
+			tipoDeMensaje: "traders.productos.inventario.pedido",
+			para: this.usuario.id
+		},function(mensaje){
+			
+			console.log('me llego un pedidoooo');
+			
+			
+			// le respondo a otro tipo mensaje
+			vx.send({
+				tipoDeMensaje: "traders.productos.inventario",
+				para: mensaje.de,
+				de: Traders.usuario.id,
+				datoSeguro: {
+					productos: Traders.productos({
+						propietario: Traders.usuario.id
+					})
+				}
+			});
+			
+		});
+		
+		
 		/* Vemos */
         setTimeout(function(){
 			
@@ -171,24 +199,6 @@ var Traders = {
 			return !(_producto.id == producto.id && _producto.propietario == producto.propietario);
 		});
 		
-<<<<<<< HEAD
-		this._productos = $.grep(this._productos, function(item){
-            return !(item.id == producto.id && item.propietario == producto.propietario);
-        });
-		
-=======
-		/*
-		_.each(this.productos(), function(_producto, i, lista){
-			if(	producto.id == _producto.id &&
-				producto.propietario == _producto.propietario
-			)
-			delete lista[i];
-			
-			return false;
-		});
-		*/
->>>>>>> cefaaaf62d1c66695419e89a8ca7e019459018f4
-		
 		if(flagInformar){
 			vx.send({
 				tipoDeMensaje:"traders.productos.baja",
@@ -206,7 +216,6 @@ var Traders = {
 		
 		this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
 		
-		console.log('dato.productos', dato.productos);
 		if(dato.productos){
 			this._productos = dato.productos;
 		}
@@ -606,14 +615,12 @@ var Traders = {
 			propietario: propietario
 		});
 		
+		
+		
 		//var lista_update = _.intersection(mensaje.datoSeguro.productos, lista_original);
 		
-		var lista_insert = _.difference(productos, lista_original);
-		
-		var lista_delete = _.difference(lista_original, productos);
-		
-		console.log('lista_insert', lista_insert);
-		console.log('lista_delete', lista_delete);
+		var lista_delete = lista_original;
+		var lista_insert = productos;
 		
 		
 		_.each(lista_insert, function(_producto){
@@ -691,10 +698,17 @@ var Traders = {
 			
 			var contacto = Traders.contactos({id:arguments[0].id})[0];
 			if(!contacto){
-			
 				contacto=arguments[0];
 				Traders._contactos.push(contacto);
 			}
+			
+			console.log('le mando un inventario.pedido');
+			
+			vx.send({
+				tipoDeMensaje: "traders.productos.inventario.pedido",
+				para: contacto.id,
+				de: Traders.usuario.id
+			});
 			
 		}
 		
