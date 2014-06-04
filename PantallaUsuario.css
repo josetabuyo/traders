@@ -46,11 +46,14 @@
 
 #pantalla_usuario
 	#panel_inventario_container{
+    height: 100%;
 	/*left:0;
 	top: 120px;
 	height: 25%;
 	width: 50%;
 	*/
+    position: absolute;
+    width: 100%;
 }
 
 #pantalla_usuario

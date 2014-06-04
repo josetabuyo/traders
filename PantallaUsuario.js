@@ -119,6 +119,9 @@ var PantallaUsuario = {
 				producto: producto, 
 				alEliminar: function(){
 					Traders.quitarProducto(producto.id);
+				},
+				alClickear: function(){
+					PantallaEdicionProducto.mostrar(producto);
 				}
 			});
 			vista.dibujarEn(_this.panel_inventario);

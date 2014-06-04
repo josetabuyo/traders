@@ -53,7 +53,8 @@ var PantallaContacto = {
         _.each(_contacto.inventario, function(producto){
 			
             var vista = new VistaDeUnProductoEnInventario({
-                producto: producto
+                producto: producto,
+				alClickear: function(){}
             });
             vista.dibujarEn(_this.panel_inventario_contacto);
 			

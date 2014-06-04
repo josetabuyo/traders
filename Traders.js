@@ -175,6 +175,20 @@ var Traders = {
 		
         this.onNovedades();
     },
+	modificarProducto: function(p){		
+		var producto = _.findWhere(this.usuario.inventario, {id: p.id});
+		producto = ClonadorDeObjetos.extend(producto, p);
+		
+        vx.send({
+            tipoDeMensaje:"traders.avisoDeProductoModificado",
+            de: this.usuario.id,
+            datoSeguro: {
+                producto: producto
+            }
+        });
+		
+        this.onNovedades();
+    },
     quitarProducto: function(id_producto){
         
 		//ver de usar delete
@@ -607,6 +621,17 @@ var Traders = {
 		
 		
         vx.when({
+			tipoDeMensaje:"traders.avisoDeProductoModificado",
+			de: contacto.id
+		}, function(mensaje){
+			var producto = _.findWhere(contacto.inventario, {id: mensaje.datoSeguro.producto.id});
+			if(producto === undefined) return;			
+			producto = ClonadorDeObjetos.extend(producto, mensaje.datoSeguro.producto);
+				
+			_this.onNovedades();
+		});
+        
+		vx.when({
 			tipoDeMensaje:"traders.avisoDeNuevoProducto",
 			de: contacto.id
 		}, function(mensaje){
@@ -621,7 +646,6 @@ var Traders = {
 			
 			_this.onNovedades();
 		});
-        
 		
         vx.when({
             tipoDeMensaje:"traders.avisoDeBajaDeProducto",

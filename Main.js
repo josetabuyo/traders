@@ -35,7 +35,7 @@ var onDeviceReady = function() {
 		
 		PantallaListaConexiones.start();
 
-		
+		PantallaEdicionProducto.start();
         PersistidorManual.start(Traders.usuario.id);
 		
     });

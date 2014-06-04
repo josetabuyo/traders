@@ -1,0 +1,22 @@
+#pantalla_edicion_producto{
+	display:none;
+}
+
+#pantalla_edicion_producto .contenidos{
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+#pantalla_edicion_producto .atributo_producto{
+	display: inline-block;
+	margin-right: 5px;
+	vertical-align: super;
+	font-weight: bold;
+}
+
+#pantalla_edicion_producto .titulo{
+	height: 40px;
+	font-size: 20px;
+	font-weight: bold;
+}
