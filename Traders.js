@@ -720,6 +720,8 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
+			console.log('mensaje de traders.productos.inventario', mensaje);
+			
 			Traders.actualizarInventario(mensaje.de, mensaje.datoSeguro.productos);
 			
 			Traders.onNovedades();
