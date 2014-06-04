@@ -67,6 +67,8 @@ var PantallaUsuario = {
         this.panel_debo.empty();
         var _this = this;
 		
+		//TO DO: hay que sacarlo afuera, que se cuelgue en los eventos propios del objeto "productos"
+		
 		///// panel_inventario
 		_.each(Traders.productos({
 			
