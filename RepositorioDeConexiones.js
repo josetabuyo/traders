@@ -42,6 +42,7 @@ var RepositorioDeConexiones = {
 		this._items = $.grep(this._items, function(item){
             return item.id != id;
         });
+		localStorage.setItem(this.id_usuario + "_conexiones", JSON.stringify(this._items));
 		this._on_remove_item(id);
 	},
 	_on_remove_item:function(){},
