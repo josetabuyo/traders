@@ -38,6 +38,9 @@ var onDeviceReady = function() {
 		PantallaEdicionProducto.start();
         PersistidorManual.start(Traders.usuario.id);
 		
+		PantallaProductos = new PantallaListaProductos();
+		PantallaProductos.dibujarEn($("#main"));
+		
     });
 
     PantallaInicio.render();
