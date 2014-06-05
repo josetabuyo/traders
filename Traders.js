@@ -457,35 +457,44 @@ var Traders = {
     },
 	
     
-	aceptarTruequeDe: function(contacto){
+	aceptarTrueque: function(trueque){
 		
-        if(contacto.trueque.estado != "recibido") return;
-        
+		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		if(_oferta.ofertante == 'usuario'){
+			alert('No podes aceptar tu propia oferta');
+			return;
+		}
+		
+		var oferta_enriquecida = $.extend(true, _oferta);
+		
+		_.each(oferta_enriquecida.doy, function(id_producto, index){
+			oferta_enriquecida.doy[index] = _.findWhere(this.usuario.inventario, {id: id_producto});
+		});
+		
+        this._concretarTrueque(trueque);
+		
 		vx.send({
             tipoDeMensaje:"traders.aceptacionDeTrueque",
             para: id_contacto,
             de: this.usuario.id,
             datoSeguro:{
-				recibo: contacto.trueque.propuestas.usuario.suyo,
-                doy: contacto.trueque.propuestas.usuario.mio
+				trueque: {id : trueque.id},
+				oferta: _oferta
             }
         });
 		
-        this._concretarTruequeCon(contacto);
         this.onNovedades();
     },
-    _concretarTruequeCon: function(contacto){
+    _concretarTrueque: function(oferta){
         var _this = this;
-        
-		_.each(contacto.trueque.propuestas.usuario.mio, function(id_producto){
-		    //_this.quitarProducto(id_producto);
-			//ver de usar delete
-			this.usuario.inventario = $.grep(this.usuario.inventario, function(prod){
-				return prod.id != id_producto;
-			});
+        var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		_.each(_oferta.doy, function(id_producto){
+		    _this.quitarProducto(id_producto);
         });
 		
-        _.each(contacto.trueque.propuestas.usuario.suyo, function(id_producto){
+        _.each(_oferta.recibo, function(id_producto){
             
 			this.usuario.inventario.push(producto);
 			

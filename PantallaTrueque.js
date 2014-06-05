@@ -26,6 +26,15 @@ var PantallaTrueque = {
 			Traders.enviarOferta(trueque);
         });
 		
+		var $btn_aceptar = this.ui.find('#btn_aceptar');
+		
+		
+        $btn_aceptar.click(function(){
+            var trueque = PantallaListaTrueques.trueque_seleccionado;
+			
+			
+			Traders.aceptarTruequeDe(trueque);
+        });
 		
     },
     render: function(){
