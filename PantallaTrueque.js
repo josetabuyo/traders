@@ -109,7 +109,7 @@ var PantallaTrueque = {
 		var $inventario_contacto = this.ui.find("#inventario_contacto");
         $inventario_contacto.empty();
 		
-		
+		// TO DO, se puede actualizar en el start y luego dejarle los callback de onAppend, etc
 		_.each(Traders.productos({
 			propietario: contacto.id
 		

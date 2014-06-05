@@ -96,6 +96,24 @@ var Vortex = Vx = vX = vx = {
 				
 				if(mensaje.datoSeguro){
 					
+					
+					console.clear();
+					console.log('debug en vortex pedirMensajesSeguros: mensaje ');
+					console.log(mensaje);
+					console.log('debug en vortex pedirMensajesSeguros: mi_clave_privada ');
+					console.log(mi_clave_privada);
+					console.log('debug en vortex pedirMensajesSeguros: _this.claveRSAComun ');
+					console.log(_this.claveRSAComun);
+					
+					console.log('debug en vortex pedirMensajesSeguros: claveRSA ');
+					console.log(claveRSA);
+					
+					
+					console.log('debug en vortex pedirMensajesSeguros: filtro ');
+					console.log(p.filtro);
+					
+					
+					
 					var desencriptado = cryptico.decrypt(mensaje.datoSeguro, mi_clave_privada);
 					
 					if(desencriptado.status == "success"){

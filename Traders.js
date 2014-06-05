@@ -88,7 +88,7 @@ var Traders = {
 		
 		vx.when({
 			tipoDeMensaje:"traders.claveAgregada",
-			para: this.usuario.id
+			para: Traders.usuario.id
 		},function(mensaje){
 			
 			
@@ -108,7 +108,10 @@ var Traders = {
 			});
 			
 			Traders.agregarContacto(mensaje.datoSeguro.contacto);
-			Traders.actualizarInventario(mensaje.de, mensaje.datoSeguro.productos);
+			
+			Traders.actualizarInventario({
+				propietario: mensaje.de
+			}, mensaje.datoSeguro.productos);
 			
 			
 			Traders.onNovedades();
@@ -119,15 +122,12 @@ var Traders = {
 		
 		vx.when({
 			tipoDeMensaje: "traders.productos.inventario.pedido",
-			para: this.usuario.id
+			para: Traders.usuario.id
 		},function(mensaje){
-			
-			console.log('me llego un pedidoooo');
-			
 			
 			// le respondo a otro tipo mensaje
 			vx.send({
-				tipoDeMensaje: "traders.productos.inventario",
+				idRequest: mensaje.idRequest,
 				para: mensaje.de,
 				de: Traders.usuario.id,
 				datoSeguro: {
@@ -156,61 +156,7 @@ var Traders = {
 	
 	
 	
-    agregarProducto: function(){
-		var Traders = this;
-		
-		var producto = arguments[0];
-		
-		var flagInformar;
-		
-		if(arguments.length == 2){
-			flagInformar = arguments[1];
-		}
-		
-		producto.id = Traders.nextProductoId();
-		
-		
-		this._productos.push(producto);
-		
-		if(flagInformar){
-			vx.send({
-				tipoDeMensaje:"traders.productos.alta",
-				de: this.usuario.id,
-				datoSeguro: {
-					producto: producto
-				}
-			});
-		}
-		
-        this.onNovedades();
-    },
-	
-    quitarProducto: function(){
-        
-		var producto = arguments[0];
-		
-		var flagInformar;
-		
-		if(arguments.length == 2){
-			flagInformar = arguments[1];
-		}
-		
-		this._productos = $.grep(this._productos, function(_producto){
-			return !(_producto.id == producto.id && _producto.propietario == producto.propietario);
-		});
-		
-		if(flagInformar){
-			vx.send({
-				tipoDeMensaje:"traders.productos.baja",
-				de: this.usuario.id,
-				datoSeguro:{
-					producto: producto
-				}
-			});
-		}
-		
-        this.onNovedades();
-    },
+    
 	setDataUsuario: function(dato){
 		var Traders = this;
 		
@@ -336,7 +282,81 @@ var Traders = {
 		return maxValue;
 		
 	},
+	agregarProducto: function(){
+		var Traders = this;
+		
+		var producto = arguments[0];
+		
+		var flagInformar;
+		
+		if(arguments.length == 2){
+			flagInformar = arguments[1];
+		}
+		
+		producto.id = Traders.nextProductoId();
+		
+		
+		this._productos.push(producto);
+		
+		if(flagInformar){
+			vx.send({
+				tipoDeMensaje:"traders.productos.alta",
+				de: this.usuario.id,
+				datoSeguro: {
+					producto: producto
+				}
+			});
+		}
+		
+        this.onNovedades();
+    },
 	
+    quitarProducto: function(){
+        
+		var producto = arguments[0];
+		
+		var flagInformar;
+		
+		if(arguments.length == 2){
+			flagInformar = arguments[1];
+		}
+		
+		this._productos = $.grep(this._productos, function(_producto){
+			return !(_producto.id == producto.id && _producto.propietario == producto.propietario);
+		});
+		
+		if(flagInformar){
+			vx.send({
+				tipoDeMensaje:"traders.productos.baja",
+				de: this.usuario.id,
+				datoSeguro:{
+					producto: producto
+				}
+			});
+		}
+		
+        this.onNovedades();
+    },
+	actualizarInventario: function(find, replace_list){
+		var Traders = this;
+		
+		var find_list = Traders.productos(find);
+		
+		//var lista_update = _.intersection(mensaje.datoSeguro.productos, lista_original);
+		
+		var lista_delete = find_list;
+		var lista_insert = replace_list;
+		
+		
+		_.each(lista_insert, function(_producto){
+			Traders.agregarProducto(_producto, false);
+		});
+		
+		_.each(lista_delete, function(_producto){
+			Traders.quitarProducto(_producto, false);
+		});
+			
+	},
 	
 	
 	
@@ -568,7 +588,7 @@ var Traders = {
 		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
 		// TO DO: ver de loguear en el producto la historia
-		
+		// se puede agregar algo tipo transaccion para tocar todos los productos luego al cerrar la transaccion se informa
 		_.each(_oferta.doy, function(id_producto){
 		    
 			var producto = Traders.productos({
@@ -595,6 +615,9 @@ var Traders = {
 		
 		trueque.estado = "cerrado";
 		
+		
+		
+		// TO DO: productos: llevar con productos
 		vx.send({
 			tipoDeMensaje: "traders.productos.inventario",
 			de: Traders.usuario.id,
@@ -608,30 +631,7 @@ var Traders = {
 		
     },
 	
-	actualizarInventario: function(propietario, productos){
-		var Traders = this;
-		
-		var lista_original = Traders.productos({
-			propietario: propietario
-		});
-		
-		
-		
-		//var lista_update = _.intersection(mensaje.datoSeguro.productos, lista_original);
-		
-		var lista_delete = lista_original;
-		var lista_insert = productos;
-		
-		
-		_.each(lista_insert, function(_producto){
-			Traders.agregarProducto(_producto, false);
-		});
-		
-		_.each(lista_delete, function(_producto){
-			Traders.quitarProducto(_producto, false);
-		});
-			
-	},
+	
 	agregarContacto: function(){
 		//****	arguments[] ****
 		// forma 1: idContacto 	string
@@ -684,7 +684,9 @@ var Traders = {
 				contacto.estado = 'CONFIRMADO';
 				
 				
-				Traders.actualizarInventario(mensaje.de, mensaje.datoSeguro.productos);
+				Traders.actualizarInventario({
+					propietario: mensaje.de
+				}, mensaje.datoSeguro.productos);
 				
 				
 				Traders.onNovedades();
@@ -702,13 +704,28 @@ var Traders = {
 				Traders._contactos.push(contacto);
 			}
 			
-			console.log('le mando un inventario.pedido');
+			console.log('le mando un inventario.pedido a contacto', contacto);
 			
+			
+			// TO DO: productos: llevar con productos
 			vx.send({
 				tipoDeMensaje: "traders.productos.inventario.pedido",
+				de: Traders.usuario.id,
 				para: contacto.id,
-				de: Traders.usuario.id
+				datoSeguro: {
+					dato: 'datoDummy'
+				}
+			}, function(mensaje){
+				
+				Traders.actualizarInventario({
+					propietario: mensaje.de
+				}, mensaje.datoSeguro.productos);
+				
 			});
+			
+			
+			
+			console.log('manduli ia');
 			
 		}
 		
@@ -722,13 +739,16 @@ var Traders = {
 			
 			console.log('mensaje de traders.productos.inventario', mensaje);
 			
-			Traders.actualizarInventario(mensaje.de, mensaje.datoSeguro.productos);
-			
+			Traders.actualizarInventario({
+				propietario: mensaje.de
+			}, mensaje.datoSeguro.productos);
+
+
 			Traders.onNovedades();
 			
         });
 		
-		
+		// TO DO: productos: llevar con productos
         vx.when({
 			tipoDeMensaje:"traders.productos.alta",
 			de: contacto.id
@@ -741,7 +761,6 @@ var Traders = {
 				id: 			_producto.id,
 				propietario: 	_producto.propietario
 			})!== undefined) return;
-			
 			
 			Traders.agregarProducto(_producto, false);
 			
