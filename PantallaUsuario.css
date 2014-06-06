@@ -88,7 +88,11 @@
 
 #pantalla_usuario
 	#panel_inventario {
-    padding:10px;
+	position: absolute;
+	top: 40px;
+	left:0px;
+	right: 0px;
+	bottom: 5px;
 }
 
 #pantalla_usuario

@@ -4,7 +4,7 @@ var ListaProductos = function(opt){
     $.extend(true, this, opt);
     
 	var _this = this;
-	this.ui = $("#plantillas").find(".pantalla_lista_productos").clone();  
+	this.ui = $("#plantillas").find(".lista_productos").clone();  
 	this.listado_de_productos = this.ui.find("#listado_de_productos");
 	Traders.onNovedades(function(){
 		if(_this.ui.is(':visible')){
