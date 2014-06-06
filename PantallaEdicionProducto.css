@@ -14,6 +14,7 @@
 
 .pantalla_edicion_producto #video_para_sacar_foto{
 	position: absolute;
+	display: none;
 }
 
 .pantalla_edicion_producto .titulo_atributo_producto{
@@ -22,7 +23,7 @@
 	font-weight: bold;
 }
 
-.pantalla_edicion_producto .input_atributo_producto
+.pantalla_edicion_producto input
 	height: 35px;
 	font-size: 18px;
 }
