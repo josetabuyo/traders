@@ -96,7 +96,7 @@ var PantallaUsuario = {
             video_stream.stop();
         });
         
-        this.inventario_usuario = new PantallaListaProductos({
+        this.inventario_usuario = new ListaProductos({
             selector:{propietario:Traders.usuario}, 
             alSeleccionar: function(producto){
                 PantallaEdicionProducto.mostrar(producto);

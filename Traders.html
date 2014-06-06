@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="PantallaTrueque.css" />
         <link rel="stylesheet" href="PantallaListaConexiones.css" />
         <link rel="stylesheet" href="PantallaEdicionProducto.css" />
+        <link rel="stylesheet" href="VistaDeUnProductoEnLista.css" />
 		
 
 		
@@ -118,6 +119,8 @@
 				</ul>
             </div>
 			
+			<div id="pantalla_productos" class="pantalla">
+			</div>
 			
 			<div id="pantalla_lista_contactos" class="pantalla">
 				<div id="lista_contactos">
@@ -230,13 +233,13 @@
         </div>   
 		
 		<div class="producto_en_lista item_en_lista">
-            <div id="thumbnail_producto"></div>
+            <img id="thumbnail_producto"/>
             <div id="nombre"></div>
             <div id="datos_propietario"></div>
             <div id="btn_eliminar">x</div>
         </div>
 		
-		<div class="pantalla pantalla_lista_productos">
+		<div class="pantalla_lista_productos">
 			<div id="listado_de_productos">
 			</div>
 		</div>
@@ -281,7 +284,8 @@
     <script type="text/javascript" src="PantallaListaTrueques.js"></script> 
 	<script type="text/javascript" src="PantallaTrueque.js"></script> 
 	<script type="text/javascript" src="PantallaEdicionProducto.js"></script> 
-	<script type="text/javascript" src="PantallaListaProductos.js"></script> 
+	<script type="text/javascript" src="ListaProductos.js"></script> 
+	<script type="text/javascript" src="PantallaProductos.js"></script> 
 	<script type="text/javascript" src="VistaDeUnProductoEnLista.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
     <script type="text/javascript" src="PersistidorManual.js"></script>     

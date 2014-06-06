@@ -17,7 +17,6 @@ $(document).ready(function() {
 var onDeviceReady = function() {     
     vx.start({verbose:true});
     
-	//'https://router-vortex.herokuapp.com' 
 	// url:'http://router-vortex.herokuapp.com',
 	// url:'http://localhost:3000',
 	
@@ -38,8 +37,7 @@ var onDeviceReady = function() {
 		PantallaEdicionProducto.start();
         PersistidorManual.start(Traders.usuario.id);
 		
-		PantallaProductos = new PantallaListaProductos();
-		PantallaProductos.dibujarEn($("#main"));
+		PantallaProductos.start(); 
 		
     });
 

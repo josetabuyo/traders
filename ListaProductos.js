@@ -1,4 +1,4 @@
-var PantallaListaProductos = function(opt){
+var ListaProductos = function(opt){
     this.alSeleccionar = function(){};
     this.selector = {};
     $.extend(true, this, opt);
@@ -13,33 +13,57 @@ var PantallaListaProductos = function(opt){
 	});
 };
 
-PantallaListaProductos.prototype.setSelector = function(selector){
+ListaProductos.prototype.setSelector = function(selector){
 	this.selector = selector;
 	this.render();
 };
 	
-PantallaListaProductos.prototype.render = function(){
+ListaProductos.prototype.render = function(){
 	var _this = this;
 	this.listado_de_productos.empty();
     
-    if(!this.selector.usuario){
+    if(!this.selector.propietario){
         _.each(Traders.usuario.inventario, function(producto){
+			if(_this.selector.idNotIn){
+				if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
+			}
+			if(_this.selector.idIn){
+				if(_this.selector.idIn.indexOf(producto.id)==-1) return;
+			}
             _this.agregarProducto(producto);               
         });
         _.each(Traders.contactos(), function(contacto){
             _.each(contacto.inventario, function(producto){
+				if(_this.selector.idNotIn){
+					if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
+				}
+				if(_this.selector.idIn){
+					if(_this.selector.idIn.indexOf(producto.id)==-1) return;
+				}
                 _this.agregarProducto(producto);       
             });
         });
     } else {
-        if(this.selector.usuario.id == Traders.usuario.id){
+        if(this.selector.propietario.id == Traders.usuario.id){
             _.each(Traders.usuario.inventario, function(producto){
+				if(_this.selector.idNotIn){
+					if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
+				}
+				if(_this.selector.idIn){
+					if(_this.selector.idIn.indexOf(producto.id)==-1) return;
+				}
                 _this.agregarProducto(producto);               
             });        
         } else {
             _.each(Traders.contactos(), function(contacto){
-                if(_this.selector.usuario.id == contacto.id){
+                if(_this.selector.propietario.id == contacto.id){
                     _.each(contacto.inventario, function(producto){
+						if(_this.selector.idNotIn){
+							if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
+						}
+						if(_this.selector.idIn){
+							if(_this.selector.idIn.indexOf(producto.id)==-1) return;
+						}
                         _this.agregarProducto(producto);       
                     });
                 }
@@ -49,22 +73,20 @@ PantallaListaProductos.prototype.render = function(){
 	this.ui.show();
 };
 
-PantallaListaProductos.prototype.agregarProducto = function(un_producto){
+ListaProductos.prototype.agregarProducto = function(un_producto){
     var _this = this;
     var vista = new VistaDeUnProductoEnLista({
         producto: un_producto,
         alClickear: function(producto_clickeado){
             _this.alSeleccionar(producto_clickeado);
         },
-        alEliminar: function(producto_eliminado){
-            _this.alEliminar(producto_eliminado);
-        }
+        alEliminar: _this.alEliminar
     });
     vista.dibujarEn(_this.listado_de_productos);
     vista.render();
 };
 
-PantallaListaProductos.prototype.dibujarEn = function(un_panel){
+ListaProductos.prototype.dibujarEn = function(un_panel){
     un_panel.append(this.ui);  
 };
 

@@ -1,0 +1,11 @@
+.producto_en_lista #thumbnail_producto{
+	display: inline-block;
+	height: 30px;
+	width: 30px;
+	margin-left: -4px;
+	margin-top: -4px;
+}
+
+.producto_en_lista #nombre{
+	display: inline-block;
+}
