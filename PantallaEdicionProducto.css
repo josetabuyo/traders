@@ -10,6 +10,7 @@
 .pantalla_edicion_producto #imagen_producto{
 	height: 100px;
 	width: 100px;
+    cursor: pointer;
 }
 
 .pantalla_edicion_producto #video_para_sacar_foto{
