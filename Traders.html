@@ -6,8 +6,12 @@
         <link rel="stylesheet" href="Alertify/alertify.core.css" />
         <link rel="stylesheet" href="Alertify/alertify.default.css" />
         
+        <link rel="stylesheet" href="vex/css/vex.css" />
+        <link rel="stylesheet" href="vex/css/vex-theme-os.css" />
+		
 		<link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" />
+		
         <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
         <link rel="stylesheet" href="Traders.css" />
 		<link rel="stylesheet" href="BarraSuperior.css" />
@@ -205,13 +209,6 @@
 				<div id="lista_conexiones">
 				</div>
 			</div>
-			
-			<div id="pantalla_edicion_producto">
-				<div class="contenidos">
-					<div class="titulo">Producto</div>
-					<label class="atributo_producto">nombre:</label><input type=text id="txt_nombre_producto"/>
-				</div>				
-			</div>
         </div>
     </body>
     
@@ -248,6 +245,15 @@
             <div id="url"></div>
 			<div id="btn_eliminar">x</div>
         </div>
+		
+		<div class="pantalla_edicion_producto">
+			<div id="div_imagen_producto">
+				<img id="imagen_producto" src="Gift-icon.png"/>
+				<video id="video_para_sacar_foto" autoplay></video>
+			</div>
+			<label class="titulo_atributo_producto">Nombre:</label>
+			<input type=text id="txt_nombre_producto" class="input_atributo_producto"/>			
+		</div>
     </div>
     
     <script type="text/javascript" src="jquery-1.10.2.min.js"></script> 
@@ -269,8 +275,8 @@
     <script type="text/javascript" src="VortexJS/NodoConectorSocket.js"></script>
     <script type="text/javascript" src="VortexJS/socket.io.js"></script>
     <script type="text/javascript" src="VortexJS/Vortex.js"></script> 
-<!--  leanmodal es una libreria para abrir popups -->
-	<script src="leanModal/jquery.leanModal.min.js"></script>
+<!--  vex es una libreria para abrir popups -->
+	<script src="vex/js/vex.combined.min.js"></script>
 	
     <script type="text/javascript" src="Main.js"></script> 
     <script type="text/javascript" src="Traders.js"></script> 

@@ -34,7 +34,6 @@ var onDeviceReady = function() {
 		
 		PantallaListaConexiones.start();
 
-		PantallaEdicionProducto.start();
         PersistidorManual.start(Traders.usuario.id);
 		
 		PantallaProductos.start(); 
@@ -42,7 +41,7 @@ var onDeviceReady = function() {
     });
 
     PantallaInicio.render();
-
+	vex.defaultOptions.className = 'vex-theme-os';
 };
 
 

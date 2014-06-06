@@ -99,7 +99,7 @@ var PantallaUsuario = {
         this.inventario_usuario = new ListaProductos({
             selector:{propietario:Traders.usuario}, 
             alSeleccionar: function(producto){
-                PantallaEdicionProducto.mostrar(producto);
+                var pantalla_edicion = new PantallaEdicionProducto(producto);
             },
             alEliminar: function(producto){
                 Traders.quitarProducto(producto.id);
