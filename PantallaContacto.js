@@ -55,7 +55,9 @@ var PantallaContacto = {
 		}
 		
         this.lbl_nombre_contacto.text(_contacto.nombre);
+		
 		if(_contacto.avatar!="") this.img_avatar_contacto.attr("src", _contacto.avatar);
+		else this.img_avatar_contacto.attr("src", "avatar_default.png");
 		
 		this.inventario_contacto.setSelector({propietario:_contacto});
 		this.inventario_contacto.render();

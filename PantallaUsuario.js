@@ -118,7 +118,8 @@ var PantallaUsuario = {
     render: function(){
         this.lbl_nombre_usuario.text(Traders.usuario.nombre);
 		if(Traders.usuario.avatar!="") this.img_avatar_usuario.attr("src", Traders.usuario.avatar);
-
+		else this.img_avatar_usuario.attr("src", "avatar_default.png");
+		
         var _this = this;
 		
         this.inventario_usuario.render();

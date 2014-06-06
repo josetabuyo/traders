@@ -71,7 +71,10 @@ var PantallaTrueque = {
 		this.ui.find("#lbl_nombre_contacto").text(this.contacto.nombre);
 		
 		if(this.usuario.avatar!="") this.ui.find("#avatar_usuario").attr("src", this.usuario.avatar);
+		else this.ui.find("#avatar_usuario").attr("src", "avatar_default.png");
+		
 		if(this.contacto.avatar!="") this.ui.find("#avatar_contacto").attr("src", this.contacto.avatar);
+		else this.ui.find("#avatar_contacto").attr("src", "avatar_default.png");
 		
 		
 		
