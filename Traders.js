@@ -403,7 +403,7 @@ var Traders = {
 			
 			
 			oferta[recibo_doy] = $.grep(oferta[recibo_doy], function(producto_id){
-				return producto_id != producto;
+				return producto_id != producto.id;
 			});
 			
 		}else{
@@ -412,8 +412,8 @@ var Traders = {
 			nuevaOferta.ofertante = 'usuario';
 			nuevaOferta.estado = 'sin_enviar';
 			
-			nuevaOferta[recibo_doy] = $.grep(nuevaOferta[recibo_doy], function(prod){
-				return prod.id != producto.id;
+			nuevaOferta[recibo_doy] = $.grep(nuevaOferta[recibo_doy], function(producto_id){
+				return producto_id != producto.id;
 			});
 			
 			trueque.ofertas.push(nuevaOferta);

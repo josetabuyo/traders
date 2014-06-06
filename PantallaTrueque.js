@@ -12,7 +12,7 @@ var PantallaTrueque = {
 		this.inventario_doy = new ListaProductos({
             selector:{}, 
 			alSeleccionar: function(producto){
-				Traders.quitarProductoTrueque(_this.trueque, producto.id, "doy");
+				Traders.quitarProductoTrueque(_this.trueque, producto, "doy");
 			}
         });
         this.inventario_doy.dibujarEn(this.$oferta_doy);
@@ -22,7 +22,7 @@ var PantallaTrueque = {
 		this.inventario_recibo = new ListaProductos({
             selector:{}, 
 			alSeleccionar: function(producto){
-				Traders.quitarProductoTrueque(_this.trueque, producto.id, "recibo");
+				Traders.quitarProductoTrueque(_this.trueque, producto, "recibo");
 			}
         });
         this.inventario_recibo.dibujarEn(this.$oferta_recibo);
