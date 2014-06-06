@@ -72,6 +72,15 @@ var Traders = {
                 });  
         }
     },
+	
+	reset: function(){
+		this._contactos = [];
+		this._trueques = [];
+		this.usuario.inventario = [];
+		
+		this.saveDataUsuario();
+	},
+	
 	login: function(_nombre, password){
         var _this = this;
 		
@@ -197,13 +206,14 @@ var Traders = {
         });
 		
 		
-        vx.send({
+		vx.send({
             tipoDeMensaje:"traders.avisoDeBajaDeProducto",
             de: this.usuario.id,
             datoSeguro:{
                 id_producto: id_producto
             }
         });
+		
         this.onNovedades();
     },
 	setDataUsuario: function(dato){
@@ -306,12 +316,7 @@ var Traders = {
 			});
 			
 		} else {
-			console.log('a lo trueque 1 1 1 11 111  11 a los.... a re ');
-			
-			console.log('this._trueques', this._trueques);
-			console.log('p', p);
-			console.log('_.findWhere(this._trueques, p)', _.findWhere(this._trueques, p));
-			
+				
 			return _.findWhere(this._trueques, {id: p.id});
 			
 			
@@ -340,12 +345,12 @@ var Traders = {
 		/*DEF: trueque*/
 		var trueque = {
 			id: this.nextTruequeId(),
-			estado: "cero",
+			estado: "CERO",
 			contacto: contacto,
 			ofertas:[
 				{
-					ofertante: 'usuario',
-					estado: 'sin_enviar',
+					ofertante: 'USUARIO',
+					estado: 'SIN_ENVIAR',
 					doy: [],
 					recibo: []
 				}
@@ -378,8 +383,8 @@ var Traders = {
 		}else{
 			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
 			
-			nuevaOferta.ofertante = 'usuario';
-			nuevaOferta.estado = 'sin_enviar';
+			nuevaOferta.ofertante = 'USUARIO';
+			nuevaOferta.estado = 'SIN_ENVIAR';
 			
 			nuevaOferta[recibo_doy].push(producto);
 			trueque.ofertas.push(nuevaOferta);
@@ -390,30 +395,28 @@ var Traders = {
 	
 	
     quitarProductoTrueque: function(trueque, producto, recibo_doy){
-		
 		var _this = this;
 		
-		if(typeof(trueque) == 'string'){
-			var trueque = _this.trueque({id:trueque});
-		}
 		
-		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
+		
+		console.log('oferta');
+		console.log(oferta);
 		
 		if(oferta.ofertante == 'usuario'){
 			
-			
 			oferta[recibo_doy] = $.grep(oferta[recibo_doy], function(producto_id){
-				return producto_id != producto;
+				return producto_id != producto.id;
 			});
 			
 		}else{
-			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
+			var nuevaOferta = $.extend(oferta);
 			
-			nuevaOferta.ofertante = 'usuario';
-			nuevaOferta.estado = 'sin_enviar';
+			nuevaOferta.ofertante = 'USUARIO';
+			nuevaOferta.estado = 'SIN_ENVIAR';
 			
-			nuevaOferta[recibo_doy] = $.grep(nuevaOferta[recibo_doy], function(prod){
-				return prod.id != producto.id;
+			nuevaOferta[recibo_doy] = $.grep(nuevaOferta[recibo_doy], function(producto_id){
+				return producto_id != producto.id;
 			});
 			
 			trueque.ofertas.push(nuevaOferta);
@@ -432,15 +435,15 @@ var Traders = {
 			var trueque = _this.trueque({id:trueque});
 		}
 		
-		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
 		
-		if(_oferta.estado == 'enviada'){
+		if(oferta.estado == 'ENVIADA'){
 			alert('Ya hiciste tu oferta, esper?a respuesta.');
 			return;
 		}
 		
-		_oferta.estado = 'enviada';
+		oferta.estado = 'ENVIADA';
 		
         vx.send({
             tipoDeMensaje:"traders.trueque.oferta",
@@ -448,7 +451,7 @@ var Traders = {
             de: this.usuario.id,
             datoSeguro:{
 				trueque: {id : trueque.id},
-				oferta: _oferta
+				oferta: oferta
             }
         });
 		
@@ -458,68 +461,66 @@ var Traders = {
 	
     
 	aceptarTrueque: function(trueque){
+		var Traders = this;
 		
-		var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
-		if(_oferta.ofertante == 'usuario'){
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		if(oferta.ofertante == 'usuario'){
 			alert('No podes aceptar tu propia oferta');
 			return;
 		}
 		
-		var oferta_enriquecida = $.extend(true, _oferta);
+		var ofertaDetallada = $.extend(true, oferta);
 		
-		_.each(oferta_enriquecida.doy, function(id_producto, index){
-			oferta_enriquecida.doy[index] = _.findWhere(this.usuario.inventario, {id: id_producto});
+		_.each(ofertaDetallada.doy, function(id_producto, index){
+			ofertaDetallada.doy[index] = _.findWhere(Traders.usuario.inventario, {id: id_producto});
 		});
 		
-        this._concretarTrueque(trueque);
+		_.each(ofertaDetallada.recibo, function(id_producto, index){
+			ofertaDetallada.recibo[index] = _.findWhere(Traders.usuario.inventario, {id: id_producto});
+		});
+        
+		trueque.ofertaDetallada = ofertaDetallada;
+		
+		Traders._concretarTrueque(trueque);
 		
 		vx.send({
             tipoDeMensaje:"traders.aceptacionDeTrueque",
             para: id_contacto,
-            de: this.usuario.id,
+            de: Traders.usuario.id,
             datoSeguro:{
 				trueque: {id : trueque.id},
-				oferta: _oferta
+				ofertaDetallada: ofertaDetallada
             }
         });
 		
-        this.onNovedades();
+        Traders.onNovedades();
     },
-    _concretarTrueque: function(oferta){
-        var _this = this;
-        var _oferta = trueque.ofertas[trueque.ofertas.length - 1]
-		
-		_.each(_oferta.doy, function(id_producto){
-		    _this.quitarProducto(id_producto);
+    _concretarTrueque: function(trueque){
+        var Traders = this;
+       
+		_.each(trueque.ofertaDetallada.doy, function(id_producto){
+		    Traders.quitarProducto(id_producto);
         });
 		
-        _.each(_oferta.recibo, function(id_producto){
-            
-			this.usuario.inventario.push(producto);
-			
-			contacto.inventario = $.grep(contacto.inventario, function(prod){
-				return prod.id != id_producto;
-			});
-			
+        _.each(trueque.ofertaDetallada.recibo, function(id_producto){
+			Traders.agregarProducto(id_producto);
         });
 		
-		//TO DO: historiar, no borrar, guardar muchos trueques
-        contacto.trueque.propuestas.usuario.mio.length = 0;
-        contacto.trueque.propuestas.usuario.suyo.length = 0;
-		contacto.trueque.propuestas.contacto.mio.length = 0;
-        contacto.trueque.propuestas.contacto.suyo.length = 0;
-        contacto.trueque.estado = "cero";
+		trueque.estado = "CERRADO";
+		
 		
 		// informo a la comunidad mi inventario actualizado
+		/*
 		vx.send({
 			tipoDeMensaje: "traders.inventario",
-			de: _this.usuario.id,
+			de: Traders.usuario.id,
 			datoSeguro:{
-				inventario:_this.usuario.inventario
+				inventario:Traders.usuario.inventario
 			}
 		});
-		
+		*/
     },
 	
 	
@@ -687,18 +688,18 @@ var Traders = {
 			}
 			
 			
-			var _oferta = mensaje.datoSeguro.oferta;
+			var oferta = mensaje.datoSeguro.oferta;
 			
-			_oferta.ofertante = 'contacto';
-			_oferta.estado = 'recibida';
-			
-			
-			var aux_doy = _oferta.doy;
-			_oferta.doy = _oferta.recibo;
-			_oferta.recibo = aux_doy;
+			oferta.ofertante = 'CONTACTO';
+			oferta.estado = 'RECIBIDA';
 			
 			
-			trueque.ofertas.push(_oferta);
+			var aux_doy = oferta.doy;
+			oferta.doy = oferta.recibo;
+			oferta.recibo = aux_doy;
+			
+			
+			trueque.ofertas.push(oferta);
 			
 			_this.onNovedades();
 		});
@@ -710,10 +711,13 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			contacto.trueque.propuestas.contacto.mio = mensaje.datoSeguro.recibo;
-			contacto.trueque.propuestas.contacto.suyo = mensaje.datoSeguro.doy;
+			var trueque = mensaje.datoSeguro.trueque.id;
+			//buscar el trueque
 			
-			_this._concretarTruequeCon(contacto);
+			
+			trueque.ofertaDetallada = mensaje.datoSeguro.ofertaDetallada;
+			
+			_this._concretarTruequeCon(trueque);
 			
 			_this.onNovedades();
 		});

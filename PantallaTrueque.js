@@ -33,7 +33,7 @@ var PantallaTrueque = {
             var trueque = PantallaListaTrueques.trueque_seleccionado;
 			
 			
-			Traders.aceptarTruequeDe(trueque);
+			Traders.aceptarTrueque(trueque);
         });
 		
     },

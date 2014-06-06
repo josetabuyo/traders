@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 
 var onDeviceReady = function() {     
-    vx.start({verbose:true});
+    vx.start({verbose:false});
     
 	//'https://router-vortex.herokuapp.com' 
 	// url:'http://router-vortex.herokuapp.com',
