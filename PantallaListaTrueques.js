@@ -10,7 +10,7 @@ var PantallaListaTrueques = {
 		/*
 		this.btn_add_trueque = this.ui.find("#btn_add_trueque");
 		this.btn_add_trueque.click(function(e){
-			Traders.nuevoTrueque();
+			Traders.nuevoTrueque(vavavava);
 			_this.render();
 		});
 		*/

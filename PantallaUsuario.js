@@ -118,7 +118,7 @@ var PantallaUsuario = {
 			var vista = new VistaDeUnProductoEnInventario({
 				producto: producto, 
 				alEliminar: function(){
-					Traders.quitarProducto(producto.id);
+					Traders.quitarProducto(producto);
 				},
 				alClickear: function(){
 					PantallaEdicionProducto.mostrar(producto);
@@ -148,7 +148,7 @@ var PantallaUsuario = {
 				var vista = new VistaDeUnProductoEnInventario({
 					producto: producto,
 					alEliminar: function(){
-						Traders.quitarProducto(producto.id);
+						Traders.quitarProducto(producto);
 					}
 				});
 				vista.dibujarEn(_this.panel_debo);

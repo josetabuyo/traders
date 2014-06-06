@@ -198,11 +198,11 @@ var Traders = {
 		
         this.onNovedades();
     },
-    quitarProducto: function(id_producto){
+    quitarProducto: function(producto){
         
 		//ver de usar delete
 		this.usuario.inventario = $.grep(this.usuario.inventario, function(prod){
-            return prod.id != id_producto;
+            return prod.id != producto.id;
         });
 		
 		
@@ -210,7 +210,7 @@ var Traders = {
             tipoDeMensaje:"traders.avisoDeBajaDeProducto",
             de: this.usuario.id,
             datoSeguro:{
-                id_producto: id_producto
+                id_producto: producto.id
             }
         });
 		
@@ -323,30 +323,20 @@ var Traders = {
 		}
     },
 	
-	nuevoTrueque: function(){
-		//****	arguments[] ****
-		// forma 1: idContacto 	string
-		// forma 2: contacto 	object
-		//**********************
-		
+	nuevoTrueque: function(opt){
 		var _this = this;
 		
-		var contacto = {};
 		
-        if(typeof(arguments[0]) == 'string'){
-			
-			var contacto = _this.contactos({id:arguments[0]});
-			
-		}else if(typeof(arguments[0]) == 'object'){
-			contacto=arguments[0];
+		if(!opt.id){
+			opt.id = this.nextTruequeId()
 		}
 		
 		
 		/*DEF: trueque*/
 		var trueque = {
-			id: this.nextTruequeId(),
+			id: opt.id,
 			estado: "CERO",
-			contacto: contacto,
+			contacto: opt.contacto,
 			ofertas:[
 				{
 					ofertante: 'USUARIO',
@@ -359,8 +349,10 @@ var Traders = {
 		
 		this._trueques.push(trueque);
 		
-		this.onNovedades();
 		
+		
+		
+		this.onNovedades();
 		
 		
 		return trueque;
@@ -378,17 +370,19 @@ var Traders = {
 		
 		
 		
-		if(oferta.ofertante == 'usuario'){
-			oferta[recibo_doy].push(producto);
+		if(oferta.ofertante == 'USUARIO'){
+			oferta[recibo_doy].push(producto.id);
 		}else{
-			var nuevaOferta = ClonadorDeObjetos.clonarObjeto(oferta);
+			
+			var nuevaOferta = $.extend(true, {}, oferta);
 			
 			nuevaOferta.ofertante = 'USUARIO';
 			nuevaOferta.estado = 'SIN_ENVIAR';
 			
-			nuevaOferta[recibo_doy].push(producto);
+			nuevaOferta[recibo_doy].push(producto.id);
 			trueque.ofertas.push(nuevaOferta);
 		}
+		
 		
 		this.onNovedades();
     },
@@ -397,19 +391,18 @@ var Traders = {
     quitarProductoTrueque: function(trueque, producto, recibo_doy){
 		var _this = this;
 		
-		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
 		
-		console.log('oferta');
-		console.log(oferta);
 		
-		if(oferta.ofertante == 'usuario'){
+		if(oferta.ofertante == 'USUARIO'){
+			
 			
 			oferta[recibo_doy] = $.grep(oferta[recibo_doy], function(producto_id){
 				return producto_id != producto.id;
 			});
 			
 		}else{
+			
 			var nuevaOferta = $.extend(oferta);
 			
 			nuevaOferta.ofertante = 'USUARIO';
@@ -419,6 +412,7 @@ var Traders = {
 				return producto_id != producto.id;
 			});
 			
+				
 			trueque.ofertas.push(nuevaOferta);
 		}
 		
@@ -435,15 +429,19 @@ var Traders = {
 			var trueque = _this.trueque({id:trueque});
 		}
 		
-		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		
+		
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
+		
 		
 		
 		if(oferta.estado == 'ENVIADA'){
-			alert('Ya hiciste tu oferta, esper?a respuesta.');
+			alert('Ya hiciste tu oferta, espera la respuesta.');
 			return;
 		}
 		
 		oferta.estado = 'ENVIADA';
+		
 		
         vx.send({
             tipoDeMensaje:"traders.trueque.oferta",
@@ -466,19 +464,22 @@ var Traders = {
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
 		
-		if(oferta.ofertante == 'usuario'){
+		if(oferta.ofertante == 'USUARIO'){
 			alert('No podes aceptar tu propia oferta');
 			return;
 		}
 		
-		var ofertaDetallada = $.extend(true, oferta);
+		var ofertaDetallada = $.extend(true, {}, oferta);
+		
+		console.log('ofertaDetallada');
+		console.log(ofertaDetallada);
 		
 		_.each(ofertaDetallada.doy, function(id_producto, index){
 			ofertaDetallada.doy[index] = _.findWhere(Traders.usuario.inventario, {id: id_producto});
 		});
 		
 		_.each(ofertaDetallada.recibo, function(id_producto, index){
-			ofertaDetallada.recibo[index] = _.findWhere(Traders.usuario.inventario, {id: id_producto});
+			ofertaDetallada.recibo[index] = _.findWhere(trueque.contacto.inventario, {id: id_producto});
 		});
         
 		trueque.ofertaDetallada = ofertaDetallada;
@@ -487,7 +488,7 @@ var Traders = {
 		
 		vx.send({
             tipoDeMensaje:"traders.aceptacionDeTrueque",
-            para: id_contacto,
+            para: trueque.contacto.id,
             de: Traders.usuario.id,
             datoSeguro:{
 				trueque: {id : trueque.id},
@@ -500,12 +501,16 @@ var Traders = {
     _concretarTrueque: function(trueque){
         var Traders = this;
        
-		_.each(trueque.ofertaDetallada.doy, function(id_producto){
-		    Traders.quitarProducto(id_producto);
+	   console.log('_concretarTrueque');
+	   console.log('trueque');
+	   console.log(trueque);
+	   
+		_.each(trueque.ofertaDetallada.doy, function(producto){
+		    Traders.quitarProducto(producto);
         });
 		
-        _.each(trueque.ofertaDetallada.recibo, function(id_producto){
-			Traders.agregarProducto(id_producto);
+        _.each(trueque.ofertaDetallada.recibo, function(producto){
+			Traders.agregarProducto(producto);
         });
 		
 		trueque.estado = "CERRADO";
@@ -676,19 +681,23 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
+			// el contacto debería coincidir, me ahorro recalcularlo, aviso por las dudas
 			
 			var trueque = _this.trueques({
 				id: mensaje.datoSeguro.trueque.id,
-				contacto: {id: mensaje.de}
+				contacto: contacto
 			})[0];
 			
 			
 			if(!trueque){
-				trueque = _this.nuevoTrueque(mensaje.de)
+				trueque = _this.nuevoTrueque({
+					id: mensaje.datoSeguro.trueque.id,
+					contacto: contacto
+				});
 			}
 			
-			
 			var oferta = mensaje.datoSeguro.oferta;
+			
 			
 			oferta.ofertante = 'CONTACTO';
 			oferta.estado = 'RECIBIDA';
@@ -711,13 +720,14 @@ var Traders = {
 			de: contacto.id
 		}, function(mensaje){
 			
-			var trueque = mensaje.datoSeguro.trueque.id;
-			//buscar el trueque
-			
+			var trueque = _this.trueques({
+				id: mensaje.datoSeguro.trueque.id,
+				contacto: contacto
+			});
 			
 			trueque.ofertaDetallada = mensaje.datoSeguro.ofertaDetallada;
 			
-			_this._concretarTruequeCon(trueque);
+			_this._concretarTrueque(trueque);
 			
 			_this.onNovedades();
 		});

@@ -29,7 +29,9 @@ var PantallaContacto = {
 			
 			// TO DO: agregar los productos seleccionados al trueque
 			
-			var trueque = Traders.nuevoTrueque(PantallaListaContactos.contacto_seleccionado);
+			var trueque = Traders.nuevoTrueque({
+				contacto: PantallaListaContactos.contacto_seleccionado
+			});
 			
 			PantallaListaTrueques.trueque_seleccionado = trueque;
 			PantallaListaTrueques.add(trueque);

@@ -49,7 +49,7 @@ var PantallaTrueque = {
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
 		
 		
-        this.ui.find("#lbl_nombre_usuario").text(usuario.nombre);
+		this.ui.find("#lbl_nombre_usuario").text(usuario.nombre);
 		this.ui.find("#lbl_nombre_contacto").text(contacto.nombre);
 		
 		if(usuario.avatar!="") this.ui.find("#avatar_usuario").attr("src", usuario.avatar);
@@ -59,9 +59,10 @@ var PantallaTrueque = {
 		var $oferta_doy = this.ui.find("#oferta .oferta_doy");
 		$oferta_doy.empty();
 		
-        _.each(oferta.doy, function(id_producto){
-			
-			var producto = _.findWhere(Traders.usuario.inventario, {id: id_producto});
+		
+		_.each(oferta.doy, function(id_producto){
+				
+			var producto = _.findWhere(usuario.inventario, {id: id_producto});
 			
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
@@ -73,9 +74,11 @@ var PantallaTrueque = {
 
 		var $oferta_recibo = this.ui.find("#oferta .oferta_recibo");
 		$oferta_recibo.empty();
-        _.each(oferta.recibo, function(id_producto){
+		
+		
+		_.each(oferta.recibo, function(id_producto){
 			var producto = _.findWhere(contacto.inventario, {id: id_producto});
-			
+				
             var vista = new VistaDeUnProductoEnInventario({
                 producto: producto
             });
@@ -91,10 +94,10 @@ var PantallaTrueque = {
                 seleccionadoParaTrueque: oferta.doy.indexOf(producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
 					
-					Traders.agregarProductoTrueque(trueque, producto.id, "doy");
+					Traders.agregarProductoTrueque(trueque, producto, "doy");
                 },
                 alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoTrueque(trueque, producto.id, "doy");
+					Traders.quitarProductoTrueque(trueque, producto, "doy");
                 }
             });
             vista.dibujarEn($inventario_usuario);
@@ -109,10 +112,10 @@ var PantallaTrueque = {
                 producto: producto,
                 seleccionadoParaTrueque: oferta.recibo.indexOf(producto.id)>-1,
                 alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoTrueque(trueque, producto.id, "recibo");
+                    Traders.agregarProductoTrueque(trueque, producto, "recibo");
                 },
                 alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoTrueque(trueque, producto.id, "recibo");
+					Traders.quitarProductoTrueque(trueque, producto, "recibo");
                 }
             });
             vista.dibujarEn($inventario_contacto);
