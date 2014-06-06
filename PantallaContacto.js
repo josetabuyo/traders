@@ -4,9 +4,7 @@ var PantallaContacto = {
         this.ui =  $("#pantalla_contacto");     
         
 		PantallaListaContactos.onSelect(function(){
-			if(_this.ui.is(':visible')){
-				_this.render();
-			}
+			_this.render();
 		});
 		
 		
@@ -49,7 +47,7 @@ var PantallaContacto = {
 		//PantallaListaContactos.render();
 		var _contacto = PantallaListaContactos.contacto_seleccionado;
         
-		if(_contacto.id == "") {
+		if(_contacto.id === undefined) {
 			this.panel_contacto.hide();
 			return;
 		}
