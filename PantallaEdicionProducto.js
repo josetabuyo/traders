@@ -23,11 +23,10 @@ var PantallaEdicionProducto = function(producto){
             img.crossOrigin = 'Anonymous';
             img.src = src;
             img.onload = function () {
-                canvas.height = img.height;
-                canvas.width = img.width;
-                ctx.drawImage(img, 0, 0);
-                var bytes_imagen = canvas.toDataURL('image/jpg');
-                //bytes_imagen = bytes_imagen.replace(/^data:image\/(png|jpg);base64,/, "");        
+                canvas.height = 100;
+                canvas.width = 100;
+                ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 100, 100);
+                var bytes_imagen = canvas.toDataURL('image/jpg');        
                 producto.imagen = bytes_imagen;
                 Traders.modificarProducto(producto);
             };
