@@ -1,6 +1,7 @@
 var ListaProductos = function(opt){
     this.alSeleccionar = function(){};
     this.selector = {};
+	this.mostrarPropietario = false;
     $.extend(true, this, opt);
     
 	var _this = this;
@@ -30,7 +31,7 @@ ListaProductos.prototype.render = function(){
 			if(_this.selector.idIn){
 				if(_this.selector.idIn.indexOf(producto.id)==-1) return;
 			}
-            _this.agregarProducto(producto);               
+            _this.agregarProducto(producto, Traders.usuario);               
         });
         _.each(Traders.contactos(), function(contacto){
             _.each(contacto.inventario, function(producto){
@@ -40,7 +41,7 @@ ListaProductos.prototype.render = function(){
 				if(_this.selector.idIn){
 					if(_this.selector.idIn.indexOf(producto.id)==-1) return;
 				}
-                _this.agregarProducto(producto);       
+                _this.agregarProducto(producto, contacto);       
             });
         });
     } else {
@@ -52,7 +53,7 @@ ListaProductos.prototype.render = function(){
 				if(_this.selector.idIn){
 					if(_this.selector.idIn.indexOf(producto.id)==-1) return;
 				}
-                _this.agregarProducto(producto);               
+                _this.agregarProducto(producto, Traders.usuario);               
             });        
         } else {
             _.each(Traders.contactos(), function(contacto){
@@ -64,7 +65,7 @@ ListaProductos.prototype.render = function(){
 						if(_this.selector.idIn){
 							if(_this.selector.idIn.indexOf(producto.id)==-1) return;
 						}
-                        _this.agregarProducto(producto);       
+                        _this.agregarProducto(producto, contacto);       
                     });
                 }
             });
@@ -73,10 +74,12 @@ ListaProductos.prototype.render = function(){
 	this.ui.show();
 };
 
-ListaProductos.prototype.agregarProducto = function(un_producto){
+ListaProductos.prototype.agregarProducto = function(un_producto, propietario){
     var _this = this;
     var vista = new VistaDeUnProductoEnLista({
         producto: un_producto,
+		propietario:propietario,
+		mostrarPropietario: this.mostrarPropietario,
         alClickear: function(producto_clickeado){
             _this.alSeleccionar(producto_clickeado);
         },

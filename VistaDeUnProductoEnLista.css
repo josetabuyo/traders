@@ -6,6 +6,18 @@
 	margin-top: -4px;
 }
 
+.producto_en_lista #avatar_propietario{
+	display: inline-block;
+	height: 30px;
+	width: 30px;
+	margin-top: -7px;
+	border-radius: 50%;
+	border: 2px solid black;
+	border-width: 2px;
+	display: none;
+	float: right;
+}
+
 .producto_en_lista #nombre{
 	display: inline-block;
 }

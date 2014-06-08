@@ -94,6 +94,7 @@ var PantallaListaContactos = {
 		}
 		
 	},
+	
 	hide: function(){
 		this.ui.hide();
 	},

@@ -9,7 +9,9 @@ var PantallaProductos = {
 			}
         });
 		
-		this.listaProductos = new ListaProductos();
+		this.listaProductos = new ListaProductos({
+			mostrarPropietario:true
+		});
 		this.listaProductos.dibujarEn(this.ui);
     },
 	
