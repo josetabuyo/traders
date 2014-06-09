@@ -46,24 +46,15 @@ var PantallaTrueque = {
 		
 		
 		if(trueque.estado == 'CERRADO'){
-			_this.ui.find('.treque_por').text('CERRADO');
+			
+			_this.ui.find('.treque_cerrado').show();
+			_this.ui.find('.treque_por').hide();
+			
 			return;
 		}
 		
 		
 		var contacto = trueque.contacto;
-		
-		
-		
-		
-		if(trueque.estado == 'CERRADO'){
-			
-			_this.ui.find('.treque_cerrado').show();
-			
-			return;
-			
-			
-		}
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
 		

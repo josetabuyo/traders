@@ -462,7 +462,7 @@ var Traders = {
 		var Traders = this;
 		
 		
-		var oferta = trueque.ofertas[trueque.ofertas.length - 1]
+		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
 		
 		if(oferta.ofertante == 'USUARIO'){
 			alert('No podes aceptar tu propia oferta');
@@ -471,8 +471,6 @@ var Traders = {
 		
 		var ofertaDetallada = $.extend(true, {}, oferta);
 		
-		console.log('ofertaDetallada');
-		console.log(ofertaDetallada);
 		
 		_.each(ofertaDetallada.doy, function(id_producto, index){
 			ofertaDetallada.doy[index] = _.findWhere(Traders.usuario.inventario, {id: id_producto});
@@ -483,8 +481,7 @@ var Traders = {
 		});
         
 		trueque.ofertaDetallada = ofertaDetallada;
-		
-		Traders._concretarTrueque(trueque);
+		trueque.estado = "CERRADO";
 		
 		vx.send({
             tipoDeMensaje:"traders.aceptacionDeTrueque",
@@ -496,13 +493,15 @@ var Traders = {
             }
         });
 		
+		
+		//Traders._concretarTrueque(trueque);
+		
         Traders.onNovedades();
     },
     _concretarTrueque: function(trueque){
         var Traders = this;
-       
-		trueque.estado = "CERRADO";
-	   
+		
+		
 		_.each(trueque.ofertaDetallada.doy, function(producto){
 		    Traders.quitarProducto(producto);
         });
@@ -720,19 +719,50 @@ var Traders = {
 			var trueque = _this.trueques({
 				id: mensaje.datoSeguro.trueque.id,
 				contacto: contacto
-			});
+			})[0];
 			
 			trueque.ofertaDetallada = mensaje.datoSeguro.ofertaDetallada;
-			
 			
 			var aux_doy = trueque.ofertaDetallada.doy;
 			trueque.ofertaDetallada.doy = trueque.ofertaDetallada.recibo;
 			trueque.ofertaDetallada.recibo = aux_doy;
 			
+			
+			trueque.estado = "CERRADO";
+			
+			vx.send({
+				tipoDeMensaje:"traders.aceptacionDeTrueque.handShake",
+				para: contacto.id,
+				de: Traders.usuario.id,
+				datoSeguro:{
+					trueque: {id : trueque.id}
+				}
+			});
+			
+			
 			_this._concretarTrueque(trueque);
 			
 			_this.onNovedades();
 		});
+		
+		
+		
+		vx.when({
+            tipoDeMensaje:"traders.aceptacionDeTrueque.handShake",
+			para: this.usuario.id,
+			de: contacto.id
+		}, function(mensaje){
+			
+			var trueque = _this.trueques({
+				id: mensaje.datoSeguro.trueque.id,
+				contacto: contacto
+			})[0];
+			
+			_this._concretarTrueque(trueque);
+			
+			_this.onNovedades();
+		});
+		
 		
 		vx.when({
 			tipoDeMensaje:"traders.avisoDeCambioDeAvatar",

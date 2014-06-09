@@ -122,6 +122,8 @@
 	z-index: 1;
 	margin-top: -7px;
 	
+	border: solid 1px;
+	
 	display: none;
 }
 
