@@ -4,9 +4,7 @@ var PantallaContacto = {
         this.ui =  $("#pantalla_contacto");     
         
 		PantallaListaContactos.onSelect(function(){
-			if(_this.ui.is(':visible')){
-				_this.render();
-			}
+			_this.render();
 		});
 		
 		
@@ -36,36 +34,36 @@ var PantallaContacto = {
 			PantallaListaTrueques.trueque_seleccionado = trueque;
 			PantallaListaTrueques.add(trueque);
 			
-			
 			BarraSuperior.solapa_trueques.click();
-			
 		});	
+		
+		this.inventario_contacto = new ListaProductos({
+            selector:{}
+        });
+		this.inventario_contacto.dibujarEn(this.panel_inventario_contacto);
     },
 	
     render: function(){
         var _this = this;
         
-		
 		//PantallaListaContactos.render();
 		var _contacto = PantallaListaContactos.contacto_seleccionado;
         
+		if(_contacto.id === undefined) {
+			this.panel_contacto.hide();
+			return;
+		}
+		
         this.lbl_nombre_contacto.text(_contacto.nombre);
+		
 		if(_contacto.avatar!="") this.img_avatar_contacto.attr("src", _contacto.avatar);
-        this.panel_inventario_contacto.empty();
-        _.each(_contacto.inventario, function(producto){
-			
-            var vista = new VistaDeUnProductoEnInventario({
-                producto: producto,
-				alClickear: function(){}
-            });
-            vista.dibujarEn(_this.panel_inventario_contacto);
-			
-        });
-        
-        if(_contacto.id == "") this.panel_contacto.hide();
-        else this.panel_contacto.show();
+		else this.img_avatar_contacto.attr("src", "avatar_default.png");
+		
+		this.inventario_contacto.setSelector({propietario:_contacto});
+		this.inventario_contacto.render();
         
         
+        this.panel_contacto.show();  
         this.ui.show();
     }
 };

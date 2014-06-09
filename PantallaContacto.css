@@ -20,7 +20,11 @@
 
 #pantalla_contacto
 #panel_inventario_contacto {
-	padding:10px;
+	position: absolute;
+	top: 150px;
+	left:0px;
+	right: 0px;
+	bottom: 5px;
 }
 
 #avatar_contacto{

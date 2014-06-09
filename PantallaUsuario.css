@@ -88,7 +88,11 @@
 
 #pantalla_usuario
 	#panel_inventario {
-    padding:10px;
+	position: absolute;
+	top: 40px;
+	left:0px;
+	right: 0px;
+	bottom: 5px;
 }
 
 #pantalla_usuario
@@ -145,20 +149,20 @@
 	left: 50%;
 }
 
-#avatar_usuario{
+#pantalla_usuario #avatar_usuario{
     cursor:pointer;
 	margin-left: -2px;
 	margin-top: -3px;
 }
 
-#video_para_sacar_foto {
+#pantalla_usuario #video_para_sacar_foto {
     height: 100px;
     width: 133px;
     margin-left: -16px;
     cursor: pointer;
 }
 
-#div_recorte_avatar{
+#pantalla_usuario #div_recorte_avatar{
     height: 100px;
     width: 100px;
     border-radius: 50%;

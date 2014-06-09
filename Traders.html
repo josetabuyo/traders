@@ -6,8 +6,14 @@
         <link rel="stylesheet" href="Alertify/alertify.core.css" />
         <link rel="stylesheet" href="Alertify/alertify.default.css" />
         
+        <link rel="stylesheet" href="vex/css/vex.css" />
+        <link rel="stylesheet" href="vex/css/vex-theme-os.css" />
+		
 		<link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" />
+        
+		<link rel="stylesheet" href="opentip/opentip.css" />
+	
         <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
         <link rel="stylesheet" href="Traders.css" />
 		<link rel="stylesheet" href="BarraSuperior.css" />
@@ -19,9 +25,9 @@
         <link rel="stylesheet" href="PantallaTrueque.css" />
         <link rel="stylesheet" href="PantallaListaConexiones.css" />
         <link rel="stylesheet" href="PantallaEdicionProducto.css" />
-		
+        <link rel="stylesheet" href="VistaDeUnProductoEnLista.css" />
+        <link rel="stylesheet" href="ListaProductos.css" />
 
-		
 		<title>Traders</title>
 	</head>
 	
@@ -89,7 +95,7 @@
 					<li>
 						<div class="datos_usuario">
                             <div id="div_recorte_avatar">
-                                <img id="avatar_usuario" src="avatar.png" class="avatar_usuario" />
+                                <img id="avatar_usuario" src="avatar_default.png" class="avatar_usuario" />
                                 <video id="video_para_sacar_foto" autoplay></video>
                             </div>
 							<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
@@ -115,31 +121,11 @@
 							</div>
 						</div>
 					</li>
-						
-						
-					<li>
-						<div id="panel_me_deben_container" class="seccion_container">
-							<div class="titulo_panel">
-								Me deben
-							</div>
-							<div id="panel_me_deben">
-							</div>
-						</div>
-					</li>
-						
-						
-					<li>
-						<div id="panel_debo_container" class="seccion_container">
-							<div class="titulo_panel">
-								Debo
-							</div>
-							<div id="panel_debo">
-							</div>
-						</div>
-					</li>
 				</ul>
             </div>
 			
+			<div id="pantalla_productos" class="pantalla">
+			</div>
 			
 			<div id="pantalla_lista_contactos" class="pantalla">
 				<div id="lista_contactos">
@@ -153,7 +139,7 @@
             <div id="pantalla_contacto" class="pantalla">
                 <div id="panel_contacto">
 					<div class="datos_usuario">
-						<img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
+						<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
 						<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
 						<div class="botonera_usuario">
 							<input id="btn_trocar" type="button" value="Trocar"/>
@@ -182,7 +168,7 @@
             <div id="pantalla_trueque" class="pantalla">
 				
 				<div class="datos_usuario datos_persona">
-					<img id="avatar_usuario" class="avatar_usuario" src="avatar.png"/>
+					<img id="avatar_usuario" class="avatar_usuario" src="avatar_default.png"/>
 					<div class="lbl_nombre_usuario"></div>
 					<div class="botonera_usuario">
 						<input id="btn_aceptar" type="button" value="Aceptar"/>
@@ -192,7 +178,7 @@
 				
 				
 				<div class="datos_contacto datos_persona">
-					<img id="avatar_contacto" class="avatar_usuario" src="avatar.png"/>
+					<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
 					<div class="lbl_nombre_usuario"></div>
 					<div class="botonera_usuario">
 						<input id="btn_mensaje" type="button" value="Enviar mensaje"/>
@@ -226,13 +212,6 @@
 				<div id="lista_conexiones">
 				</div>
 			</div>
-			
-			<div id="pantalla_edicion_producto">
-				<div class="contenidos">
-					<div class="titulo">Producto</div>
-					<label class="atributo_producto">nombre:</label><input type=text id="txt_nombre_producto"/>
-				</div>				
-			</div>
         </div>
     </body>
     
@@ -252,11 +231,32 @@
             <div id="btn_eliminar">x</div>
         </div>   
 		
+		<div class="producto_en_lista item_en_lista">
+            <img id="thumbnail_producto"/>
+            <div id="nombre"></div>
+            <img id="avatar_propietario"></img>
+            <div id="btn_eliminar">x</div>
+        </div>
+		
+		<div class="lista_productos">
+			<div id="listado_de_productos">
+			</div>
+		</div>
+		
 		<div class="conexion_en_lista item_en_lista">
 			<input id="rad_activar" name="selectores_conexion" type="radio"/>
             <div id="url"></div>
 			<div id="btn_eliminar">x</div>
         </div>
+		
+		<div class="pantalla_edicion_producto">
+			<div id="div_imagen_producto">
+				<img id="imagen_producto" src="Gift-icon-grande.png"/>
+				<video id="video_para_sacar_foto" autoplay></video>
+			</div>
+			<label class="titulo_atributo_producto">Nombre:</label>
+			<input type="text" id="txt_nombre_producto" style="height: 35px; font-size: 18px;"/>			
+		</div>
     </div>
     
     <script type="text/javascript" src="jquery-1.10.2.min.js"></script> 
@@ -265,6 +265,10 @@
     <script type="text/javascript" src="Cryptico.min.js"></script> 
     <script type="text/javascript" src="select2-3.4.5/select2.min.js"></script> 
     <script type="text/javascript" src="Bootstrap/js/bootstrap.min.js"></script> 
+<!--  vex es una libreria para abrir popups -->
+	<script src="vex/js/vex.combined.min.js"></script>
+<!-- opentip es para hacer tooltips copados -->
+	<script src="opentip/opentip-jquery.min.js"></script>
     
     <script type="text/javascript" src="VortexJS/FiltrosYTransformaciones.js"></script>
     <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script> 
@@ -278,8 +282,6 @@
     <script type="text/javascript" src="VortexJS/NodoConectorSocket.js"></script>
     <script type="text/javascript" src="VortexJS/socket.io.js"></script>
     <script type="text/javascript" src="VortexJS/Vortex.js"></script> 
-<!--  leanmodal es una libreria para abrir popups -->
-	<script src="leanModal/jquery.leanModal.min.js"></script>
 	
     <script type="text/javascript" src="Main.js"></script> 
     <script type="text/javascript" src="Traders.js"></script> 
@@ -292,6 +294,9 @@
     <script type="text/javascript" src="PantallaListaTrueques.js"></script> 
 	<script type="text/javascript" src="PantallaTrueque.js"></script> 
 	<script type="text/javascript" src="PantallaEdicionProducto.js"></script> 
+	<script type="text/javascript" src="ListaProductos.js"></script> 
+	<script type="text/javascript" src="PantallaProductos.js"></script> 
+	<script type="text/javascript" src="VistaDeUnProductoEnLista.js"></script> 
     <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
     <script type="text/javascript" src="PersistidorManual.js"></script>     
 	<script type="text/javascript" src="RepositorioDeConexiones.js"></script> 

@@ -1,22 +1,30 @@
-#pantalla_edicion_producto{
-	display:none;
+.pantalla_edicion_producto{
+	
+	
 }
 
-#pantalla_edicion_producto .contenidos{
-	background-color: white;
-	padding: 20px;
-	border-radius: 10px;
+.pantalla_edicion_producto #div_imagen_producto{
+	display: inline-block;
 }
 
-#pantalla_edicion_producto .atributo_producto{
+.pantalla_edicion_producto #imagen_producto{
+	height: 100px;
+	width: 100px;
+    cursor: pointer;
+}
+
+.pantalla_edicion_producto #video_para_sacar_foto{
+	position: absolute;
+	display: none;
+}
+
+.pantalla_edicion_producto .titulo_atributo_producto{
 	display: inline-block;
 	margin-right: 5px;
-	vertical-align: super;
 	font-weight: bold;
 }
 
-#pantalla_edicion_producto .titulo{
-	height: 40px;
-	font-size: 20px;
-	font-weight: bold;
+.pantalla_edicion_producto input
+	height: 35px;
+	font-size: 18px;
 }

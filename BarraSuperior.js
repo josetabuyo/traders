@@ -33,7 +33,7 @@ var BarraSuperior = {
 		});	
 		
 		this.solapa_productos.click(function(e) {
-			//PantallaTrueque.render();
+			PantallaProductos.render();
 		});	
 
 		this.solapa_vortex.click(function(e) {

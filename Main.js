@@ -17,7 +17,6 @@ $(document).ready(function() {
 var onDeviceReady = function() {     
     vx.start({verbose:false});
     
-	//'https://router-vortex.herokuapp.com' 
 	// url:'http://router-vortex.herokuapp.com',
 	// url:'http://localhost:3000',
 	
@@ -35,13 +34,14 @@ var onDeviceReady = function() {
 		
 		PantallaListaConexiones.start();
 
-		PantallaEdicionProducto.start();
         PersistidorManual.start(Traders.usuario.id);
+		
+		PantallaProductos.start(); 
 		
     });
 
     PantallaInicio.render();
-
+	vex.defaultOptions.className = 'vex-theme-os';
 };
 
 

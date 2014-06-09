@@ -360,14 +360,12 @@ var Traders = {
 	},
 	
 	agregarProductoTrueque: function(trueque, producto, recibo_doy){
+		var _this = this;
 		
 		
-		if(typeof(trueque) == 'string'){
-			var trueque = _this.trueque({id:trueque});
-		}
+		
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
-		
 		
 		
 		if(oferta.ofertante == 'USUARIO'){
@@ -383,6 +381,10 @@ var Traders = {
 			trueque.ofertas.push(nuevaOferta);
 		}
 		
+		
+		console.log('agregarProductoTrueque pasamo por acá');
+		console.log('trueque');
+		console.log(trueque);
 		
 		this.onNovedades();
     },
@@ -407,7 +409,7 @@ var Traders = {
 			
 			nuevaOferta.ofertante = 'USUARIO';
 			nuevaOferta.estado = 'SIN_ENVIAR';
-			
+
 			nuevaOferta[recibo_doy] = $.grep(nuevaOferta[recibo_doy], function(producto_id){
 				return producto_id != producto.id;
 			});

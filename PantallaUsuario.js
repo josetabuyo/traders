@@ -5,8 +5,7 @@ var PantallaUsuario = {
         
         this.lbl_nombre_usuario = this.ui.find("#lbl_nombre_usuario");
         this.panel_inventario = this.ui.find("#panel_inventario");
-        this.panel_me_deben = this.ui.find("#panel_me_deben");
-        this.panel_debo = this.ui.find("#panel_debo");
+        
 		this.img_avatar_usuario = this.ui.find("#avatar_usuario");
         this.video_para_sacar_foto= this.ui.find("#video_para_sacar_foto")[0];
 		
@@ -97,6 +96,17 @@ var PantallaUsuario = {
             video_stream.stop();
         });
         
+        this.inventario_usuario = new ListaProductos({
+            selector:{propietario:Traders.usuario}, 
+            alSeleccionar: function(producto){
+                var pantalla_edicion = new PantallaEdicionProducto(producto);
+            },
+            alEliminar: function(producto){
+                Traders.quitarProducto(producto.id);
+            }
+        });
+        this.inventario_usuario.dibujarEn(this.panel_inventario);
+        
 		Traders.onNovedades(function(){
 			if(_this.ui.is(':visible')){
 				_this.render();
@@ -108,6 +118,8 @@ var PantallaUsuario = {
     render: function(){
         this.lbl_nombre_usuario.text(Traders.usuario.nombre);
 		if(Traders.usuario.avatar!="") this.img_avatar_usuario.attr("src", Traders.usuario.avatar);
+
+/*
         this.panel_inventario.empty();
         this.panel_me_deben.empty();
         this.panel_debo.empty();
@@ -157,8 +169,13 @@ var PantallaUsuario = {
 			_this.panel_debo.closest('.seccion_container').closest('li').hide();
 		}
 		
+*/
+		else this.img_avatar_usuario.attr("src", "avatar_default.png");
+
 		
+        var _this = this;
 		
+        this.inventario_usuario.render();
        
         this.ui.show();      
     }
