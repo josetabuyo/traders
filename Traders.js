@@ -724,6 +724,11 @@ var Traders = {
 			
 			trueque.ofertaDetallada = mensaje.datoSeguro.ofertaDetallada;
 			
+			
+			var aux_doy = trueque.ofertaDetallada.doy;
+			trueque.ofertaDetallada.doy = trueque.ofertaDetallada.recibo;
+			trueque.ofertaDetallada.recibo = aux_doy;
+			
 			_this._concretarTrueque(trueque);
 			
 			_this.onNovedades();
