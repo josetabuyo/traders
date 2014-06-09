@@ -94,8 +94,36 @@
 	font-size: 22px;
 	z-index: 1;
 	margin-top: -7px;
+	
 }
 
+
+
+#pantalla_trueque
+	#oferta
+		.treque_cerrado{
+		
+	position: absolute;
+	
+	margin-left: auto;
+	margin-right: auto;
+	
+	
+	top: 50%;
+	left:0;
+	right:0;
+	
+	width:20px;
+	height:20px;
+	
+	background-color: rgb(255,255,255);
+	text-align: center;
+	font-size: 22px;
+	z-index: 1;
+	margin-top: -7px;
+	
+	display: none;
+}
 
 
 #pantalla_trueque

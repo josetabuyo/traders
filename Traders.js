@@ -501,9 +501,7 @@ var Traders = {
     _concretarTrueque: function(trueque){
         var Traders = this;
        
-	   console.log('_concretarTrueque');
-	   console.log('trueque');
-	   console.log(trueque);
+		trueque.estado = "CERRADO";
 	   
 		_.each(trueque.ofertaDetallada.doy, function(producto){
 		    Traders.quitarProducto(producto);
@@ -513,7 +511,6 @@ var Traders = {
 			Traders.agregarProducto(producto);
         });
 		
-		trueque.estado = "CERRADO";
 		
 		
 		// informo a la comunidad mi inventario actualizado

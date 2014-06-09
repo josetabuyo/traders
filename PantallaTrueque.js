@@ -46,6 +46,19 @@ var PantallaTrueque = {
 		
 		
 		var contacto = trueque.contacto;
+		
+		
+		
+		
+		if(trueque.estado == 'CERRADO'){
+			
+			_this.ui.find('.treque_cerrado').show();
+			
+			return;
+			
+			
+		}
+		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
 		
 		
@@ -54,6 +67,10 @@ var PantallaTrueque = {
 		
 		if(usuario.avatar!="") this.ui.find("#avatar_usuario").attr("src", usuario.avatar);
 		if(contacto.avatar!="") this.ui.find("#avatar_contacto").attr("src", contacto.avatar);
+		
+		
+		
+		
 		
 		
 		var $oferta_doy = this.ui.find("#oferta .oferta_doy");
