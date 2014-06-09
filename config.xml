@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
     <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.vortex.pruebaBluetooth"
+        id        = "com.haciendo.traders"
         versionCode="10" 
-        version   = "1.0.0">
+        version   = "0.0.1">
 
     <!-- versionCode is optional and Android only -->
     <gap:platform name="android" />
-    <preference name="phonegap-version"           value="3.1.0" />
+    <preference name="phonegap-version"           value="3.3.0" />
         
-    <name>Prueba Bluetooth</name>
+    <name>Traders</name>
 
     <description>
-        Prueba de conexion con arduino usando plugin
+        Aplicacion distribuida de trueque
     </description>
 
-    <author href="https://build.phonegap.com" email="support@phonegap.com">
-        Javier Lurgo 
+    <author href="https://github.com/haciendo" email="jlurgo@gmail.com">
+        Laboratorio Haciendo
     </author>
         
     <access origin="*"/>
-    <gap:plugin name="com.megster.cordova.bluetoothserial" />     
-<!--    <gap:plugin name="org.apache.cordova.device-orientation" />-->
 </widget>
