@@ -382,10 +382,6 @@ var Traders = {
 		}
 		
 		
-		console.log('agregarProductoTrueque pasamo por acá');
-		console.log('trueque');
-		console.log(trueque);
-		
 		this.onNovedades();
     },
 	
@@ -426,16 +422,8 @@ var Traders = {
 	
 	
 	enviarOferta: function(trueque){
-	
-		if(typeof(trueque) == 'string'){
-			var trueque = _this.trueque({id:trueque});
-		}
-		
-		
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
-		
-		
 		
 		if(oferta.estado == 'ENVIADA'){
 			alert('Ya hiciste tu oferta, espera la respuesta.');
@@ -686,13 +674,23 @@ var Traders = {
 				contacto: contacto
 			})[0];
 			
+			console.log('LLEGO UNA OFERTA');
+			console.log('mensaje');
+			console.log(mensaje);
 			
 			if(!trueque){
+				console.log('e nuevo');
+			
 				trueque = _this.nuevoTrueque({
 					id: mensaje.datoSeguro.trueque.id,
 					contacto: contacto
 				});
 			}
+			
+			
+			console.log(' me llego una oferta del trueque');
+			console.log(trueque);
+			
 			
 			var oferta = mensaje.datoSeguro.oferta;
 			

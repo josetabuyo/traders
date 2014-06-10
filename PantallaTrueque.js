@@ -5,8 +5,10 @@ var PantallaTrueque = {
 
 		var $btn_ofertar = this.ui.find('#btn_ofertar');
         $btn_ofertar.click(function(){
-            Traders.enviarOferta(_this.trueque);
+			
+            Traders.enviarOferta(PantallaListaTrueques.trueque_seleccionado);
         });
+		
 		
 		this.$oferta_doy = this.ui.find("#oferta .oferta_doy");
 		this.inventario_doy = new ListaProductos({
@@ -55,6 +57,7 @@ var PantallaTrueque = {
         });
 
 		PantallaListaTrueques.onSelect(function(){
+			_this.trueque = PantallaListaTrueques.trueque_seleccionado;
 			_this.render();
 		});
 		

@@ -23,7 +23,10 @@ ListaProductos.prototype.render = function(){
 	var _this = this;
 	this.listado_de_productos.empty();
     
-	if(!this.selector) return;
+	if(!this.selector){
+		console.log('sin selector');
+		return;
+	}
 	
 	
     if(!this.selector.propietario){
