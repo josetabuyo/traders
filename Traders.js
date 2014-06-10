@@ -299,27 +299,11 @@ var Traders = {
 	
 	_trueques:[],
     trueques:function(p){
-        if(!p){
-		
+        
+		if(!p){
 			return this._trueques;
-		
-		}else if(p.query){
-		
-			return _.filter(this._trueques, function(_trueque){
-				return _trueque.contacto.nombre.indexOf(p.query)>=0 || contacto.id == p.query;
-			});
-			
-        }else if(p.contacto){
-			
-			return _.filter(this._trueques, function(_trueque){
-				return _trueque.contacto.id == p.contacto.id;
-			});
-			
 		} else {
-				
-			return _.findWhere(this._trueques, {id: p.id});
-			
-			
+			return _.where(this._trueques, p);
 		}
     },
 	
@@ -432,6 +416,9 @@ var Traders = {
 		
 		oferta.estado = 'ENVIADA';
 		
+		console.log('LE ENVIO EL TRUEQUE');
+		console.log('trueque');
+		console.log(trueque);
 		
         vx.send({
             tipoDeMensaje:"traders.trueque.oferta",
@@ -679,7 +666,7 @@ var Traders = {
 			console.log(mensaje);
 			
 			if(!trueque){
-				console.log('e nuevo');
+				console.log('ES NUEVO EL TRUEQUE');
 			
 				trueque = _this.nuevoTrueque({
 					id: mensaje.datoSeguro.trueque.id,
@@ -687,8 +674,7 @@ var Traders = {
 				});
 			}
 			
-			
-			console.log(' me llego una oferta del trueque');
+			console.log('trueque');
 			console.log(trueque);
 			
 			
