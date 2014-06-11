@@ -76,9 +76,10 @@ var PantallaTrueque = {
 		
 		
 		
-		
 		this.contacto = this.trueque.contacto;
 		this.oferta = this.trueque.ofertas[this.trueque.ofertas.length - 1];
+		
+		
 		
 		
         this.ui.find("#lbl_nombre_usuario").text(this.usuario.nombre);
@@ -92,7 +93,27 @@ var PantallaTrueque = {
 		else this.ui.find("#avatar_contacto").attr("src", "avatar_default.png");
 		
 		
+		
+		if(this.oferta.estado == 'ENVIADA'){
+			this.ui.find('#btn_ofertar').hide();
+		} else {
+			this.ui.find('#btn_ofertar').show();
+		}
+		
+		
+		if(this.oferta.ofertante == 'USUARIO'){
+			this.ui.find('#btn_aceptar').hide();
+		} else {
+			this.ui.find('#btn_aceptar').show();
+		}
+		
+		
 		if(this.trueque.estado == 'CERRADO'){
+			// TO DO: graficar el trueque cerrado
+			
+			this.ui.find('#btn_ofertar').hide();
+			this.ui.find('#btn_aceptar').hide();
+			
 			
 			_this.ui.find('.treque_cerrado').show();
 			_this.ui.find('.treque_por').hide();

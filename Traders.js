@@ -385,7 +385,7 @@ var Traders = {
 			
 		}else{
 			
-			var nuevaOferta = $.extend(oferta);
+			var nuevaOferta = $.extend(true, {}, oferta);
 			
 			nuevaOferta.ofertante = 'USUARIO';
 			nuevaOferta.estado = 'SIN_ENVIAR';
@@ -408,6 +408,8 @@ var Traders = {
 	enviarOferta: function(trueque){
 		
 		var oferta = trueque.ofertas[trueque.ofertas.length - 1];
+		
+		trueque.estado = 'ABIERTO';
 		
 		if(oferta.estado == 'ENVIADA'){
 			alert('Ya hiciste tu oferta, espera la respuesta.');
@@ -661,22 +663,15 @@ var Traders = {
 				contacto: contacto
 			})[0];
 			
-			console.log('LLEGO UNA OFERTA');
-			console.log('mensaje');
-			console.log(mensaje);
 			
 			if(!trueque){
-				console.log('ES NUEVO EL TRUEQUE');
-			
 				trueque = _this.nuevoTrueque({
 					id: mensaje.datoSeguro.trueque.id,
 					contacto: contacto
 				});
 			}
 			
-			console.log('trueque');
-			console.log(trueque);
-			
+			trueque.estado = 'ABIERTO'
 			
 			var oferta = mensaje.datoSeguro.oferta;
 			
