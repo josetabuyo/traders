@@ -43,8 +43,6 @@ var PantallaListaTrueques = {
 		
 		$trueque_en_lista.click(function(){
 			
-			console.log('se selecciona este trueque');
-			console.log(trueque);
 			
 			_this.trueque_seleccionado = trueque;
 			_this.lista_trueques.find('.trueque_en_lista').removeClass("trueque_seleccionado");

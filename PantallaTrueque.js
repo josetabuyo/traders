@@ -74,7 +74,8 @@ var PantallaTrueque = {
 		this.usuario = Traders.usuario;
 		this.trueque = PantallaListaTrueques.trueque_seleccionado;
 		
-		
+		console.log('se renderiza este trueque');
+		console.log(this.trueque);
 		
 		this.contacto = this.trueque.contacto;
 		this.oferta = this.trueque.ofertas[this.trueque.ofertas.length - 1];
@@ -114,20 +115,42 @@ var PantallaTrueque = {
 			this.ui.find('#btn_ofertar').hide();
 			this.ui.find('#btn_aceptar').hide();
 			
-			
-			_this.ui.find('.treque_cerrado').show();
-			_this.ui.find('.treque_por').hide();
-			
-			
+			/*
 			this.inventario_doy.setSelector(null);
 			this.inventario_recibo.setSelector(null);
 			this.inventario_usuario.setSelector(null);
 			this.inventario_contacto.setSelector(null);
+			*/
 			
 			
-			this.ui.show();
-			 
-			return;
+			console.log('_.pluck(this.trueque.ofertaDetallada.doy, id)');
+			console.log(_.pluck(this.trueque.ofertaDetallada.doy, 'id'));
+			
+			this.inventario_doy.setSelector({
+				propietario: this.contacto,//this.usuario,
+				idIn: _.pluck(this.trueque.ofertaDetallada.doy, 'id')
+			});
+			
+			this.inventario_recibo.setSelector({
+				propietario: this.usuario,//this.contacto,
+				idIn: _.pluck(this.trueque.ofertaDetallada.recibo, 'id')
+			});
+			
+			
+			this.inventario_usuario.setSelector({
+				propietario: this.usuario,
+				idNotIn: _.pluck(this.trueque.ofertaDetallada.doy, 'id')
+			});
+			
+			
+			this.inventario_contacto.setSelector({
+				propietario: this.contacto,
+				idNotIn: _.pluck(this.trueque.ofertaDetallada.recibo, 'id')
+			});
+			
+			_this.ui.find('.treque_cerrado').show();
+			_this.ui.find('.treque_por').hide();
+			
 		} else {
 		
 			this.inventario_doy.setSelector({
