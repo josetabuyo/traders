@@ -34,25 +34,12 @@ ul {
 
 .pantalla{
     display: none;
-	
     position: absolute;
     top: 40px;
     bottom: 5px;
-	left:5px;
-	right:5px;
+	left:0px;
+	right:0px;
 }
-
-
-
-.titulo_pantalla{
-    position: absolute;
-    left: 5px;
-    font-size: 40px;
-    font-style: italic;
-    bottom: 10px;
-}
-
-
 
 .producto_en_inventario {
     display: inline-block;
