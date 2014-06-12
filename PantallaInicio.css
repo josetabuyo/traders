@@ -44,8 +44,8 @@
 #pantalla_inicio
 	#contenedor_password{
 		position: absolute;
-		right: 84px;
-		width: 164px;
+		right: 99px;
+		width: 150px;
 		height: 30px;
 		top: 14px;
 }
@@ -55,7 +55,7 @@
 		height: 22px;
 		width: 22px;
 		position: absolute;
-		right: 4px;
+		right: -8px;
 		top: 4px;
 		background-color: red;
 		border-radius: 5px;
@@ -63,7 +63,7 @@
 
 #pantalla_inicio
 	#password{
-		width: 150px;
+		width: 100%;
 }
 
 #pantalla_inicio
@@ -100,5 +100,42 @@
 		#boton_ingresar {
 			left: 357px;
 			top: 60px;
+	}	
+}
+
+@media screen and (max-width: 433px) {	
+	#pantalla_inicio
+		.barra_superior{
+			height: 228px;
+	}
+	
+	#pantalla_inicio
+		#comentarios_login{
+			left: 10px;
+			right: 10px;
+	}
+	
+	#pantalla_inicio
+		#nombre_usuario{
+			left: 10px;
+			top: 60px;
+			right: 10px;
+			width: 90%;
+	}
+
+	#pantalla_inicio
+		#contenedor_password{
+			left: 10px;
+			top: 100px;
+			right: 10px;
+			width: 90%;
+	}
+
+	#pantalla_inicio
+		#boton_ingresar {
+			left: 10px;
+			top: 140px;
+			right: 10px;
+			width: 94%;
 	}	
 }
