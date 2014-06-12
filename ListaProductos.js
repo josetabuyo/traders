@@ -18,17 +18,68 @@ ListaProductos.prototype.setSelector = function(selector){
 	this.selector = selector;
 	this.render();
 };
+
+
+
+ListaProductos.prototype.setLista = function(lista){
+	this.lista = lista;
 	
+	this.renderLista();
+};
+
+
+ListaProductos.prototype.renderLista = function(){
+	var _this = this;
+	
+	_.each(this.lista, function(producto){
+		_this.agregarProducto(producto, Traders.usuario);               
+	});
+}
+
 ListaProductos.prototype.render = function(){
 	var _this = this;
 	this.listado_de_productos.empty();
     
 	if(!this.selector){
-		console.log('sin selector');
 		return;
 	}
 	
 	
+	if(!this.selector.propietario){
+		this.selector.propietario = Traders.usuario;
+	}
+	
+	if(this.selector.propietario.id == Traders.usuario.id){
+		
+		_.each(Traders.usuario.inventario, function(producto){
+			if(_this.selector.idNotIn){
+				if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
+			}
+			if(_this.selector.idIn){
+				if(_this.selector.idIn.indexOf(producto.id)==-1) return;
+			}
+			_this.agregarProducto(producto, Traders.usuario);               
+		});        
+	} else {
+		_.each(Traders.contactos(), function(contacto){
+			
+			if(_this.selector.propietario.id == contacto.id){
+				_.each(contacto.inventario, function(producto){
+					if(_this.selector.idNotIn){
+						if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
+					}
+					if(_this.selector.idIn){
+						if(_this.selector.idIn.indexOf(producto.id)==-1) return;
+					}
+					_this.agregarProducto(producto, contacto);       
+				});
+			}
+		});
+	}
+	
+	
+	
+	/*
     if(!this.selector.propietario){
         _.each(Traders.usuario.inventario, function(producto){
 			if(_this.selector.idNotIn){
@@ -77,6 +128,8 @@ ListaProductos.prototype.render = function(){
             });
         }
     }
+	
+	*/
 	this.ui.show();
 };
 

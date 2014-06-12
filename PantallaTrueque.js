@@ -123,30 +123,19 @@ var PantallaTrueque = {
 			*/
 			
 			
-			console.log('_.pluck(this.trueque.ofertaDetallada.doy, id)');
-			console.log(_.pluck(this.trueque.ofertaDetallada.doy, 'id'));
+			console.log('this.trueque.ofertaDetallada');
+			console.log(this.trueque.ofertaDetallada);
 			
-			this.inventario_doy.setSelector({
-				propietario: this.contacto,//this.usuario,
-				idIn: _.pluck(this.trueque.ofertaDetallada.doy, 'id')
-			});
-			
-			this.inventario_recibo.setSelector({
-				propietario: this.usuario,//this.contacto,
-				idIn: _.pluck(this.trueque.ofertaDetallada.recibo, 'id')
-			});
+
 			
 			
-			this.inventario_usuario.setSelector({
-				propietario: this.usuario,
-				idNotIn: _.pluck(this.trueque.ofertaDetallada.doy, 'id')
-			});
+			this.inventario_doy.setLista(this.trueque.ofertaDetallada.doy);
+			this.inventario_recibo.setLista(this.trueque.ofertaDetallada.recibo);
 			
 			
-			this.inventario_contacto.setSelector({
-				propietario: this.contacto,
-				idNotIn: _.pluck(this.trueque.ofertaDetallada.recibo, 'id')
-			});
+			this.inventario_usuario.setSelector(null);
+			this.inventario_contacto.setSelector(null);
+			
 			
 			_this.ui.find('.treque_cerrado').show();
 			_this.ui.find('.treque_por').hide();
