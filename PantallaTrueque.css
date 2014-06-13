@@ -157,5 +157,20 @@
 	margin-left: 5px;
 }
 
+#pantalla_trueque #btn_aceptar,
+#pantalla_trueque #btn_ofertar 
+{
+	position: absolute;	
+	top: 70px;
+	left: 120px;
+}
 
-
+#pantalla_trueque .lbl_nombre_usuario,
+#pantalla_trueque .lbl_nombre_contacto
+{
+	position: absolute;
+	top: 30px;
+	left: 120px;
+	font-size: 35px;
+	font-weight: bold;
+}
