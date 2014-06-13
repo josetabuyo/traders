@@ -10,12 +10,16 @@ var BarraSuperior = {
 		this.solapa_productos 	= this.ui.find("#solapa_productos");
 		this.solapa_vortex 		= this.ui.find("#solapa_vortex");
 		
-		
+		this.avatar_usuario = this.solapa_yo.find("img");
 		
 		this.ui.find(".solapa").on('click', function(){
 			$('div.pantalla').hide();
 			_this.ui.find('.solapa').removeClass('solapa_selected');
 			$(this).addClass('solapa_selected',1000);
+		});
+		
+		Traders.onNovedades(function(){
+			_this.render();
 		});
 		
 		this.solapa_yo.click(function(e) {
@@ -42,6 +46,7 @@ var BarraSuperior = {
 		
     },
 	render: function(){
+		if(Traders.usuario.avatar!="") this.avatar_usuario.attr("src", Traders.usuario.avatar);
         this.ui.show();
     }
 };
