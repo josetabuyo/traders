@@ -21,9 +21,8 @@ ListaProductos.prototype.setSelector = function(selector){
 
 
 
-ListaProductos.prototype.setLista = function(lista){
+ListaProductos.prototype.setLista = function(lista, propietario){
 	this.lista = lista;
-	
 	this.renderLista();
 };
 
@@ -32,7 +31,7 @@ ListaProductos.prototype.renderLista = function(){
 	var _this = this;
 	
 	_.each(this.lista, function(producto){
-		_this.agregarProducto(producto, Traders.usuario);               
+		_this.agregarProducto(producto);               
 	});
 }
 
@@ -44,6 +43,10 @@ ListaProductos.prototype.render = function(){
 		return;
 	}
 	
+	if(this.lista){
+		this.renderLista();
+		return;
+	}
 	
 	if(!this.selector.propietario){
 		this.selector.propietario = Traders.usuario;
@@ -137,7 +140,7 @@ ListaProductos.prototype.agregarProducto = function(un_producto, propietario){
     var _this = this;
     var vista = new VistaDeUnProductoEnLista({
         producto: un_producto,
-		propietario:propietario,
+		propietario: propietario,
 		mostrarPropietario: this.mostrarPropietario,
         alClickear: function(producto_clickeado){
             _this.alSeleccionar(producto_clickeado);

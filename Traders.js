@@ -418,9 +418,7 @@ var Traders = {
 		
 		oferta.estado = 'ENVIADA';
 		
-		console.log('LE ENVIO EL TRUEQUE');
-		console.log('trueque');
-		console.log(trueque);
+		
 		
         vx.send({
             tipoDeMensaje:"traders.trueque.oferta",
@@ -448,19 +446,18 @@ var Traders = {
 			return;
 		}
 		
-		var ofertaDetallada = $.extend(true, {}, oferta);
+		trueque.ofertaDetallada = $.extend(true, {}, oferta);
 		
 		
-		_.each(ofertaDetallada.doy, function(id_producto, index){
-			ofertaDetallada.doy[index] = _.findWhere(Traders.usuario.inventario, {id: id_producto});
+		_.each(trueque.ofertaDetallada.doy, function(id_producto, index){
+			trueque.ofertaDetallada.doy[index] = _.findWhere(Traders.usuario.inventario, {id: id_producto});
 		});
 		
-		_.each(ofertaDetallada.recibo, function(id_producto, index){
-			ofertaDetallada.recibo[index] = _.findWhere(trueque.contacto.inventario, {id: id_producto});
+		_.each(trueque.ofertaDetallada.recibo, function(id_producto, index){
+			trueque.ofertaDetallada.recibo[index] = _.findWhere(trueque.contacto.inventario, {id: id_producto});
 		});
-        
-		trueque.ofertaDetallada = ofertaDetallada;
-		trueque.estado = "CERRADO";
+       
+		
 		
 		vx.send({
             tipoDeMensaje:"traders.aceptacionDeTrueque",
@@ -468,11 +465,14 @@ var Traders = {
             de: Traders.usuario.id,
             datoSeguro:{
 				trueque: {id : trueque.id},
-				ofertaDetallada: ofertaDetallada
+				ofertaDetallada: trueque.ofertaDetallada
             }
         });
 		
-		
+		trueque.estado = "CERRADO";
+		 
+		 
+		 
 		//Traders._concretarTrueque(trueque);
 		
         Traders.onNovedades();
@@ -696,6 +696,11 @@ var Traders = {
 			para: this.usuario.id,
 			de: contacto.id
 		}, function(mensaje){
+			
+			
+			console.log('traders.aceptacionDeTrueque me llego este mensaje');
+			console.log(mensaje);
+			
 			
 			var trueque = _this.trueques({
 				id: mensaje.datoSeguro.trueque.id,

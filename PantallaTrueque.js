@@ -129,8 +129,8 @@ var PantallaTrueque = {
 
 			
 			
-			this.inventario_doy.setLista(this.trueque.ofertaDetallada.doy);
-			this.inventario_recibo.setLista(this.trueque.ofertaDetallada.recibo);
+			this.inventario_doy.setLista(this.trueque.ofertaDetallada.doy, this.contacto);
+			this.inventario_recibo.setLista(this.trueque.ofertaDetallada.recibo, this.usuario);
 			
 			
 			this.inventario_usuario.setSelector(null);
