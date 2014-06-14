@@ -16,6 +16,7 @@ var ListaProductos = function(opt){
 
 ListaProductos.prototype.setSelector = function(selector){
 	this.selector = selector;
+	this.lista = null;
 	this.render();
 };
 
@@ -23,28 +24,45 @@ ListaProductos.prototype.setSelector = function(selector){
 
 ListaProductos.prototype.setLista = function(lista, propietario){
 	this.lista = lista;
+	this.selector = null;
 	this.renderLista();
 };
 
 
+
+ListaProductos.prototype.render = function(){
+	
+	this.listado_de_productos.empty();
+	
+	if(this.selector){
+		this.renderSelector();
+		return;
+		
+	}else if(this.lista){
+		this.renderLista();
+		return;
+	}
+	
+	
+}
+
 ListaProductos.prototype.renderLista = function(){
 	var _this = this;
+	
+	if(!this.lista){
+		return;
+	}
 	
 	_.each(this.lista, function(producto){
 		_this.agregarProducto(producto);               
 	});
 }
 
-ListaProductos.prototype.render = function(){
+ListaProductos.prototype.renderSelector = function(){
 	var _this = this;
-	this.listado_de_productos.empty();
+	
     
 	if(!this.selector){
-		return;
-	}
-	
-	if(this.lista){
-		this.renderLista();
 		return;
 	}
 	

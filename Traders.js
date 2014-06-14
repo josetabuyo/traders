@@ -200,7 +200,9 @@ var Traders = {
     },
     quitarProducto: function(producto){
         
-		//ver de usar delete
+		console.log('pero usted quitarProducto ??????????????????????????? ');
+		console.log(producto);
+		
 		this.usuario.inventario = $.grep(this.usuario.inventario, function(prod){
             return prod.id != producto.id;
         });
@@ -696,11 +698,6 @@ var Traders = {
 			para: this.usuario.id,
 			de: contacto.id
 		}, function(mensaje){
-			
-			
-			console.log('traders.aceptacionDeTrueque me llego este mensaje');
-			console.log(mensaje);
-			
 			
 			var trueque = _this.trueques({
 				id: mensaje.datoSeguro.trueque.id,

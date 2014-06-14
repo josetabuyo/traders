@@ -74,8 +74,6 @@ var PantallaTrueque = {
 		this.usuario = Traders.usuario;
 		this.trueque = PantallaListaTrueques.trueque_seleccionado;
 		
-		console.log('se renderiza este trueque');
-		console.log(this.trueque);
 		
 		this.contacto = this.trueque.contacto;
 		this.oferta = this.trueque.ofertas[this.trueque.ofertas.length - 1];
@@ -123,15 +121,10 @@ var PantallaTrueque = {
 			*/
 			
 			
-			console.log('this.trueque.ofertaDetallada');
-			console.log(this.trueque.ofertaDetallada);
-			
-
 			
 			
 			this.inventario_doy.setLista(this.trueque.ofertaDetallada.doy, this.contacto);
 			this.inventario_recibo.setLista(this.trueque.ofertaDetallada.recibo, this.usuario);
-			
 			
 			this.inventario_usuario.setSelector(null);
 			this.inventario_contacto.setSelector(null);

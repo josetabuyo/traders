@@ -102,7 +102,7 @@ var PantallaUsuario = {
                 var pantalla_edicion = new PantallaEdicionProducto(producto);
             },
             alEliminar: function(producto){
-                Traders.quitarProducto(producto.id);
+                Traders.quitarProducto(producto);
             }
         });
         this.inventario_usuario.dibujarEn(this.panel_inventario);
