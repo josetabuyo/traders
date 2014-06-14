@@ -200,9 +200,6 @@ var Traders = {
     },
     quitarProducto: function(producto){
         
-		console.log('pero usted quitarProducto ??????????????????????????? ');
-		console.log(producto);
-		
 		this.usuario.inventario = $.grep(this.usuario.inventario, function(prod){
             return prod.id != producto.id;
         });
