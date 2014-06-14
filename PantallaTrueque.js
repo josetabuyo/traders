@@ -14,6 +14,7 @@ var PantallaTrueque = {
 		this.inventario_doy = new ListaProductos({
             selector:{}, 
 			alSeleccionar: function(producto){
+				if(_this.oferta && _this.oferta.estado == 'ENVIADA') return;
 				Traders.quitarProductoTrueque(_this.trueque, producto, "doy");
 			}
         });
@@ -24,6 +25,7 @@ var PantallaTrueque = {
 		this.inventario_recibo = new ListaProductos({
             selector:{}, 
 			alSeleccionar: function(producto){
+				if(_this.oferta && _this.oferta.estado == 'ENVIADA') return;
 				Traders.quitarProductoTrueque(_this.trueque, producto, "recibo");
 			}
         });
@@ -33,6 +35,7 @@ var PantallaTrueque = {
 		this.inventario_usuario = new ListaProductos({
             selector:{}, 
 			alSeleccionar: function(producto){
+				if(_this.oferta && _this.oferta.estado == 'ENVIADA') return;
 				Traders.agregarProductoTrueque(_this.trueque, producto, "doy");
 			}
         });
@@ -42,6 +45,7 @@ var PantallaTrueque = {
 		this.inventario_contacto = new ListaProductos({
             selector:{}, 
 			alSeleccionar: function(producto){
+				if(_this.oferta && _this.oferta.estado == 'ENVIADA') return;
 				Traders.agregarProductoTrueque(_this.trueque, producto, "recibo");
 			}
         });
@@ -78,9 +82,7 @@ var PantallaTrueque = {
 		this.contacto = this.trueque.contacto;
 		this.oferta = this.trueque.ofertas[this.trueque.ofertas.length - 1];
 		
-		
-		
-		
+
         this.ui.find("#lbl_nombre_usuario").text(this.usuario.nombre);
 		this.ui.find("#lbl_nombre_contacto").text(this.contacto.nombre);
 
@@ -91,18 +93,21 @@ var PantallaTrueque = {
 		if(this.contacto.avatar!="") this.ui.find("#avatar_contacto").attr("src", this.contacto.avatar);
 		else this.ui.find("#avatar_contacto").attr("src", "avatar_default.png");
 		
+		this.ui.find('#btn_ofertar').hide();
+		this.ui.find('#btn_aceptar').hide();
 		
+		if(this.oferta.estado == 'SIN_ENVIAR'){
+			this.ui.find('#btn_ofertar').show();
+			this.ui.find('#btn_aceptar').hide();
+		}
 		
 		if(this.oferta.estado == 'ENVIADA'){
 			this.ui.find('#btn_ofertar').hide();
-		} else {
-			this.ui.find('#btn_ofertar').show();
+			this.ui.find('#btn_aceptar').hide();
 		}
 		
-		
-		if(this.oferta.ofertante == 'USUARIO'){
-			this.ui.find('#btn_aceptar').hide();
-		} else {
+		if(this.oferta.estado == 'RECIBIDA'){
+			this.ui.find('#btn_ofertar').hide();
 			this.ui.find('#btn_aceptar').show();
 		}
 		
@@ -171,76 +176,5 @@ var PantallaTrueque = {
 		this.inventario_contacto.render();
         
         this.ui.show();
-		
-		
-/*
-		var $oferta_doy = this.ui.find("#oferta .oferta_doy");
-		$oferta_doy.empty();
-		
-		
-		_.each(oferta.doy, function(id_producto){
-				
-			var producto = _.findWhere(usuario.inventario, {id: id_producto});
-			
-            var vista = new VistaDeUnProductoEnInventario({
-                producto: producto
-            });
-			
-            vista.dibujarEn($oferta_doy);
-        });
-		
-
-		var $oferta_recibo = this.ui.find("#oferta .oferta_recibo");
-		$oferta_recibo.empty();
-		
-		
-		_.each(oferta.recibo, function(id_producto){
-			var producto = _.findWhere(contacto.inventario, {id: id_producto});
-				
-            var vista = new VistaDeUnProductoEnInventario({
-                producto: producto
-            });
-            vista.dibujarEn($oferta_recibo);
-        });
-
-		var $inventario_usuario = this.ui.find("#inventario_usuario");
-        $inventario_usuario.empty();
-		_.each(usuario.inventario, function(producto){
-		
-			var vista = new VistaDeUnProductoEnInventario({
-                producto: producto,
-                seleccionadoParaTrueque: oferta.doy.indexOf(producto.id)>-1,
-                alSeleccionarParaTrueque: function(){
-					
-					Traders.agregarProductoTrueque(trueque, producto, "doy");
-                },
-                alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoTrueque(trueque, producto, "doy");
-                }
-            });
-            vista.dibujarEn($inventario_usuario);
-        });
-*/
-		
-		
-		
-/*
-		var $inventario_contacto = this.ui.find("#inventario_contacto");
-        $inventario_contacto.empty();
-		_.each(contacto.inventario, function(producto){
-		
-			var vista = new VistaDeUnProductoEnInventario({
-                producto: producto,
-                seleccionadoParaTrueque: oferta.recibo.indexOf(producto.id)>-1,
-                alSeleccionarParaTrueque: function(){
-                    Traders.agregarProductoTrueque(trueque, producto, "recibo");
-                },
-                alDesSeleccionarParaTrueque: function(){
-					Traders.quitarProductoTrueque(trueque, producto, "recibo");
-                }
-            });
-            vista.dibujarEn($inventario_contacto);
-        });
-*/
     }    
 };

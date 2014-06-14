@@ -17,6 +17,7 @@
 html, body{
     height:100%;
     margin: 0px;
+	padding: 0px;
 }
 
 
@@ -34,25 +35,12 @@ ul {
 
 .pantalla{
     display: none;
-	
     position: absolute;
     top: 40px;
     bottom: 5px;
-	left:5px;
-	right:5px;
+	left:0px;
+	right:0px;
 }
-
-
-
-.titulo_pantalla{
-    position: absolute;
-    left: 5px;
-    font-size: 40px;
-    font-style: italic;
-    bottom: 10px;
-}
-
-
 
 .producto_en_inventario {
     display: inline-block;
@@ -133,38 +121,12 @@ ul {
     color:black;
 }
 
-
-.datos_usuario {
-    background-color: rgb(248, 248, 248);
-}
-.datos_persona{
-    background-color: rgb(248, 248, 248);
-	height: 120px;
-}
-
-
 .avatar_usuario {
     height: 100px;
     width: 100px;
 	border-radius: 50%;
 	border: solid black;
 }
-
-.lbl_nombre_usuario {
-	position: absolute;
-	top: 80px;
-	left: 115px;
-	font-size: 45px;
-    font-weight: bold;
-    vertical-align: bottom;
-}
-
-.botonera_usuario {
-	position: absolute;
-	top: 10px;
-	left: 115px;
-}
-
 
 .seccion_container{
 	border: solid 1px;

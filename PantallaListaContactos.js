@@ -49,8 +49,13 @@ var PantallaListaContactos = {
 		var $contacto_en_lista = $("#plantillas .contacto_en_lista").clone();
 		
 		$contacto_en_lista.find("#nombre").text(contacto.nombre);
+		var $avatar = $contacto_en_lista.find("#avatar").text(contacto.nombre);
 		
+        if(contacto.avatar) $avatar.attr("src", contacto.avatar);
+        else $avatar.attr("src", "avatar_default.png");
+        
 		var btn_eliminar = $contacto_en_lista.find("#btn_eliminar");
+        
 		btn_eliminar.click(function(e){
 			Traders.quitarContacto(contacto.id);
 			

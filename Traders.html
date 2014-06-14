@@ -37,54 +37,39 @@
                     <div class="titulo_pantalla">
                         Traders
                     </div>
-                    <div id="controles_login">
-                        <div id="comentarios_login">
-                            *Para ingresar no es necesario registrarte, inventate un usuario y un password
-                        </div>
-                        <div class="control_login">
-                            <input id="nombre_usuario" type="text" class="input_login" placeholder="Usuario">
-                        </div>    
-                        <div class="control_login">
-                            <div id="indicador_fuerza"></div>                                          
-                            <input id="password" type="password" class="input_login" placeholder="contraseña"/>
-                        </div>
-                        <input id="boton_ingresar" type="button" value="Entrar" class="btn btn-primary"/>
-                    </div>  
+					<div id="comentarios_login">
+						*Para ingresar no es necesario registrarte, inventate un usuario y un password
+					</div>
+					<input id="nombre_usuario" type="text" class="input_login" placeholder="Usuario">   
+					<div id="contenedor_password">
+						<div id="indicador_fuerza"></div>                                          
+						<input id="password" type="password" class="input_login" placeholder="contraseña"/>
+					</div>
+					<input id="boton_ingresar" type="button" value="Entrar" class="btn btn-primary"/>
                 </div>
-
-				TO DO:
-				<ul>
-					<li> Emancipar los productos de los contactos, enriquecer el asunto "Productos"
-					</li>
-					
-					<li> Sincronizar datos que son de=para=usuario.id (para mi) mergeando los productos, contactos
-					</li>
-					
-					<li> Ver de informar la realizacion del trueque para auditoria
-				    </li>
-					
-					<li> Revisar datoSeguro de un vx.send con "de" solamente
-					</li>
-				</ul>
-				
             </div>
 			
 			
 			<div id="barra_superior" class="barra_superior">
 				<div id="solapa_yo" class="solapa">
-					Yo
+                    <img src="avatar_default.png"/>
+					<label>Yo</label>
 				</div>
 				<div id="solapa_contactos" class="solapa">
-					Contactos
+                    <img src="Imagenes/icono_contactos.png"/>
+					<label>Contactos</label>
 				</div>
 				<div id="solapa_trueques" class="solapa">
-					Trueques
+                    <img src="Imagenes/icono_trueques.png"/>
+					<label>Trueques</label>
 				</div>
 				<div id="solapa_productos" class="solapa">
-					Productos
+                    <img src="Imagenes/icono_productos.png"/>
+					<label>Productos</label>
 				</div>
 				<div id="solapa_vortex" class="solapa">
-					Conexiones
+                    <img src="Imagenes/icono_conexiones.png"/>
+					<label>Conexiones</label>
 				</div>
 				
 			</div>
@@ -98,9 +83,7 @@
                                 <video id="video_para_sacar_foto" autoplay></video>
                             </div>
 							<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
-							<div class="botonera_usuario">
-								<input id="btn_compartir_id" type="button" value="Compartir Id"/>
-							</div>
+							<input id="btn_compartir_id" type="button" value="Id" class="btn btn-primary"/>
 						</div>
 					</li>				
 				</ul>
@@ -140,9 +123,7 @@
 					<div class="datos_usuario">
 						<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
 						<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
-						<div class="botonera_usuario">
-							<input id="btn_trocar" type="button" value="Trocar"/>
-						</div>
+						<input id="btn_trocar" type="button" class="btn btn-primary" value="Trocar"/>
 					</div>
 					
 					<div class="titulo_panel">
@@ -164,26 +145,18 @@
 				</div>
 			</div>
 			
-            <div id="pantalla_trueque" class="pantalla">
-				
+            <div id="pantalla_trueque" class="pantalla">				
 				<div class="datos_usuario datos_persona">
 					<img id="avatar_usuario" class="avatar_usuario" src="avatar_default.png"/>
-					<div class="lbl_nombre_usuario"></div>
-					<div class="botonera_usuario">
-						<input id="btn_aceptar" type="button" value="Aceptar"/>
-						<input id="btn_ofertar" type="button" value="Ofertar"/>
-					</div>
-				</div>
-				
+					<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+					<input id="btn_aceptar" type="button" class="btn btn-primary" value="Aceptar"/>
+					<input id="btn_ofertar" type="button" class="btn btn-primary" value="Ofertar"/>
+				</div>				
 				
 				<div class="datos_contacto datos_persona">
 					<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
-					<div class="lbl_nombre_usuario"></div>
-					<div class="botonera_usuario">
-						<input id="btn_mensaje" type="button" value="Enviar mensaje"/>
-					</div>
-				</div>
-				
+					<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
+				</div>				
 				
 				<div id="oferta">
 					<div class="oferta_doy">
@@ -200,8 +173,7 @@
 				</div>
 				
 				<div id="inventario_contacto" class="panel_inventario">
-				</div>
-				
+				</div>				
             </div>
 			
 			<div id="pantalla_lista_conexiones" class="pantalla">
@@ -216,6 +188,7 @@
     
     <div id="plantillas">
         <div class="contacto_en_lista item_en_lista">
+            <img id="avatar">
             <div id="nombre"></div>
 			<div id="btn_eliminar">x</div>
         </div>
@@ -233,7 +206,7 @@
 		<div class="producto_en_lista item_en_lista">
             <img id="thumbnail_producto"/>
             <div id="nombre"></div>
-            <img id="avatar_propietario"></img>
+            <img id="avatar_propietario">
             <div id="btn_eliminar">x</div>
         </div>
 		
@@ -303,6 +276,5 @@
     <script type="text/javascript" src="Utiles.js"></script>
 	
     <script type="text/javascript" src="phonegap.js"></script>
-
 </html>
 

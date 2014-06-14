@@ -1,90 +1,9 @@
-
-
-
-
-/*
-#btn_load,
-#btn_save {
-    float: right;
-    margin:5px;
-}
-*/
-#pantalla_usuario
-	.producto_en_inventario
-		#btn_eliminar {
-    position: absolute;
-    top:5px;
-    left:5px;
-    color:red;
-    background-color: black;
-    border-radius: 50%;
-    display:none;
-    width: 23px;
-    height: 23px;
-    font-weight: bold;
-}
-
-#pantalla_usuario
-	.producto_en_inventario
-		#btn_eliminar: hover {
-    background-color: white;
-    color:black;
-}
-
-#pantalla_usuario
-	.producto_en_inventario
-		#nombre {
-    position: absolute;
-    top:50%;
-    left:5px;
-    right:5px;
-    color:black;
-}
-
-
-
-
 #pantalla_usuario
 	#panel_inventario_container{
     height: 100%;
-	/*left:0;
-	top: 120px;
-	height: 25%;
-	width: 50%;
-	*/
     position: absolute;
     width: 100%;
 }
-
-#pantalla_usuario
-	#panel_me_deben_container{
-	/*
-	left:0%;
-	top:50%;
-	
-	height: 50%;
-	width: 50%;
-	*/
-}
-
-#pantalla_usuario
-	#panel_debo_container{
-	/*left:50%;
-	top:50%;
-	height: 50%;
-	width: 50%;
-	*/
-}
-#pantalla_usuario
-	#panel_trueques_pendientes_container{
-/*	position: absolute;
-	left:50%;
-	top:0;
-	height: 50%;
-	width: 50%;
-*/
-}
-
 
 #pantalla_usuario
 	#panel_inventario {
@@ -101,26 +20,12 @@
 	margin-right: 3px;
 	margin-top: -31px;
 }
-#pantalla_usuario
-	#btn_add_trueque{
-	float: right;
-	margin-right: 3px;
-	margin-top: -31px;
-}
 
 #pantalla_usuario
 	#panel_alta_producto
 		#btn_add_producto{
 	margin-top: -12px;
 }
-/*
-#panel_alta_producto #txt_nombre_producto_add{
-	margin-right: 30px;
-    margin-top: 0px;
-	
-	width: 100px;
-}
-*/
 
 #pantalla_usuario
 	ul.panel{
@@ -143,10 +48,29 @@
 	left: 0;
 }
 
-#pantalla_usuario
-	.panel_der
-{
-	left: 50%;
+
+#pantalla_usuario .lbl_nombre_usuario {
+	position: absolute;
+	top: 23px;
+	left: 120px;
+	font-size: 45px;
+    font-weight: bold;
+    vertical-align: bottom;
+}
+
+#pantalla_usuario .datos_usuario {
+    background-color: rgb(248, 248, 248);
+}
+
+#pantalla_usuario #btn_compartir_id {
+    position: absolute;
+	top: 73px;
+	left: 120px;
+}
+
+#pantalla_usuario .datos_persona{
+    background-color: rgb(248, 248, 248);
+	height: 120px;
 }
 
 #pantalla_usuario #avatar_usuario{
@@ -172,3 +96,10 @@
     margin:5px;
     position: relative;
 }
+
+#pantalla_usuario
+	.panel_der
+{
+	left: 50%;
+}
+
