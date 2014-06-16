@@ -1,53 +1,50 @@
 #pantalla_usuario
-	#panel_inventario_container{
-    height: 100%;
-    position: absolute;
-    width: 100%;
+	.datos_usuario{
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		top:0px;
+		height:115px;
+		background-color: rgb(248, 248, 248);
+}
+
+#pantalla_usuario 
+	.panel_inventario_container {
+		position: absolute;
+		left: 0px;
+		right: 0px;
+		top:115px;
+		bottom: 0px;
 }
 
 #pantalla_usuario
 	#panel_inventario {
-	position: absolute;
-	top: 40px;
-	left:0px;
-	right: 0px;
-	bottom: 5px;
 }
 
 #pantalla_usuario
-	#panel_alta_producto {
-	float: right;
-	margin-right: 3px;
-	margin-top: -31px;
+	#txt_nombre_producto_add{
+		position: absolute;
+		right: 46px;
+		bottom: 1px;
+		width: 105px;
+}
+
+#pantalla_usuario
+	#btn_add_producto{
+		position: absolute;
+		right: 8px;
+		bottom: 11px;
+		border-radius: 50%;
+		height: 30px;
+		width: 30px;
+		padding-left: 10px;
 }
 
 #pantalla_usuario
 	#panel_alta_producto
 		#btn_add_producto{
-	margin-top: -12px;
+			margin-top: -12px;
 }
-
-#pantalla_usuario
-	ul.panel{
-	position: absolute;
-	width: 50%;
-	top: 0px;
-	bottom: 0px;
-}
-
-#pantalla_usuario
-	ul.panel li:last-child{
-	
-	float:none;
-	overflow:hidden;
-}
-
-
-#pantalla_usuario
-	.panel_izq{
-	left: 0;
-}
-
 
 #pantalla_usuario .lbl_nombre_usuario {
 	position: absolute;
@@ -56,10 +53,6 @@
 	font-size: 45px;
     font-weight: bold;
     vertical-align: bottom;
-}
-
-#pantalla_usuario .datos_usuario {
-    background-color: rgb(248, 248, 248);
 }
 
 #pantalla_usuario #btn_compartir_id {
@@ -95,11 +88,5 @@
     overflow: hidden;
     margin:5px;
     position: relative;
-}
-
-#pantalla_usuario
-	.panel_der
-{
-	left: 50%;
 }
 

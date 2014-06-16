@@ -2,39 +2,42 @@
 /*Pantalla Contactos*/
 
 #pantalla_lista_contactos {
-	border: solid 1px;
-    position: absolute;
-	width: 24.6%;
-    right: 3px;
-	
+	position: absolute;
+	width: 200px;
 	bottom: 0px;
 	display: none;
 	z-index: 1;
+	left: 0px;
 }
 
 #pantalla_lista_contactos
 #lista_contactos {
     position: absolute;
-    top: 28px;
+    top: 0px;
     left: 0px;
     right: 0px;
-    bottom: 60px;
+    bottom: 33px;
 }
 
 
 #pantalla_lista_contactos
 #panel_alta_contacto {
 	position: absolute;
-	top:0;
-	right:0;
-	
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+	height: 33px;	
 }
 
 #pantalla_lista_contactos
 #btn_add_contacto{
 	position: absolute;
-	top:3px;
-	right:3px;
+	bottom:4px;
+	right:4px;	
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	padding-left: 10px;
 }
 
 #pantalla_lista_contactos

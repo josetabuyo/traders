@@ -75,35 +75,20 @@
 			</div>
 			
             <div id="pantalla_usuario" class="pantalla">
-				<ul class="panel panel_izq">
-					<li>
-						<div class="datos_usuario">
-                            <div id="div_recorte_avatar">
-                                <img id="avatar_usuario" src="avatar_default.png" class="avatar_usuario" />
-                                <video id="video_para_sacar_foto" autoplay></video>
-                            </div>
-							<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
-							<input id="btn_compartir_id" type="button" value="Id" class="btn btn-primary"/>
-						</div>
-					</li>				
-				</ul>
-				<ul class="panel panel_der">
-					<li>
-						<div id="panel_inventario_container" class="seccion_container">
-							<div class="titulo_panel">
-								<div class="descripcion_titulo">Tengo</div>
-								<div id="panel_alta_producto">
-									<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
-									<input id="btn_add_producto" type="button" value="+"/>
-								</div>
-							</div>
-							
-							<div id="panel_inventario">
-                                
-							</div>
-						</div>
-					</li>
-				</ul>
+				<div class="datos_usuario">
+					<div id="div_recorte_avatar">
+						<img id="avatar_usuario" src="avatar_default.png" class="avatar_usuario" />
+						<video id="video_para_sacar_foto" autoplay></video>
+					</div>
+					<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+					<input id="btn_compartir_id" type="button" value="Id" class="btn btn-primary"/>
+					<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
+					<input id="btn_add_producto" type="button" class="btn btn-primary" value="+"/>
+				</div>
+				<div class="panel_inventario_container">
+					<div id="panel_inventario">
+					</div>
+				</div>
             </div>
 			
 			<div id="pantalla_productos" class="pantalla">
@@ -113,7 +98,7 @@
 				<div id="lista_contactos">
 				</div>
 				<div id="panel_alta_contacto">
-					<input id="btn_add_contacto" type="button" value="+"/>
+					<input id="btn_add_contacto" type="button" class="btn btn-primary" value="+"/>
 				</div>
 			</div>
 			
@@ -125,11 +110,6 @@
 						<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
 						<input id="btn_trocar" type="button" class="btn btn-primary" value="Trocar"/>
 					</div>
-					
-					<div class="titulo_panel">
-						<div class="descripcion_titulo">Tiene</div>
-					</div>
-					
 					<div id="panel_inventario_contacto">
 					</div>
 					

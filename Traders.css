@@ -37,7 +37,7 @@ ul {
     display: none;
     position: absolute;
     top: 40px;
-    bottom: 5px;
+    bottom: 0px;
 	left:0px;
 	right:0px;
 }
