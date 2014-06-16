@@ -59,48 +59,8 @@ ListaProductos.prototype.renderLista = function(){
 }
 
 ListaProductos.prototype.renderSelector = function(){
-	var _this = this;
+	var _this = this;	
 	
-    
-	if(!this.selector){
-		return;
-	}
-	
-	if(!this.selector.propietario){
-		this.selector.propietario = Traders.usuario;
-	}
-	
-	if(this.selector.propietario.id == Traders.usuario.id){
-		
-		_.each(Traders.usuario.inventario, function(producto){
-			if(_this.selector.idNotIn){
-				if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
-			}
-			if(_this.selector.idIn){
-				if(_this.selector.idIn.indexOf(producto.id)==-1) return;
-			}
-			_this.agregarProducto(producto, Traders.usuario);               
-		});        
-	} else {
-		_.each(Traders.contactos(), function(contacto){
-			
-			if(_this.selector.propietario.id == contacto.id){
-				_.each(contacto.inventario, function(producto){
-					if(_this.selector.idNotIn){
-						if(_this.selector.idNotIn.indexOf(producto.id)>=0) return;
-					}
-					if(_this.selector.idIn){
-						if(_this.selector.idIn.indexOf(producto.id)==-1) return;
-					}
-					_this.agregarProducto(producto, contacto);       
-				});
-			}
-		});
-	}
-	
-	
-	
-	/*
     if(!this.selector.propietario){
         _.each(Traders.usuario.inventario, function(producto){
 			if(_this.selector.idNotIn){
@@ -150,7 +110,6 @@ ListaProductos.prototype.renderSelector = function(){
         }
     }
 	
-	*/
 	this.ui.show();
 };
 
