@@ -3,12 +3,13 @@ var PantallaContactos = {
 		var _this = this;
 		this.ui = $("#pantalla_contactos");	
 		PantallaListaContactos.onSelect(function(){
-			_this.ui.scrollLeft(_this.ui.width());
+			_this.ui.animate({scrollLeft: _this.ui.width()}, 300);
 		});
 	},
 	render:function(){
 		this.ui.show();
 		PantallaContacto.render();
 		PantallaListaContactos.render();
+		this.ui.animate({scrollLeft: 0}, 300);
 	}
 };
