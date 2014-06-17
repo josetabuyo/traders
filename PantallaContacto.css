@@ -8,8 +8,9 @@
 
 @media screen and (max-width: 550px) {	
     #pantalla_contacto{
+		left: 100%;
+		width: 100%;
 		right: initial;
-		width: 500px;
 	}
 }
 

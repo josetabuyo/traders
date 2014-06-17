@@ -12,6 +12,12 @@
 	top: 0px;
 }
 
+@media screen and (max-width: 550px) {	
+    #pantalla_lista_contactos{
+		width: 100%;
+	}
+}
+
 #pantalla_lista_contactos
 #lista_contactos {
     position: absolute;
