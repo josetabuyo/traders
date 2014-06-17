@@ -20,4 +20,6 @@
     </author>
         
     <access origin="*"/>
+		
+	<gap:plugin name="de.appplant.cordova.plugin.background-mode"/>
 </widget>

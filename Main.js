@@ -33,6 +33,13 @@ var onDeviceReady = function() {
 
     PantallaInicio.render();
 	vex.defaultOptions.className = 'vex-theme-os';
+	/**
+	 * Enables the background mode. The app will not pause while in background.
+	 */
+	if(window.plugin){
+		window.plugin.backgroundMode.enable();
+		alertify.alert("funciona en background");
+	}
 };
 
 
