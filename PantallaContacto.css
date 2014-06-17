@@ -2,7 +2,17 @@
 	position: absolute;
 	bottom: 0px;
 	left: 200px;
+	top:0px;
+	right: 0px;
 }
+
+@media screen and (max-width: 550px) {	
+    #pantalla_contacto{
+		right: initial;
+		width: 500px;
+	}
+}
+
 
 #pantalla_contacto
 	.datos_usuario{

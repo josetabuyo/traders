@@ -19,6 +19,7 @@
 		<link rel="stylesheet" href="BarraSuperior.css" />
 		<link rel="stylesheet" href="PantallaInicio.css" />
         <link rel="stylesheet" href="PantallaUsuario.css" />
+        <link rel="stylesheet" href="PantallaContactos.css" />
         <link rel="stylesheet" href="PantallaListaContactos.css" />
         <link rel="stylesheet" href="PantallaContacto.css" />
 		<link rel="stylesheet" href="PantallaListaTrueques.css" />
@@ -93,28 +94,27 @@
 			<div id="pantalla_productos" class="pantalla">
 			</div>
 
-			<div id="pantalla_lista_contactos" class="pantalla">
-				<div id="lista_contactos">
+			<div id="pantalla_contactos" class="pantalla">
+				<div id="pantalla_lista_contactos">
+					<div id="lista_contactos">
+					</div>
+					<div id="panel_alta_contacto">
+						<input id="btn_add_contacto" type="button" class="btn btn-primary" value="+"/>
+					</div>
 				</div>
-				<div id="panel_alta_contacto">
-					<input id="btn_add_contacto" type="button" class="btn btn-primary" value="+"/>
+
+				<div id="pantalla_contacto">
+					<div id="panel_contacto">
+						<div class="datos_usuario">
+							<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
+							<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
+							<input id="btn_trocar" type="button" class="btn btn-primary" value="Trocar"/>
+						</div>
+						<div id="panel_inventario_contacto">
+						</div>
+					</div>
 				</div>
 			</div>
-
-
-			<div id="pantalla_contacto" class="pantalla">
-				<div id="panel_contacto">
-					<div class="datos_usuario">
-						<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
-						<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
-						<input id="btn_trocar" type="button" class="btn btn-primary" value="Trocar"/>
-					</div>
-					<div id="panel_inventario_contacto">
-					</div>
-
-				</div>
-			</div>
-
 
 			<div id="pantalla_lista_trueques" class="pantalla">
 				<div id="lista_trueques">
@@ -241,7 +241,8 @@
     <script type="text/javascript" src="PantallaUsuario.js"></script> 
     <script type="text/javascript" src="PantallaListaContactos.js"></script> 
 	<script type="text/javascript" src="PantallaListaConexiones.js"></script> 
-    <script type="text/javascript" src="PantallaContacto.js"></script> 
+    <script type="text/javascript" src="PantallaContactos.js"></script>     
+	<script type="text/javascript" src="PantallaContacto.js"></script> 
     <script type="text/javascript" src="PantallaListaTrueques.js"></script> 
 	<script type="text/javascript" src="PantallaTrueque.js"></script> 
 	<script type="text/javascript" src="PantallaEdicionProducto.js"></script> 

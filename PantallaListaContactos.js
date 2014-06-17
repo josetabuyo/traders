@@ -39,10 +39,6 @@ var PantallaListaContactos = {
 		
     },
 	
-	
-	
-	
-	
 	add: function(contacto){
 		var _this = this;
 		
@@ -73,6 +69,12 @@ var PantallaListaContactos = {
 			
 			_this.onSelect();
 		});
+		
+		if(this.contacto_seleccionado.id){
+			if(contacto.id == this.contacto_seleccionado.id){
+				$contacto_en_lista.addClass("contacto_seleccionado");
+			}
+		};
 		
 		this.lista_contactos.append($contacto_en_lista);
 		
@@ -109,9 +111,7 @@ var PantallaListaContactos = {
 	},
 	
     render: function(){
-        
 		var _this = this;
-        
 		
 		if(!this.contacto_seleccionado){
 			this.contacto_seleccionado = Traders.contactos()[0];
@@ -122,11 +122,7 @@ var PantallaListaContactos = {
         _.each(Traders.contactos(), function(contacto){
 			_this.add(contacto);
 		});
-        
-        
-       
-        
-		
+
         this.show();
     }
 };

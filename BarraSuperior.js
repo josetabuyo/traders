@@ -27,13 +27,11 @@ var BarraSuperior = {
 		});		
 		
 		this.solapa_contactos.click(function(e) {
-			PantallaListaContactos.render();
-			PantallaContacto.render();
+			PantallaContactos.render();
 		});	
 		
 		this.solapa_trueques.click(function(e) {
 			PantallaListaTrueques.render();
-			//PantallaTrueque.render();
 		});	
 		
 		this.solapa_productos.click(function(e) {

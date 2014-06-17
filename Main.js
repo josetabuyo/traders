@@ -26,6 +26,7 @@ var onDeviceReady = function() {
     Traders.onUsuarioLogueado(function(){
 		PantallaUsuario.start();
 		
+		PantallaContactos.start();
 		PantallaListaContactos.start();
 		PantallaContacto.start();
 		
