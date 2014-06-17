@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="PantallaContactos.css" />
         <link rel="stylesheet" href="PantallaListaContactos.css" />
         <link rel="stylesheet" href="PantallaContacto.css" />
+        <link rel="stylesheet" href="PantallaTrueques.css" />
 		<link rel="stylesheet" href="PantallaListaTrueques.css" />
         <link rel="stylesheet" href="PantallaTrueque.css" />
         <link rel="stylesheet" href="PantallaListaConexiones.css" />
@@ -115,46 +116,39 @@
 					</div>
 				</div>
 			</div>
-
-			<div id="pantalla_lista_trueques" class="pantalla">
-				<div id="lista_trueques">
-				</div>
-				<div id="panel_alta_trueque">
-					<input id="btn_add_trueque" type="button" value="+"/>
-				</div>
-			</div>
-
-			<div id="pantalla_trueque" class="pantalla">				
-				<div class="datos_usuario datos_persona">
-					<img id="avatar_usuario" class="avatar_usuario" src="avatar_default.png"/>
-					<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
-					<input id="btn_aceptar" type="button" class="btn btn-primary" value="Aceptar"/>
-					<input id="btn_ofertar" type="button" class="btn btn-primary" value="Ofertar"/>
-				</div>				
-
-				<div class="datos_contacto datos_persona">
-					<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
-					<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
-				</div>				
-
-				<div id="oferta">
-					<div class="oferta_doy">
-					</div>
-
-					<div class="treque_cerrado"> CERRADO </div>
-					<div class="treque_por"> X </div>
-
-					<div class="oferta_recibo">
+			<div id="pantalla_trueques" class="pantalla">
+				<div id="pantalla_lista_trueques">
+					<div id="lista_trueques">
 					</div>
 				</div>
 
-				<div id="inventario_usuario" class="panel_inventario">
+				<div id="pantalla_trueque">				
+					<div class="datos_usuario datos_persona">
+						<img id="avatar_usuario" class="avatar_usuario" src="avatar_default.png"/>
+						<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+						<input id="btn_aceptar" type="button" class="btn btn-primary" value="Aceptar"/>
+						<input id="btn_ofertar" type="button" class="btn btn-primary" value="Ofertar"/>
+					</div>				
+
+					<div class="datos_contacto datos_persona">
+						<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
+						<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
+					</div>				
+
+					<div id="oferta">
+						<div class="oferta_doy"> </div>
+						<div class="treque_cerrado"> CERRADO </div>
+						<div class="treque_por"> X </div>
+						<div class="oferta_recibo">	</div>
+					</div>
+
+					<div id="inventario_usuario" class="panel_inventario">
+					</div>
+
+					<div id="inventario_contacto" class="panel_inventario">
+					</div>				
 				</div>
-
-				<div id="inventario_contacto" class="panel_inventario">
-				</div>				
 			</div>
-
 			<div id="pantalla_lista_conexiones" class="pantalla">
 				<div id="panel_alta_conexion">
 					<input id="btn_add_conexion" type="button" value="+"/>
@@ -243,6 +237,7 @@
 	<script type="text/javascript" src="PantallaListaConexiones.js"></script> 
     <script type="text/javascript" src="PantallaContactos.js"></script>     
 	<script type="text/javascript" src="PantallaContacto.js"></script> 
+	<script type="text/javascript" src="PantallaTrueques.js"></script> 
     <script type="text/javascript" src="PantallaListaTrueques.js"></script> 
 	<script type="text/javascript" src="PantallaTrueque.js"></script> 
 	<script type="text/javascript" src="PantallaEdicionProducto.js"></script> 

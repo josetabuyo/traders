@@ -31,7 +31,7 @@ var BarraSuperior = {
 		});	
 		
 		this.solapa_trueques.click(function(e) {
-			PantallaListaTrueques.render();
+			PantallaTrueques.render();
 		});	
 		
 		this.solapa_productos.click(function(e) {

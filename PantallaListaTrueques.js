@@ -3,17 +3,9 @@ var PantallaListaTrueques = {
 		
         var _this = this;
 		
-        this.ui =  $("#pantalla_lista_trueques");
-        
+        this.ui =  $("#pantalla_lista_trueques");    
         
 		this.lista_trueques = this.ui.find("#lista_trueques");
-		/*
-		this.btn_add_trueque = this.ui.find("#btn_add_trueque");
-		this.btn_add_trueque.click(function(e){
-			Traders.nuevoTrueque(vavavava);
-			_this.render();
-		});
-		*/
 		
 		Traders.onNovedades(function(){
 			if(_this.ui.is(':visible')){
@@ -21,9 +13,7 @@ var PantallaListaTrueques = {
 			}
         });
 		
-		
 		this.hide();
-		
     },
 	
 	add: function(trueque){
@@ -40,22 +30,24 @@ var PantallaListaTrueques = {
 			$trueque_en_lista.remove();
 		});
 		
-		
 		$trueque_en_lista.click(function(){
-			
-			
 			_this.trueque_seleccionado = trueque;
 			_this.lista_trueques.find('.trueque_en_lista').removeClass("trueque_seleccionado");
 			
 			$(this).addClass("trueque_seleccionado");
-			
-			
+
 			_this.onSelect();
 		});
 		
-		if(this.trueque_seleccionado == trueque){
-			 $trueque_en_lista.click();
-		}
+		if(this.trueque_seleccionado.id){
+			if(trueque.id == this.trueque_seleccionado.id){
+				$trueque_en_lista.addClass("contacto_seleccionado");
+			}
+		};
+		
+//		if(this.trueque_seleccionado == trueque){
+//			 $trueque_en_lista.click();
+//		}
 		
 		this.lista_trueques.append($trueque_en_lista);
 		
@@ -94,15 +86,12 @@ var PantallaListaTrueques = {
 		if(!this.trueque_seleccionado){
 			this.trueque_seleccionado = Traders.trueques()[0];
 		}
-		
-		
-		
+
 		this.lista_trueques.empty();
 		
         _.each(Traders.trueques(), function(trueque){
 			_this.add(trueque);
 		});
-		
 		
         this.show();
     }

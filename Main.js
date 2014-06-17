@@ -24,21 +24,11 @@ var onDeviceReady = function() {
     BarraSuperior.start();
     
     Traders.onUsuarioLogueado(function(){
-		PantallaUsuario.start();
-		
-		PantallaContactos.start();
-		PantallaListaContactos.start();
-		PantallaContacto.start();
-		
-		PantallaListaTrueques.start();
-		PantallaTrueque.start();
-		
+		PantallaUsuario.start();		
+		PantallaContactos.start();		
+		PantallaTrueques.start();		
 		PantallaListaConexiones.start();
-
-        PersistidorManual.start(Traders.usuario.id);
-		
-		PantallaProductos.start(); 
-		
+		PantallaProductos.start(); 	
     });
 
     PantallaInicio.render();
