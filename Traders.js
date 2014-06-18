@@ -111,17 +111,6 @@ var Traders = {
         });
 		
 		
-		
-		vx.when({
-			tipoDeMensaje:"vortex.persistencia.datos",
-			de: this.usuario.id,
-			para: this.usuario.id
-		}, function(mensaje){
-			
-			_this.setDataUsuario(mensaje.dato);
-        });
-		
-		
 		vx.when({
 			tipoDeMensaje:"traders.claveAgregada",
 			para: this.usuario.id
@@ -248,28 +237,26 @@ var Traders = {
 	
     saveDataUsuario: function(){
 		
-		var _dato = {
+		var _datos = {
 			usuario: 					this.usuario,
 			contactos:					this.contactos(),
 			trueques:					this.trueques()
 		};
 		
-		if(typeof(Storage)!=="undefined"){
-			//no se si usar la clave privada ahi o algo m?seguro que solo yo tenga
-			
-			localStorage.setItem(this.usuario.id, JSON.stringify(_dato));
-			
-		}else{
-			
-			vx.send({
-				tipoDeMensaje:"vortex.persistencia.guardarDatos",
-				de: this.usuario.id,
-                para: this.usuario.id,
-				dato: _dato
-			});
+		vx.send({
+			tipoDeMensaje:"vortex.persistencia.guardarDatos",
+			de: this.usuario.id,
+			para: this.usuario.id,
+			datoSeguro:{
+				datos: _datos
+			}
 		
-		}
-		
+		}, function(mensaje){
+			console.log('llegoooo vortex.persistencia.guardarDatos');
+			console.log('mensaje');
+			console.log(mensaje);
+			
+		});
 		
     },
 	
@@ -277,21 +264,20 @@ var Traders = {
         
 		var _this = this;
 		
-		if(typeof(Storage)!=="undefined"){
-			//no se si usar la clave privada ahi o algo m?seguro que solo yo tenga
-			var sDatos = localStorage.getItem(this.usuario.id);
-			
-			this.setDataUsuario(JSON.parse(sDatos));
-			
-
-		}else{
-			
-			vx.send({
-				tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-				de: this.usuario.id
-			});
-		}
 		
+		vx.send({
+			tipoDeMensaje:"vortex.persistencia.obtenerDatos",
+			de: this.usuario.id,
+			para: this.usuario.id
+			
+		}, function(mensaje){
+			console.log('llegoooo vortex.persistencia.guardarDatos');
+			console.log('mensaje');
+			console.log(mensaje);
+			
+			_this.setDataUsuario(mensaje.datoSeguro.datos);
+			
+		});
 		
 		
     },
