@@ -38,7 +38,6 @@ var onDeviceReady = function() {
 	 */
 	if(window.plugin){
 		window.plugin.backgroundMode.enable();
-		alertify.alert("funciona en background");
 	}
 };
 

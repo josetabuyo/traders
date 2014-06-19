@@ -12,24 +12,29 @@
 #pantalla_lista_conexiones
 #btn_add_conexion{
 	position: absolute;
-	top:3px;
-	right:3px;
+	bottom:4px;
+	right:4px;	
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	padding-left: 10px;
 }
 
 #pantalla_lista_conexiones
 	#panel_alta_conexion
 {
 	position: absolute;
-	top:0;
-	right:0;
-	
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+	height: 33px;		
 }
 
 #pantalla_lista_conexiones
 #lista_conexiones {
     position: absolute;
-    top: 28px;
+    top: 0px;
     left: 0px;
     right: 0px;
-    bottom: 60px;
+    bottom: 30px;
 }

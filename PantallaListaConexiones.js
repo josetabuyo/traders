@@ -7,13 +7,15 @@ var PantallaListaConexiones = {
 	 
 		this.btn_add_conexion = this.ui.find("#btn_add_conexion");
 		this.btn_add_conexion.click(function(e){
-			alertify.prompt("Ingrese la url", function (e, str) {
-				if (e) {
-					var conexion = RepositorioDeConexiones.add({url:str, 
-																activa:false});
+			vex.dialog.prompt({
+				message: 'Ingrese la url',
+				placeholder: 'url',
+				callback: function(value) {
+					if(value){
+						RepositorioDeConexiones.add({url:str, activa:false});
+					}
 				}
-			}, "");
-			
+			});
 			_this.render();
 		});		
 	 
