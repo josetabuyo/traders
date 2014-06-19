@@ -33,7 +33,7 @@ var PersistidorManual = {
 								idRequest: mensaje.idRequest,
 								de: id_usuario,
 								para: id_usuario,
-								dato: JSON.parse(str)
+								dato: JSON.parse(value)
 							});
 					} else {
 						// user clicked "cancel"

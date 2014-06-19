@@ -17,7 +17,7 @@ var PantallaListaContactos = {
 				placeholder: 'Id del usuario',
 				callback: function(value) {
 					if(value){
-						Traders.agregarContacto(str);
+						Traders.agregarContacto(value);
 					}
 				}
 			});			

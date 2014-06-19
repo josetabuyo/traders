@@ -12,7 +12,7 @@ var PantallaListaConexiones = {
 				placeholder: 'url',
 				callback: function(value) {
 					if(value){
-						RepositorioDeConexiones.add({url:str, activa:false});
+						RepositorioDeConexiones.add({url:value, activa:false});
 					}
 				}
 			});

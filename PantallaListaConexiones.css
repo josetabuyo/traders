@@ -1,8 +1,11 @@
 .conexion_en_lista {
 }
 
-.conexion_en_lista #chk_activar {
-	
+.conexion_en_lista #rad_activar {
+	position: absolute;
+	top: 2px;
+	left: 6px;
+	zoom: 1.7;
 }
 
 .conexion_en_lista #url {
@@ -37,4 +40,15 @@
     left: 0px;
     right: 0px;
     bottom: 30px;
+}
+
+#pantalla_lista_conexiones .conexion_en_lista #url{
+	position: absolute;
+	left: 41px;
+	right: 35px;
+	top: 5px;
+	word-break: break-all;
+	line-height: 27px;
+	height: 27px;
+	overflow: hidden;	
 }
