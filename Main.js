@@ -32,7 +32,7 @@ var onDeviceReady = function() {
     });
 
     PantallaInicio.render();
-	vex.defaultOptions.className = 'vex-theme-os';
+	vex.defaultOptions.className = 'vex-theme-top';
 	/**
 	 * Enables the background mode. The app will not pause while in background.
 	 */
