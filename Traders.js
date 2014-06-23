@@ -117,7 +117,7 @@ var Traders = {
 		},function(mensaje){
 			// le completo los datos
 			vx.send({
-				idRequest: mensaje.idRequest,
+				responseTo: mensaje.idRequest,
 				para: mensaje.de,
 				de: _this.usuario.id,
 				datoSeguro: {
@@ -279,8 +279,7 @@ var Traders = {
 			console.log('mensaje');
 			console.log(mensaje);
 			
-			_this.setDataUsuario(mensaje.datoSeguro.datos);
-			
+			if(mensaje.datoSeguro.estado == 'OK') _this.setDataUsuario(mensaje.datoSeguro.datos);
 		});
 		
 		

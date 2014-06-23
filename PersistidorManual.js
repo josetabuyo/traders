@@ -39,7 +39,7 @@ var PersistidorManual = {
 					}
 				
 					vx.send({
-					idRequest: mensaje.idRequest,
+					responseTo: mensaje.idRequest,
 					de: id_usuario,
 					para: id_usuario,
 					datoSeguro: {

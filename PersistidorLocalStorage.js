@@ -20,7 +20,7 @@ var PersistidorLocalStorage = {
 			}
 			
 			vx.send({
-				idRequest: mensaje.idRequest,
+				responseTo: mensaje.idRequest,
 				de: id_usuario,
 				para: id_usuario,
 				descripcion: 'LocalStorage',
@@ -47,7 +47,9 @@ var PersistidorLocalStorage = {
 			
 			if(typeof(Storage)!=="undefined"){
 				datos = JSON.parse(localStorage.getItem(id_usuario));
-				estado = 'OK';
+				if(datos){
+					estado = 'OK';
+				}
 			}
 			
 			
@@ -56,19 +58,17 @@ var PersistidorLocalStorage = {
 			
 			
 			var obj = {
-				idRequest: mensaje.idRequest,
+				responseTo: mensaje.idRequest,
 				de: id_usuario,
 				para: id_usuario,
 				descripcion: 'LocalStorage',
 				datoSeguro: {
 					datos: datos,
 					estado: estado
-				},
-				happyVerdey: 'soy yo'
-				
+				}				
 			};
 			
-			//vx.send(obj);
+			vx.send(obj);
 			
         });
 		

@@ -182,7 +182,7 @@ var Vortex = Vx = vX = vx = {
 			obj.idRequest = ++this.lastRequest;
 			
 			var idPortal = this.when({
-				idRequest: obj.idRequest,
+				responseTo: obj.idRequest,
 				para: obj.de
 			},function(objRespuesta){
 				callback(objRespuesta);
