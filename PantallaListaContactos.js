@@ -12,18 +12,15 @@ var PantallaListaContactos = {
 		
 		this.btn_add_contacto = this.ui.find("#btn_add_contacto");
 		this.btn_add_contacto.click(function(e){
-			
-			alertify.prompt("Ingrese el id del usuario", function (e, str) {
-				if (e) {
-					var contacto = Traders.agregarContacto(str);
-					
-					
-					//_this.add(contacto);
-				} else {
-					// user clicked "cancel"
+			vex.dialog.prompt({
+				message: 'Ingrese el id del usuario',
+				placeholder: 'Id del usuario',
+				callback: function(value) {
+					if(value){
+						Traders.agregarContacto(value);
+					}
 				}
-			}, "");
-			
+			});			
 			_this.render();
 		});
 		

@@ -25,21 +25,18 @@ var PantallaUsuario = {
 				_this.btn_add_producto.click();
 			}
 		});    
-        this.btnSave.click(function(){  
-            Traders.saveDataUsuario();
-        });
-		
-        this.btnLoad.click(function(){            
-            Traders.loadDataUsuario();
-        });
         
 		this.btn_compartir_id = this.ui.find("#btn_compartir_id");
 		this.btn_compartir_id.click(function(){
-			alertify.prompt("Compartí tu Id", function (e, str) {
-				if (e) {
-					clipboardCopy(Traders.usuario.id);
+			vex.dialog.prompt({
+				message: 'Compartí tu id',
+				value: Traders.usuario.id,
+				callback: function(value) {
+					if(value){
+						clipboardCopy(Traders.usuario.id);
+					}
 				}
-			}, Traders.usuario.id);
+			});
 		});
 		var video_stream;
         this.img_avatar_usuario.click(function(){		            

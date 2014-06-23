@@ -20,6 +20,7 @@
 	.datos_persona
 {
 	width: 50%;
+	overflow: hidden;
 }
 
 

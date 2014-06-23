@@ -1,8 +1,11 @@
 .conexion_en_lista {
 }
 
-.conexion_en_lista #chk_activar {
-	
+.conexion_en_lista #rad_activar {
+	position: absolute;
+	top: 2px;
+	left: 6px;
+	zoom: 1.7;
 }
 
 .conexion_en_lista #url {
@@ -12,24 +15,40 @@
 #pantalla_lista_conexiones
 #btn_add_conexion{
 	position: absolute;
-	top:3px;
-	right:3px;
+	bottom:4px;
+	right:4px;	
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	padding-left: 10px;
 }
 
 #pantalla_lista_conexiones
 	#panel_alta_conexion
 {
 	position: absolute;
-	top:0;
-	right:0;
-	
+	right: 0px;
+	left: 0px;
+	bottom: 0px;
+	height: 33px;		
 }
 
 #pantalla_lista_conexiones
 #lista_conexiones {
     position: absolute;
-    top: 28px;
+    top: 0px;
     left: 0px;
     right: 0px;
-    bottom: 60px;
+    bottom: 30px;
+}
+
+#pantalla_lista_conexiones .conexion_en_lista #url{
+	position: absolute;
+	left: 41px;
+	right: 35px;
+	top: 5px;
+	word-break: break-all;
+	line-height: 27px;
+	height: 27px;
+	overflow: hidden;	
 }
