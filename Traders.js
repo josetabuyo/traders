@@ -204,15 +204,15 @@ var Traders = {
 		
         this.onNovedades();
     },
-	setDataUsuario: function(dato){
+	setDataUsuario: function(datos){
 		var _this = this;
 		
-		if(dato) {
-			this.usuario = ClonadorDeObjetos.extend(this.usuario, dato.usuario);
+		if(datos) {
+			this.usuario = ClonadorDeObjetos.extend(this.usuario, datos.usuario);
 		
-			this._trueques = dato.trueques;
+			this._trueques = datos.trueques;
 		
-			$.each(dato.contactos, function(index, item){
+			$.each(datos.contactos, function(index, item){
 				_this.agregarContacto(item);
 			});
 		}
@@ -220,17 +220,19 @@ var Traders = {
 			this._trueques = [];
 			
 		}
+
+		vx.send({
+			tipoDeMensaje: "traders.inventario",
+			de: _this.usuario.id,
+			datoSeguro:{
+				inventario:_this.usuario.inventario
+			}
+		});
 		
+		/*
 		setTimeout(function(){
-			vx.send({
-				tipoDeMensaje: "traders.inventario",
-				de: _this.usuario.id,
-				datoSeguro:{
-					inventario:_this.usuario.inventario
-				}
-			});
 		}, 200);
-		
+		*/
 		this.onNovedades();
 	},
 	
@@ -252,6 +254,7 @@ var Traders = {
 			}
 		
 		}, function(mensaje){
+			
 			console.log('llegoooo vortex.persistencia.guardarDatos');
 			console.log('mensaje');
 			console.log(mensaje);
@@ -271,7 +274,8 @@ var Traders = {
 			para: this.usuario.id
 			
 		}, function(mensaje){
-			console.log('llegoooo vortex.persistencia.guardarDatos');
+			
+			console.log('llegaaaaaa respuesta a vortex.persistencia.obtenerDatos');
 			console.log('mensaje');
 			console.log(mensaje);
 			
