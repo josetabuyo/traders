@@ -8,7 +8,7 @@ var PersistidorManual = {
 		},function(mensaje){
 			vex.dialog.prompt({
 				message: 'Llevate tus datos tranquilo',
-				value: JSON.stringify(mensaje.datos),
+				value: JSON.stringify(mensaje.datoSeguro),
 				callback: function(value) {
 					if(value){
 						clipboardCopy(JSON.stringify(mensaje.dato));
@@ -33,7 +33,7 @@ var PersistidorManual = {
 								idRequest: mensaje.idRequest,
 								de: id_usuario,
 								para: id_usuario,
-								dato: JSON.parse(value)
+								datoSeguro: JSON.parse(value)
 							});
 					} else {
 						// user clicked "cancel"
