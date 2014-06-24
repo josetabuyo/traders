@@ -32,7 +32,10 @@ var onDeviceReady = function() {
 		PantallaListaConexiones.start();
 		PantallaProductos.start();
 		// PersistidorManual.start(this.usuario.id);
-		PersistidorLocalStorage.start(this.usuario.id);
+		// PersistidorLocalStorage.start(this.usuario.id);
+		var PersistidorLocalStorage_Propio = new PersistidorLocalStorage({
+			usuario_id: this.usuario.id
+		});
 		
     });
 

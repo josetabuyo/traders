@@ -255,9 +255,8 @@ var Traders = {
 		
 		}, function(mensaje){
 			
-			console.log('llegoooo vortex.persistencia.guardarDatos');
-			console.log('mensaje');
-			console.log(mensaje);
+			//console.log('mensaje');
+			//console.log(mensaje);
 			
 		});
 		
@@ -274,10 +273,6 @@ var Traders = {
 			para: this.usuario.id
 			
 		}, function(mensaje){
-			
-			console.log('llegaaaaaa respuesta a vortex.persistencia.obtenerDatos');
-			console.log('mensaje');
-			console.log(mensaje);
 			
 			if(mensaje.datoSeguro.estado == 'OK') _this.setDataUsuario(mensaje.datoSeguro.datos);
 		});
@@ -740,6 +735,17 @@ var Traders = {
 			contacto.avatar = mensaje.datoSeguro.avatar;
 			_this.onNovedades();
 		});
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
 		
 		_this.onNovedades();
 		
