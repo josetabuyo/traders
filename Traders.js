@@ -249,9 +249,7 @@ var Traders = {
 			tipoDeMensaje:"vortex.persistencia.guardarDatos",
 			de: this.usuario.id,
 			para: this.usuario.id,
-			datoSeguro:{
-				datos: _datos
-			}
+			datoSeguro:_datos
 		
 		}, function(mensaje){
 			
@@ -274,7 +272,7 @@ var Traders = {
 			
 		}, function(mensaje){
 			
-			if(mensaje.datoSeguro.estado == 'OK') _this.setDataUsuario(mensaje.datoSeguro.datos);
+			if(mensaje.estado == 'OK') _this.setDataUsuario(mensaje.datoSeguro);
 		});
 		
 		
