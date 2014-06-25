@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Vortex Debug</title>
+	</head>
+	
+	<body>
+		
+	</body>
+    
+    <script type="text/javascript" src="jquery-1.10.2.min.js"></script> 
+    <script type="text/javascript" src="underscore-min.js"></script> 
+    <script type="text/javascript" src="Cryptico.min.js"></script> 
+    
+    <script type="text/javascript" src="VortexJS/FiltrosYTransformaciones.js"></script>
+    <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script> 
+    <script type="text/javascript" src="VortexJS/ClonadorDeObjetos.js"></script> 
+    <script type="text/javascript" src="VortexJS/GeneradorDeIdMensaje.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script>  
+    <script type="text/javascript" src="VortexJS/NodoPortalBidi.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoPortalBidiMonoFiltro.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoRouter.js"></script> 
+    <script type="text/javascript" src="VortexJS/PataConectora.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoConectorSocket.js"></script>
+    <script type="text/javascript" src="VortexJS/socket.io.js"></script>
+    <script type="text/javascript" src="VortexJS/Vortex.js"></script> 
+	
+    <script type="text/javascript" src="phonegap.js"></script>
+	
+	
+	<script type="text/javascript">
+	
+	$(function() {
+		//toda esta garcha es para detectar si la aplicacion esta corriendo en un celular o en una pc.
+		//En el celular para arrancar la app hay que esperar al evento deviceReady, en la pc solo al documentReady
+		window.isphone = false;
+		//    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		//        window.isphone = true;
+		//    }
+
+		if(window.isphone) {
+			document.addEventListener("deviceready", onDeviceReady, false);
+		} else {
+			onDeviceReady();
+		}
+	});
+
+	var onDeviceReady = function() {     
+		vx.start({verbose:true});
+		
+		vx.conectarPorWebSockets({
+			url:'https://router-vortex.herokuapp.com' 
+		});
+		
+		
+		console.log('que pasa roffo?');
+		
+		vx.when({
+			tipoDeMensaje	: "vortex.debug"
+		
+		}, function(mensaje){
+			
+			console.log(mensaje);
+			
+			$('body').append('<div>' + mensaje.descripcion + '</div>');
+			
+        });
+		
+		
+	};
+		
+	</script>
+	
+	
+</html>
+

@@ -100,8 +100,7 @@ var Traders = {
         };
 		
 		
-		
-        
+		RepositorioDeConexiones.start(this.usuario.id);
 		
 		////parche para atajar las respuestas
 		vx.when({
@@ -146,7 +145,21 @@ var Traders = {
 			
         },20);
 		
-		RepositorioDeConexiones.start(this.usuario.id);
+		
+		
+		
+		
+				
+		//DEBUG
+		vx.send({
+			tipoDeMensaje	: "vortex.debug",
+			descripcion		: 'this.usuario',
+			dato			: _this.usuario
+		});
+        
+		
+		
+		
 		
         this._onUsuarioLogueado();
 		
