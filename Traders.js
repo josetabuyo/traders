@@ -137,21 +137,11 @@ var Traders = {
 		});
 		
 		/* Vemos */
-        setTimeout(function(){
-			
+        setTimeout(function(){			
 			_this.loadDataUsuario();
-			
-        },20);		
-
-				
-		//DEBUG
-		vx.send({
-			tipoDeMensaje	: "vortex.debug",
-			descripcion		: "para jose que lo mira por tv"
-		});
-        
-
-        this._onUsuarioLogueado();		
+        },20);
+		
+        this._onUsuarioLogueado();
     },
 	
 	
@@ -254,6 +244,14 @@ var Traders = {
 			datoSeguro:_datos
 		
 		}, function(mensaje){
+			
+		
+			
+			//DEBUG
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: 'se ejecuto saveDataUsuario'
+			});
 			
 			//console.log('mensaje');
 			//console.log(mensaje);
