@@ -147,20 +147,6 @@ var Traders = {
 		
 		
 		
-		
-		
-				
-		//DEBUG
-		vx.send({
-			tipoDeMensaje	: "vortex.debug",
-			descripcion		: 'this.usuario',
-			dato			: _this.usuario
-		});
-        
-		
-		
-		
-		
         this._onUsuarioLogueado();
 		
     },
@@ -265,6 +251,14 @@ var Traders = {
 			datoSeguro:_datos
 		
 		}, function(mensaje){
+			
+		
+			
+			//DEBUG
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: 'se ejecuto saveDataUsuario'
+			});
 			
 			//console.log('mensaje');
 			//console.log(mensaje);
