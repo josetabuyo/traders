@@ -136,33 +136,22 @@ var Traders = {
 			
 		});
 		
-		
-		
 		/* Vemos */
         setTimeout(function(){
 			
 			_this.loadDataUsuario();
 			
-        },20);
-		
-		
-		
-		
-		
+        },20);		
+
 				
 		//DEBUG
 		vx.send({
 			tipoDeMensaje	: "vortex.debug",
-			descripcion		: 'this.usuario',
-			dato			: _this.usuario
+			descripcion		: "para jose que lo mira por tv"
 		});
         
-		
-		
-		
-		
-        this._onUsuarioLogueado();
-		
+
+        this._onUsuarioLogueado();		
     },
 	
 	
