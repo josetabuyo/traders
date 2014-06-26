@@ -136,19 +136,12 @@ var Traders = {
 			
 		});
 		
-		
-		
 		/* Vemos */
-        setTimeout(function(){
-			
+        setTimeout(function(){			
 			_this.loadDataUsuario();
-			
         },20);
 		
-		
-		
         this._onUsuarioLogueado();
-		
     },
 	
 	

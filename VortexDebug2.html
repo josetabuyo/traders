@@ -54,21 +54,20 @@
 		vx.conectarPorWebSockets({
 			url:'https://router-vortex.herokuapp.com'
 		});
+
+		vx.send({
+			tipoDeMensaje	: "vortex.debug",
+			descripcion		: "prueba debug"
+		});
 		
+		setTimeout(function(){
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: "prueba debug"
+			});
+		}, 5000);
+
 		
-		console.log('que pasa roffo?');
-		
-		vx.when({
-			tipoDeMensaje	: "vortex.debug"
-		
-		}, function(mensaje){
-			
-			console.log(mensaje);
-			
-			$('body').append('<div>' + mensaje.descripcion + '</div>');
-			
-        });
-	
 	};
 		
 	</script>
