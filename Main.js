@@ -6,7 +6,7 @@ $(document).ready(function() {
 //        window.isphone = true;
 //    }
 
-    if(window.isphone) {
+	if(window.isphone){
         document.addEventListener("deviceready", onDeviceReady, false);
     } else {
         onDeviceReady();
@@ -36,6 +36,16 @@ var onDeviceReady = function() {
 		var PersistidorLocalStorage_Propio = new PersistidorLocalStorage({
 			usuario_id: this.usuario.id
 		});
+		
+		
+		var PersistidorPhoneGap_Propio;
+		
+		
+		//if(window.isphone){
+			PersistidorPhoneGap_Propio = new PersistidorPhoneGap({
+				usuario_id: this.usuario.id
+			});
+		//}
 		
     });
 

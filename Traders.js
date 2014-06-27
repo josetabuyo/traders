@@ -231,6 +231,8 @@ var Traders = {
 	
     saveDataUsuario: function(){
 		
+		var _this = this;
+		
 		var _datos = {
 			usuario: 					this.usuario,
 			contactos:					this.contactos(),
@@ -242,20 +244,11 @@ var Traders = {
 			de: this.usuario.id,
 			para: this.usuario.id,
 			datoSeguro:_datos
-		
+			
 		}, function(mensaje){
 			
-		
-			
-			//DEBUG
-			vx.send({
-				tipoDeMensaje		: "vortex.debug",
-				descripcion			: 'se ejecuto saveDataUsuario',
-				mensajeDeRespuesta:	: mensaje
-			});
-			
-			//console.log('mensaje');
-			//console.log(mensaje);
+			console.log('mensaje');
+			console.log(mensaje);
 			
 		});
 		

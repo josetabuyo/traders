@@ -4,7 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Vortex Debug</title>
+        <title>Vortex Debug Test</title>
 	</head>
 	
 	<body>
@@ -57,13 +57,13 @@
 
 		vx.send({
 			tipoDeMensaje	: "vortex.debug",
-			descripcion		: "prueba debug"
+			descripcion		: "prueba debug en el onload"
 		});
 		
 		setTimeout(function(){
 			vx.send({
 				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "prueba debug"
+				descripcion		: "prueba debug 5 segundos"
 			});
 		}, 5000);
 
