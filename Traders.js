@@ -145,7 +145,7 @@ var Traders = {
 			//DEBUG
 			vx.send({
 				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "document.URL: " + document.URL + ' - window.PhoneGap:' + window.PhoneGap,
+				descripcion		: "window.isphone: " + window.isphone,
 				dato			: window.isphone
 			});
 			

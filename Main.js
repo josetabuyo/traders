@@ -6,7 +6,7 @@ $(function() {
 //        window.isphone = true;
 //    }
 	
-	//window.isphone = (document.URL.indexOf("http://") == -1);
+	window.isphone = (document.URL.indexOf("com.haciendo.traders") > 0);
 	
 	
 	if(window.isphone){

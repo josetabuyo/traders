@@ -1,16 +1,6 @@
 var PersistidorPhoneGap = function(opt){
 	var _this = this;    
 	
-	
-	console.log('PersistidorPhoneGap cargado');
-	
-	vx.send({
-		tipoDeMensaje	: "vortex.debug",
-		descripcion		: "es un celu (window.isphone): " + window.isphone,
-		dato			: window.isphone
-	});
-	
-	
 	// Al dope creo, no se si hacerlo acá o afuera
 	if(!window.isphone) return;
 	
