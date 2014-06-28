@@ -115,6 +115,14 @@ var PantallaUsuario = {
     render: function(){
         this.lbl_nombre_usuario.text(Traders.usuario.nombre);
 		if(Traders.usuario.avatar!="") this.img_avatar_usuario.attr("src", Traders.usuario.avatar);
+		
+		
+		// DEBUG
+		if(window.isphone){
+			this.lbl_nombre_usuario.text(Traders.usuario.nombre + ' es un celu carajo');
+		}
+		
+		
 
 /*
         this.panel_inventario.empty();
