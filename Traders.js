@@ -136,9 +136,20 @@ var Traders = {
 			
 		});
 		
+		
+		
 		/* Vemos */
         setTimeout(function(){			
 			_this.loadDataUsuario();
+			
+			
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: "document.URL: " + document.URL,
+				dato			: window.isphone
+			});
+			
+			
         },20);
 		
         this._onUsuarioLogueado();

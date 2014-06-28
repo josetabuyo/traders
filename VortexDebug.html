@@ -40,7 +40,9 @@
 		//    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		//        window.isphone = true;
 		//    }
-
+		
+		//window.isphone = (document.URL.indexOf("http://") == -1);
+		
 		if(window.isphone) {
 			document.addEventListener("deviceready", onDeviceReady, false);
 		} else {
