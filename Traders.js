@@ -142,10 +142,10 @@ var Traders = {
         setTimeout(function(){			
 			_this.loadDataUsuario();
 			
-			
+			//DEBUG
 			vx.send({
 				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "document.URL: " + document.URL,
+				descripcion		: "document.URL: " + document.URL + ' - window.PhoneGap:' + window.PhoneGap,
 				dato			: window.isphone
 			});
 			
