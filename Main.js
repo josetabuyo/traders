@@ -36,19 +36,21 @@ var onDeviceReady = function() {
 		PantallaProductos.start();
 		// PersistidorManual.start(this.usuario.id);
 		// PersistidorLocalStorage.start(this.usuario.id);
-		var PersistidorLocalStorage_Propio = new PersistidorLocalStorage({
+		
+		/*
+		ACLARACIóN: si no usas "var" se declara global,
+					en este caso es lo mismo,
+					no nesecitamos hacer referencia directa a los persistidores
+		*/
+		PersistidorLocalStorage_Propio = new PersistidorLocalStorage({
 			usuario_id: this.usuario.id
 		});
 		
-		
-		var PersistidorPhoneGap_Propio;
-		
-		
-		//if(window.isphone){
+		if(window.isphone){
 			PersistidorPhoneGap_Propio = new PersistidorPhoneGap({
 				usuario_id: this.usuario.id
 			});
-		//}
+		}
 		
     });
 
