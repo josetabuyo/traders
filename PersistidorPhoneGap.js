@@ -31,7 +31,8 @@ var PersistidorPhoneGap = function(opt){
 		callback: function(mensaje){
 			
 			var estado = 'ERROR';
-
+			var dato = {};
+			
 			//estado = 'DENEGADO';
 			
 			if(typeof(Storage)!=="undefined"){
@@ -46,16 +47,39 @@ var PersistidorPhoneGap = function(opt){
 					cmd+=')';
 					tx.executeSql(cmd);
 					
-					cmd = '';
-					cmd+='INSERT INTO Datos (';
-					cmd+='	id,		'
-					cmd+='	dato	';
-					cmd+=')';
-					cmd+='VALUES (';
-					cmd+='	"'+ mensaje.de + '",';
-					cmd+='	"'+ mensaje.datoSeguro + '",';
-					cmd+=')';
-					tx.executeSql(cmd);
+					cmd= '';
+					cmd+='SELECT dato';
+					cmd+='	FROM Datos';
+					cmd+='	WHERE id = "' + mensaje.de + '"';
+					
+					tx.executeSql(cmd, [], function(tx, results) {
+						dato = JSON.parse(results.rows[0]);
+						
+						if(dato){
+							cmd = '';
+							cmd+='UPDATE Datos (';
+							cmd+='	SET dato = "'+ mensaje.datoSeguro + '",';
+							cmd+='	WHERE id = "'+ mensaje.de + '"';
+						}else{
+							cmd = '';
+							cmd+='INSERT INTO Datos (';
+							cmd+='	id,		'
+							cmd+='	dato	';
+							cmd+=')';
+							cmd+='VALUES (';
+							cmd+='	"'+ mensaje.de + '",';
+							cmd+='	"'+ mensaje.datoSeguro + '",';
+							cmd+=')';
+						}
+						
+						tx.executeSql(cmd);
+						
+					},function(){
+					
+						estado = 'ERROR';
+					});
+					
+					
 				};
 				
 				var errorCB = function(err){
