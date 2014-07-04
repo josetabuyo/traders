@@ -77,6 +77,13 @@ var PersistidorPhoneGap = function(opt){
 				tx.executeSql(cmd, [], function(tx, results) {
 					dato = JSON.parse(results.rows[0]);
 					
+					
+					vx.send({
+						tipoDeMensaje	: "vortex.debug",
+						descripcion		: "se lee este dato" + dato,
+						dato			: dato	
+					});
+					
 					if(dato){
 						cmd = '';
 						cmd+='UPDATE Datos (';
@@ -100,8 +107,12 @@ var PersistidorPhoneGap = function(opt){
 					});
 					tx.executeSql(cmd);
 					
-				},function(){
-				
+				},function(err){
+					vx.send({
+						tipoDeMensaje	: "vortex.debug",
+						descripcion		: "dio error " + err,
+						dato			: err
+					});
 					estado = 'ERROR';
 				});
 				
@@ -109,7 +120,12 @@ var PersistidorPhoneGap = function(opt){
 			};
 			
 			var errorCB = function(err){
-				console.log(err);
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "dio error " + err,
+					dato			: err
+				});
+				
 				estado = 'ERROR';
 			};
 			
@@ -169,8 +185,16 @@ var PersistidorPhoneGap = function(opt){
 
 			
 			var querySuccess = function(tx, results) {
-				dato = results.rows[0];
+				dato = JSON.parse(results.rows[0]);
 				estado = 'OK';
+				
+				
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "se lee este dato" + dato,
+					dato			: dato	
+				});
+				
 			};
 			
 
