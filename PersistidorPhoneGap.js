@@ -19,6 +19,12 @@ var PersistidorPhoneGap = function(opt){
 	}
 	
 	
+	vx.send({
+		tipoDeMensaje	: "vortex.debug",
+		descripcion		: "se inicializó el PersistidorPhoneGap"
+	});
+	
+	
 	var db = window.openDatabase("traders_db", "1.0", "traders_db", 1000000);
 	var cmd;
 	
@@ -33,67 +39,88 @@ var PersistidorPhoneGap = function(opt){
 			var estado = 'ERROR';
 			var dato = {};
 			
+			
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: "llegó el mensaje de guardar datos"
+			});
+			
+			
 			//estado = 'DENEGADO';
 			
-			if(typeof(Storage)!=="undefined"){
-				//localStorage.setItem(_this.contacto_id, mensaje.datoSeguro);
+			var addDato = function(tx){
+				cmd= '';
+				cmd+='CREATE TABLE IF NOT EXISTS Datos (';
+				cmd+='	id		TEXT PRIMARY KEY,';
+				cmd+='	dato	TEXT';
+				cmd+=')';
 				
 				
-				var addDato = function(tx){
-					cmd= '';
-					cmd+='CREATE TABLE IF NOT EXISTS Datos (';
-					cmd+='	id		TEXT PRIMARY KEY,';
-					cmd+='	dato	TEXT';
-					cmd+=')';
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "se ejecuta " + cmd
+				});
+				
+				tx.executeSql(cmd);
+				
+				cmd= '';
+				cmd+='SELECT dato';
+				cmd+='	FROM Datos';
+				cmd+='	WHERE id = "' + mensaje.de + '"';
+				
+				
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "se ejecuta " + cmd
+				});
+				
+				tx.executeSql(cmd, [], function(tx, results) {
+					dato = JSON.parse(results.rows[0]);
+					
+					if(dato){
+						cmd = '';
+						cmd+='UPDATE Datos (';
+						cmd+='	SET dato = "'+ mensaje.datoSeguro + '",';
+						cmd+='	WHERE id = "'+ mensaje.de + '"';
+					}else{
+						cmd = '';
+						cmd+='INSERT INTO Datos (';
+						cmd+='	id,		'
+						cmd+='	dato	';
+						cmd+=')';
+						cmd+='VALUES (';
+						cmd+='	"'+ mensaje.de + '",';
+						cmd+='	"'+ mensaje.datoSeguro + '",';
+						cmd+=')';
+					}
+					
+					vx.send({
+						tipoDeMensaje	: "vortex.debug",
+						descripcion		: "se ejecuta " + cmd
+					});
 					tx.executeSql(cmd);
 					
-					cmd= '';
-					cmd+='SELECT dato';
-					cmd+='	FROM Datos';
-					cmd+='	WHERE id = "' + mensaje.de + '"';
-					
-					tx.executeSql(cmd, [], function(tx, results) {
-						dato = JSON.parse(results.rows[0]);
-						
-						if(dato){
-							cmd = '';
-							cmd+='UPDATE Datos (';
-							cmd+='	SET dato = "'+ mensaje.datoSeguro + '",';
-							cmd+='	WHERE id = "'+ mensaje.de + '"';
-						}else{
-							cmd = '';
-							cmd+='INSERT INTO Datos (';
-							cmd+='	id,		'
-							cmd+='	dato	';
-							cmd+=')';
-							cmd+='VALUES (';
-							cmd+='	"'+ mensaje.de + '",';
-							cmd+='	"'+ mensaje.datoSeguro + '",';
-							cmd+=')';
-						}
-						
-						tx.executeSql(cmd);
-						
-					},function(){
-					
-						estado = 'ERROR';
-					});
-					
-					
-				};
+				},function(){
 				
-				var errorCB = function(err){
-					console.log(err);
 					estado = 'ERROR';
-				};
+				});
 				
-				var successCB = function(){
-					estado = 'OK';
-				};
 				
-				db.transaction(addDato, errorCB, successCB);
-			}
-
+			};
+			
+			var errorCB = function(err){
+				console.log(err);
+				estado = 'ERROR';
+			};
+			
+			var successCB = function(){
+				estado = 'OK';
+			};
+			
+			db.transaction(addDato, errorCB, successCB);
+			
+			
+			
 			vx.send({
 				responseTo: mensaje.idRequest,
 				de: _this.usuario_id,
@@ -115,37 +142,45 @@ var PersistidorPhoneGap = function(opt){
 
 			var estado = 'ERROR';
 			//estado = 'DENEGADO';
-
+			
+			
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: "llego mensaje de obtener datos"
+			});
+			
+			
 			var dato;
 
-			if(typeof(Storage)!=="undefined"){
-				
-				
-				var queryDB = function(tx) {
-					cmd= '';
-					cmd+='SELECT dato';
-					cmd+='	FROM Datos';
-					cmd+='	WHERE id = "' + mensaje.de + '"';
-					
-					tx.executeSql(cmd, [], querySuccess, errorCB);
-				}
+			var queryDB = function(tx) {
+				cmd= '';
+				cmd+='SELECT dato';
+				cmd+='	FROM Datos';
+				cmd+='	WHERE id = "' + mensaje.de + '"';
 
-				
-				var querySuccess = function(tx, results) {
-					dato = results.rows[0];
-					estado = 'OK';
-				};
-				
 
-				var errorCB = function (err) {
-					console.log(err);
-					estado = 'ERROR';
-				};
-
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "se ejecuta " + cmd
+				});
 				
-				db.transaction(queryDB, errorCB);
+				tx.executeSql(cmd, [], querySuccess, errorCB);
 			}
+
 			
+			var querySuccess = function(tx, results) {
+				dato = results.rows[0];
+				estado = 'OK';
+			};
+			
+
+			var errorCB = function (err) {
+				console.log(err);
+				estado = 'ERROR';
+			};
+
+			
+			db.transaction(queryDB, errorCB);
 			
 			var obj = {
 				responseTo: mensaje.idRequest,
