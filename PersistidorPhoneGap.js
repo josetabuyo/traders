@@ -35,9 +35,56 @@ var PersistidorPhoneGap = function(opt){
 		
 		var cmd;
 		
-		var db = window.openDatabase("Database", "1.0", "PhoneGap Demo", 200000);
-        
 		
+		function populateDB(tx) {
+			cmd= '';
+			cmd+='CREATE TABLE IF NOT EXISTS Datos (';
+			cmd+='	id		TEXT PRIMARY KEY,';
+			cmd+='	dato	TEXT';
+			cmd+=')';
+			tx.executeSql(cmd);
+		}
+
+		
+		function queryDB(tx) {
+			cmd= '';
+			cmd+='SELECT dato';
+			cmd+='	FROM Datos';
+			cmd+='	WHERE id = "' + id + '"';
+			
+			tx.executeSql(cmd, [], querySuccess, errorCB);
+		}
+
+		// Query the success callback
+		//
+		function querySuccess(tx, results) {
+			dato = JSON.parse(results.rows[0]);
+			estado = 'OK';
+		}
+
+		// Transaction error callback
+		//
+		function errorCB(err) {
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: "dio error " + err.code,
+				err				: err
+			});
+			
+			estado = 'ERROR';
+		}
+
+		// Transaction success callback
+		//
+		function successCB() {
+			db.transaction(queryDB, errorCB);
+		}
+		
+		db.transaction(populateDB, errorCB, successCB);
+		
+		
+		
+		/*
 		db.transaction(
 			function(tx) {
 				
@@ -58,14 +105,7 @@ var PersistidorPhoneGap = function(opt){
 					
 						dato = JSON.parse(results.rows[0]);
 						estado = 'OK';
-						/*
-						// this will be empty since no rows were inserted.
-						console.log("Insert ID = " + results.insertId);
-						// this will be 0 since it is a select statement
-						console.log("Rows Affected = " + results.rowAffected);
-						// the number of rows returned by the select statement
-						console.log("Insert ID = " + results.rows.length);
-						*/
+						
 					},function(err){
 						
 						vx.send({
@@ -87,6 +127,9 @@ var PersistidorPhoneGap = function(opt){
 				estado = 'ERROR';
 			}
 		);
+		*/
+		
+		
 		
 		
 		return dato;
