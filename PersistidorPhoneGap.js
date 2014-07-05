@@ -42,7 +42,8 @@ var PersistidorPhoneGap = function(opt){
 			
 			vx.send({
 				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "llegó el mensaje de guardar datos"
+				descripcion		: "llegó el mensaje de guardar datos",
+				mensaje			: mensaje
 			});
 			
 			
@@ -111,7 +112,7 @@ var PersistidorPhoneGap = function(opt){
 					vx.send({
 						tipoDeMensaje	: "vortex.debug",
 						descripcion		: "dio error " + err,
-						dato			: err
+						err				: err
 					});
 					estado = 'ERROR';
 				});
@@ -123,7 +124,7 @@ var PersistidorPhoneGap = function(opt){
 				vx.send({
 					tipoDeMensaje	: "vortex.debug",
 					descripcion		: "dio error " + err,
-					dato			: err
+					err				: err
 				});
 				
 				estado = 'ERROR';
@@ -162,7 +163,9 @@ var PersistidorPhoneGap = function(opt){
 			
 			vx.send({
 				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "llego mensaje de obtener datos"
+				descripcion		: "llego mensaje de obtener datos",
+				mensaje			: mensaje
+				
 			});
 			
 			
@@ -199,7 +202,11 @@ var PersistidorPhoneGap = function(opt){
 			
 
 			var errorCB = function (err) {
-				console.log(err);
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "dio error " + err,
+					err				: err
+				});
 				estado = 'ERROR';
 			};
 

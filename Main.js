@@ -43,7 +43,11 @@ var onDeviceReady = function() {
 					no nesecitamos hacer referencia directa a los persistidores
 		*/
 		
+		
+		
+		
 		/*
+		//DEBUG: para corroborar que anda el phonegap
 		PersistidorLocalStorage_Propio = new PersistidorLocalStorage({
 			usuario_id: this.usuario.id
 		});
