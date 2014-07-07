@@ -94,10 +94,22 @@ var PersistidorPhoneGap = function(opt){
 			
 			
 			tx.executeSql(sql, [], function(tx, result) {
+				
+				
+				
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "obtenerDatos result: " + result,
+					result			: result
+				});
+				
+				
+				dato = {dummy: 'dummmy'};
+				
+				
 				if (result != null && result.rows != null) {
 					
 					dato = JSON.parse(result.rows.item(0));
-					
 					
 					vx.send({
 						tipoDeMensaje	: "vortex.debug",
@@ -137,6 +149,14 @@ var PersistidorPhoneGap = function(opt){
 			});
 			
 			var dato = obtenerDatos(mensaje.de);
+			
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: "obtenerDatos(mensaje.de) me dio dato",
+				dato			: dato
+				
+			});
+			
 			
 			var obj = {
 				responseTo: mensaje.idRequest,
