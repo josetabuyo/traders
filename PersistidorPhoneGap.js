@@ -46,7 +46,10 @@ var PersistidorPhoneGap = function(opt){
 	 
 	// this is called when a successful transaction happens
 	function successCallBack() {
-	   alert("DEBUGGING: success");
+	   vx.send({
+			tipoDeMensaje	: "vortex.debug",
+			descripcion		: 'successCallBack !!'
+		});
 	}
 	 
 	function nullHandler(){};
@@ -176,7 +179,7 @@ var PersistidorPhoneGap = function(opt){
 				
 				var sql = '';
 				if(dato){
-					sql+='UPDATE Datos (';
+					sql+='UPDATE Datos';
 					sql+='	SET dato = "'+ mensaje.datoSeguro + '",';
 					sql+='	WHERE id = "'+ mensaje.de + '"';
 				}else{
@@ -186,9 +189,15 @@ var PersistidorPhoneGap = function(opt){
 					sql+=')';
 					sql+='VALUES (';
 					sql+='	"'+ mensaje.de + '",';
-					sql+='	"'+ mensaje.datoSeguro + '",';
+					sql+='	"'+ mensaje.datoSeguro + '"';
 					sql+=')';
 				}
+				
+				
+				vx.send({
+					tipoDeMensaje	: "vortex.debug",
+					descripcion		: "se ejecuta " + sql
+				});
 				
 				transaction.executeSql(sql,[], nullHandler,errorHandler);
 				estado = 'OK';
