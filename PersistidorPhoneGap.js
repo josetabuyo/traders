@@ -52,7 +52,12 @@ var PersistidorPhoneGap = function(opt){
 		});
 	}
 	 
-	function nullHandler(){};
+	function nullHandler(){
+		vx.send({
+			tipoDeMensaje	: "vortex.debug",
+			descripcion		: 'nullHandler !!'
+		});
+	};
 	
 	// this line will try to create the table User in the database just	created/openned
 	db.transaction(function(tx){
@@ -78,7 +83,7 @@ var PersistidorPhoneGap = function(opt){
 	
 	
 	var obtenerDatos = function (id){
-		var dato;
+		var dato = {dummy: 'dummmy'};
 		
 		db.transaction(function(tx){
 			
@@ -95,16 +100,11 @@ var PersistidorPhoneGap = function(opt){
 			
 			tx.executeSql(sql, [], function(tx, result) {
 				
-				
-				
 				vx.send({
 					tipoDeMensaje	: "vortex.debug",
 					descripcion		: "obtenerDatos result: " + result,
 					result			: result
 				});
-				
-				
-				dato = {dummy: 'dummmy'};
 				
 				
 				if (result != null && result.rows != null) {
@@ -153,7 +153,7 @@ var PersistidorPhoneGap = function(opt){
 			vx.send({
 				tipoDeMensaje	: "vortex.debug",
 				descripcion		: "obtenerDatos(mensaje.de) me dio dato",
-				dato			: dato
+				datolll			: dato
 				
 			});
 			
