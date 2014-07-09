@@ -90,7 +90,7 @@ var PersistidorPhoneGap = function(opt){
 			var sql = '';
 			sql+='SELECT dato';
 			sql+='	FROM Datos';
-			sql+='	WHERE id = "' + id + '";';
+			//sql+='	WHERE id = "' + id + '";';
 			
 			vx.send({
 				tipoDeMensaje	: "vortex.debug",
