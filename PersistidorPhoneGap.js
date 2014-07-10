@@ -154,7 +154,6 @@ var PersistidorPhoneGap = function(opt){
 				tipoDeMensaje	: "vortex.debug",
 				descripcion		: "obtenerDatos(mensaje.de) me dio dato",
 				datolll			: dato
-				
 			});
 			
 			
