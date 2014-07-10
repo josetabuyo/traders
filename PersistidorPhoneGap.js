@@ -49,7 +49,7 @@ var PersistidorPhoneGap = function(opt){
 	function successCallBack(arguments) {
 	   vx.send({
 			tipoDeMensaje	: "vortex.debug",
-			descripcion		: 'successCallBack !!',
+			descripcion		: 'successCallBack !!dddd!!!sss!!',
 			arguments		: arguments
 		});
 	}
