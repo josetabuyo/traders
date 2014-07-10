@@ -37,7 +37,8 @@ var PersistidorPhoneGap = function(opt){
 		vx.send({
 			tipoDeMensaje	: "vortex.debug",
 			descripcion		: 'Error: ' + error.message + ' code: ' + error.code,
-			error 			: error
+			error 			: error,
+			arguments		: arguments
 		});
 	
 	   
@@ -45,17 +46,19 @@ var PersistidorPhoneGap = function(opt){
 	}
 	 
 	// this is called when a successful transaction happens
-	function successCallBack() {
+	function successCallBack(arguments) {
 	   vx.send({
 			tipoDeMensaje	: "vortex.debug",
-			descripcion		: 'successCallBack !!'
+			descripcion		: 'successCallBack !!',
+			arguments		: arguments
 		});
 	}
 	 
 	function nullHandler(){
 		vx.send({
 			tipoDeMensaje	: "vortex.debug",
-			descripcion		: 'nullHandler !!'
+			descripcion		: 'nullHandler !!',
+			arguments		: arguments
 		});
 	};
 	
