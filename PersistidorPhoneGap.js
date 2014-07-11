@@ -32,60 +32,30 @@ var PersistidorPhoneGap = function(opt){
 	var estado;
 	
 	// this is called when an error happens in a transaction
-	function errorHandler(transaction, error) {
-	
+	var onErrorGenerico = function(transaction, error) {
+		
 		vx.send({
 			tipoDeMensaje	: "vortex.debug",
 			descripcion		: 'Error: ' + error.message + ' code: ' + error.code,
 			error 			: error,
 			arguments		: arguments
 		});
-	
-	   
-		estado = 'ERROR';
-	}
-	 
-	// this is called when a successful transaction happens
-	function successCallBack(arguments) {
-	   vx.send({
-			tipoDeMensaje	: "vortex.debug",
-			descripcion		: 'successCallBack !!dddd!!!sss!!',
-			arguments		: arguments
-		});
-	}
-	 
-	function nullHandler(){
-		vx.send({
-			tipoDeMensaje	: "vortex.debug",
-			descripcion		: 'nullHandler !!',
-			arguments		: arguments
-		});
 	};
 	
-	// this line will try to create the table User in the database just	created/openned
-	db.transaction(function(tx){
-		
-		// this line actually creates the table User if it does not exist	and sets up the three columns and their types
-		// note the UserId column is an auto incrementing column which is	useful if you want to pull back distinct rows
-		// easily from the table.
-		var sql = '';
-		sql+='CREATE TABLE IF NOT EXISTS Datos (';
-		sql+='	id		TEXT PRIMARY KEY,';
-		sql+='	dato	TEXT';
-		sql+=')';
-		
+	var onSuccessGenerico = function() {
 		vx.send({
 			tipoDeMensaje	: "vortex.debug",
-			descripcion		: "se ejecuta " + sql
+			descripcion		: 'Success!!',
+			arguments		: arguments
 		});
 		
-		tx.executeSql( sql, [], nullHandler, errorHandler);
-		
-	}, errorHandler, successCallBack);
+	}
 	
 	
 	
-	var obtenerDatos = function (id){
+	// this is called when a successful transaction happens
+	
+	var obtenerDatos = function (id, onObtenerDatos){
 		var dato = {dummy: 'dummmy'};
 		
 		db.transaction(function(tx){
@@ -114,127 +84,183 @@ var PersistidorPhoneGap = function(opt){
 					
 					dato = JSON.parse(result.rows.item(0));
 					
-					vx.send({
-						tipoDeMensaje	: "vortex.debug",
-						descripcion		: "se obtiene el dato de " + dato.nombre,
-						dato			: dato
-					});
-					
-					
-					
-					estado = 'OK';
+					onObtenerDatos(dato);
 				}
-			}, errorHandler);
+			}, onErrorGenerico);
 			
-		}, errorHandler, nullHandler);
+		}, onErrorGenerico, onSuccessGenerico);
 		
         return dato;
 	};
 	
 	
 	
-	
-	vx.pedirMensajesSeguros({
-		filtro: {
-			tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-			de: _this.contacto_id,
-			para: _this.usuario_id
-		},
-		callback: function(mensaje){
-			estado = 'ERROR';
-			//estado = 'DENEGADO';
+	// this line will try to create the table User in the database just	created/openned
+	db.transaction(function(tx){
+		
+		// this line actually creates the table User if it does not exist	and sets up the three columns and their types
+		// note the UserId column is an auto incrementing column which is	useful if you want to pull back distinct rows
+		// easily from the table.
+		var sql = '';
+		sql+='CREATE TABLE IF NOT EXISTS Datos (';
+		sql+='	id		TEXT PRIMARY KEY,';
+		sql+='	dato	TEXT';
+		sql+=')';
+		
+		vx.send({
+			tipoDeMensaje	: "vortex.debug",
+			descripcion		: "se ejecuta " + sql
+		});
+		
+		tx.executeSql( sql, [], function(){
 			
-			vx.send({
-				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "llego mensaje de obtener datos",
-				mensaje			: mensaje
-				
-			});
-			
-			var dato = obtenerDatos(mensaje.de);
-			
-			vx.send({
-				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "obtenerDatos(mensaje.de) me dio dato",
-				datolll			: dato
-			});
-			
-			
-			var obj = {
-				responseTo: mensaje.idRequest,
-				de: _this.usuario_id,
-				para: _this.contacto_id,
-				descripcion: 'PersistidorPhoneGap',
-				estado: estado,
-				datoSeguro: dato
-			};
-			
-			vx.enviarMensaje(obj);
-		}
-	});	
-	
-	
-	
-	
-	vx.pedirMensajes({
-		filtro: {
-				tipoDeMensaje: "vortex.persistencia.guardarDatos",
-				de: _this.contacto_id,
-				para: _this.usuario_id
-			},
-		callback: function(mensaje){
-			estado = 'ERROR';
-			//estado = 'DENEGADO';
-			
-			
-			vx.send({
-				tipoDeMensaje	: "vortex.debug",
-				descripcion		: "llegó el mensaje de guardar datos",
-				mensaje			: mensaje
-			});
-			
-			var dato = obtenerDatos(mensaje.de);
-			
-			
-			// this is the section that actually inserts the values into the User table
-			db.transaction(function(transaction) {
-				
-				var sql = '';
-				if(dato){
-					sql+='UPDATE Datos';
-					sql+='	SET dato = "'+ mensaje.datoSeguro + '",';
-					sql+='	WHERE id = "'+ mensaje.de + '"';
-				}else{
-					sql+='INSERT INTO Datos (';
-					sql+='	id,		'
-					sql+='	dato	';
-					sql+=')';
-					sql+='VALUES (';
-					sql+='	"'+ mensaje.de + '",';
-					sql+='	"'+ mensaje.datoSeguro + '"';
-					sql+=')';
+			vx.pedirMensajesSeguros({
+				filtro: {
+					tipoDeMensaje:"vortex.persistencia.obtenerDatos",
+					de: _this.contacto_id,
+					para: _this.usuario_id
+				},
+				callback: function(mensaje){
+					estado = 'ERROR';
+					//estado = 'DENEGADO';
+					
+					vx.send({
+						tipoDeMensaje	: "vortex.debug",
+						descripcion		: "llego mensaje de obtener datos",
+						mensaje			: mensaje
+						
+					});
+					
+					
+					obtenerDatos(mensaje.de, function(dato){
+						
+						vx.send({
+							tipoDeMensaje	: "vortex.debug",
+							descripcion		: "se obtiene el dato de " + dato.nombre,
+							dato			: dato
+						});
+						
+						var obj = {
+							responseTo: mensaje.idRequest,
+							de: _this.usuario_id,
+							para: _this.contacto_id,
+							descripcion: 'PersistidorPhoneGap',
+							estado: estado,
+							datoSeguro: dato
+						};
+						
+						vx.enviarMensaje(obj);
+						
+					});
 				}
-				
-				
-				vx.send({
-					tipoDeMensaje	: "vortex.debug",
-					descripcion		: "se ejecuta " + sql
-				});
-				
-				transaction.executeSql(sql,[], nullHandler,errorHandler);
-				estado = 'OK';
-			});
+			});	
 			
 			
-			vx.send({
-				responseTo: mensaje.idRequest,
-				de: _this.usuario_id,
-				para: _this.contacto_id,
-				descripcion: 'PersistidorPhoneGap',
-				estado: estado
+			
+			
+			vx.pedirMensajes({
+				filtro: {
+						tipoDeMensaje: "vortex.persistencia.guardarDatos",
+						de: _this.contacto_id,
+						para: _this.usuario_id
+					},
+				callback: function(mensaje){
+					estado = 'ERROR';
+					//estado = 'DENEGADO';
+					
+					
+					vx.send({
+						tipoDeMensaje	: "vortex.debug",
+						descripcion		: "llegó el mensaje de guardar datos",
+						mensaje			: mensaje
+					});
+					
+					
+					obtenerDatos(mensaje.de, function(dato){
+						
+						// this is the section that actually inserts the values into the User table
+						db.transaction(function(transaction) {
+							
+							var sql = '';
+							if(dato){
+								sql+='UPDATE Datos';
+								sql+='	SET dato = "'+ mensaje.datoSeguro + '",';
+								sql+='	WHERE id = "'+ mensaje.de + '"';
+							}else{
+								sql+='INSERT INTO Datos (';
+								sql+='	id,		'
+								sql+='	dato	';
+								sql+=')';
+								sql+='VALUES (';
+								sql+='	"'+ mensaje.de + '",';
+								sql+='	"'+ mensaje.datoSeguro + '"';
+								sql+=')';
+							}
+							
+							
+							vx.send({
+								tipoDeMensaje	: "vortex.debug",
+								descripcion		: "se ejecuta " + sql
+							});
+							
+							transaction.executeSql(sql,[], function(tx, result){
+								
+								vx.send({
+									tipoDeMensaje	: "vortex.debug",
+									descripcion		: "resultados",
+									result			: result
+								});
+								
+								estado = 'OK';
+								
+								vx.send({
+									responseTo: mensaje.idRequest,
+									de: _this.usuario_id,
+									para: _this.contacto_id,
+									descripcion: 'PersistidorPhoneGap',
+									estado: estado
+								});
+								
+							}, function (transaction, error) {
+			
+								vx.send({
+									tipoDeMensaje	: "vortex.debug",
+									descripcion		: 'Error: ' + error.message + ' code: ' + error.code,
+									error 			: error,
+									arguments		: arguments
+								});
+							
+							   
+								estado = 'ERROR';
+								
+								vx.send({
+									responseTo: mensaje.idRequest,
+									de: _this.usuario_id,
+									para: _this.contacto_id,
+									descripcion: 'PersistidorPhoneGap',
+									estado: estado
+								});
+								
+							});
+							
+						});
+					});
+				}
 			});
-		}
+			
+		}, onErrorGenerico);
+		
+	}, onErrorGenerico, function() {
+		
+		/*onSuccess*/
+		vx.send({
+			tipoDeMensaje	: "vortex.debug",
+			descripcion		: 'Terminou la transaccion global',
+			arguments		: arguments
+		});
+		
 	});
+
 	
-	
+		
 };
