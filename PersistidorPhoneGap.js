@@ -90,7 +90,6 @@ var PersistidorPhoneGap = function(opt){
 			
 		}, onErrorGenerico, onSuccessGenerico);
 		
-        return dato;
 	};
 	
 	
@@ -112,7 +111,16 @@ var PersistidorPhoneGap = function(opt){
 			descripcion		: "se ejecuta " + sql
 		});
 		
+		
+		
 		tx.executeSql( sql, [], function(){
+			
+			vx.send({
+				tipoDeMensaje	: "vortex.debug",
+				descripcion		: "se crea la base, onSucces creo",
+				arguments		: arguments
+			});
+			
 			
 			vx.pedirMensajesSeguros({
 				filtro: {
@@ -179,7 +187,7 @@ var PersistidorPhoneGap = function(opt){
 					obtenerDatos(mensaje.de, function(dato){
 						
 						// this is the section that actually inserts the values into the User table
-						db.transaction(function(transaction) {
+						db.transaction(function(tx) {
 							
 							var sql = '';
 							if(dato){
@@ -203,12 +211,12 @@ var PersistidorPhoneGap = function(opt){
 								descripcion		: "se ejecuta " + sql
 							});
 							
-							transaction.executeSql(sql,[], function(tx, result){
+							tx.executeSql(sql,[], function(tx, result){
 								
 								vx.send({
 									tipoDeMensaje	: "vortex.debug",
 									descripcion		: "resultados",
-									result			: result
+									arguments		: arguments
 								});
 								
 								estado = 'OK';
@@ -221,7 +229,7 @@ var PersistidorPhoneGap = function(opt){
 									estado: estado
 								});
 								
-							}, function (transaction, error) {
+							}, function (tx, error) {
 			
 								vx.send({
 									tipoDeMensaje	: "vortex.debug",
@@ -243,7 +251,7 @@ var PersistidorPhoneGap = function(opt){
 								
 							});
 							
-						});
+						}, onErrorGenerico, onSuccessGenerico);
 					});
 				}
 			});
