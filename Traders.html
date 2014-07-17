@@ -1,184 +1,257 @@
 <!DOCTYPE HTML>
 <html>
-<head>
- 
-<!--
-This is an example that shows how to create an application that uses
-an embedded sqlite database
-in a mobile device (iphone,ipod,ipad,android using phonegap, jquery
-and sqlite.
- 
-Your phonegap project will already contain the phonegap.js.
- 
-You will need to download and add to your project the jquery.min.js
-file
- 
-The application will create a database called WebSqlDb with a
-table in it called User, which contains three fields  UserId,
-FirstName and LastName
- 
-When the application is run the firsttime, if the local database does
-not exist, the application
-will create the database and the table.
- 
-The application shows two text boxes which you can use to add values
-to the database using the add record button
- 
-The application also has a refresh button which will get the data from
-the database and show it on the screen
- 
-When the application is run on the device the onBodyLoad() function is
-called, which sets up the database and table
- 
-The Add Record button calls the AddValueToDB() function
- 
-The Refresh button calls the ListDBValues() function
- 
-There are a few alert statements in this application, which are only
-there for debuggin purposes.  They look like this
-alert("DEBUGGING: followed by some text");
- 
-These are only in the application to indicate where the application is
-at when it is processing functions, etc
- 
-You will need to comment these out before you deploy/sell your
-application
- 
--->
- 
-<!-- Change this if you want to allow scaling -->
-   <meta name="viewport" content="width=default-width; user-scalable=no" />
-   <meta http-equiv="Content-type" content="text/html;charset=utf-8">
- 
-   <title>Embedded Sql Example</title>
- 
-<!-- include the next line to use phonegap javascript functions -->
-    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
- 
-<!-- include the next line to use jquery functions in your application
-you must download this and include the directory your html file is in
--->
-        <script type="text/javascript" charset="utf-8" src="jquery.min.js"></script>
- 
-<!-- main scripts used in this example -->
-<script type="text/javascript" charset="utf-8">
-	 
-	// global variables
-	var db;
-	var shortName = 'WebSqlDB';
-	var version = '1.0';
-	var displayName = 'WebSqlDB';
-	var maxSize = 65535;
-	 
-	// this is called when an error happens in a transaction
-	function errorHandler(transaction, error) {
-	   alert('Error: ' + error.message + ' code: ' + error.code);
-	 
-	}
-	 
-	// this is called when a successful transaction happens
-	function successCallBack() {
-	   alert("DEBUGGING: success");
-	 
-	}
-	 
-	function nullHandler(){};
-	 
-	// called when the application loads
-	function onBodyLoad(){
-		 
-		// This alert is used to make sure the application is loaded correctly
-		// you can comment this out once you have the application working
-		alert("DEBUGGING: we are in the onBodyLoad() function");
-		 
-		if (!window.openDatabase) {
-		   // not all mobile devices support databases  if it does not, the 	following alert will display
-		   // indicating the device will not be albe to run this application
-			alert('Databases are not supported in this browser.');
-			return;
-		}
-		 
-		// this line tries to open the database base locally on the device
-		// if it does not exist, it will create it and return a database object stored in variable db
-		db = openDatabase(shortName, version, displayName,maxSize);
-		 
-		// this line will try to create the table User in the database just	created/openned
-		db.transaction(function(tx){
-			
-			// you can uncomment this next line if you want the User table to be empty each time the application runs
-			// tx.executeSql( 'DROP TABLE User',nullHandler,nullHandler);
-			
-			// this line actually creates the table User if it does not exist	and sets up the three columns and their types
-			// note the UserId column is an auto incrementing column which is	useful if you want to pull back distinct rows
-			// easily from the table.
-			tx.executeSql( 'CREATE TABLE IF NOT EXISTS User(UserId INTEGER NOT NULL PRIMARY KEY, FirstName TEXT NOT NULL, LastName TEXT NOT NULL)', [], nullHandler, errorHandler);
-			
-		}, errorHandler, successCallBack);
-	 
-	}
-	 
-	// list the values in the database to the screen using jquery toupdate the #lbUsers element
-	function ListDBValues() {
-
-		if (!window.openDatabase) {
-			alert('Databases are not supported in this browser.');
-			return;
-		}
-
-		// this line clears out any content in the #lbUsers element on the page so that the next few lines will show updated
-		// content and not just keep repeating lines
-		$('#lbUsers').html('');
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="vex/css/vex.css" />
+        <link rel="stylesheet" href="vex/css/vex-theme-top.css" />
 		
-		// this next section will select all the content from the User table and then go through it row by row
-		// appending the UserId  FirstName  LastName to the  #lbUsers element on the page
-		
-		db.transaction(function(transaction){
-			transaction.executeSql('SELECT * FROM User;', [], function(transaction, result) {
-				if (result != null && result.rows != null) {
-					for (var i = 0; i < result.rows.length; i++) {
-						var row = result.rows.item(i);
-						$('#lbUsers').append('<br>' + row.UserId + '. ' + row.FirstName+ ' ' + row.LastName);
-					}
-				}
-			},errorHandler);
+		<link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="Bootstrap/css/bootstrap-responsive.min.css" />
+        
+		<link rel="stylesheet" href="opentip/opentip.css" />
+	
+        <link rel="stylesheet" href="select2-3.4.5/select2.css"/>
+        <link rel="stylesheet" href="Traders.css" />
+		<link rel="stylesheet" href="BarraSuperior.css" />
+		<link rel="stylesheet" href="PantallaInicio.css" />
+        <link rel="stylesheet" href="PantallaUsuario.css" />
+        <link rel="stylesheet" href="PantallaContactos.css" />
+        <link rel="stylesheet" href="PantallaListaContactos.css" />
+        <link rel="stylesheet" href="PantallaContacto.css" />
+        <link rel="stylesheet" href="PantallaTrueques.css" />
+		<link rel="stylesheet" href="PantallaListaTrueques.css" />
+        <link rel="stylesheet" href="PantallaTrueque.css" />
+        <link rel="stylesheet" href="PantallaListaConexiones.css" />
+        <link rel="stylesheet" href="PantallaEdicionProducto.css" />
+        <link rel="stylesheet" href="VistaDeUnProductoEnLista.css" />
+        <link rel="stylesheet" href="ListaProductos.css" />
+		<title>Traders</title>
+	</head>
+	
+	<body>	
+        <div id="main">
+            <div id="pantalla_inicio" class="pantalla">
+                <div class="barra_superior">
+                    <div class="titulo_pantalla">
+                        Traders
+                    </div>
+					<div id="comentarios_login">
+						*Para ingresar no es necesario registrarte, inventate un usuario y un password
+					</div>
+					<input id="nombre_usuario" type="text" class="input_login" placeholder="Usuario">   
+					<div id="contenedor_password">
+						<div id="indicador_fuerza"></div>                                          
+						<input id="password" type="password" class="input_login" placeholder="contraseña"/>
+					</div>
+					<input id="boton_ingresar" type="button" value="Entrar" class="btn btn-primary"/>
+                </div>
+            </div>
 			
-		}, errorHandler, nullHandler);
-		
-		return;
-	}
-	 
-	// this is the function that puts values into the database using the values from the text boxes on the screen
-	function AddValueToDB() {
-		if (!window.openDatabase) {
-			alert('Databases are not supported in this browser.');
-			return;
-		}
-
-		// this is the section that actually inserts the values into the User table
-		db.transaction(function(transaction) {
 			
-			transaction.executeSql('INSERT INTO User(FirstName, LastName) VALUES (?,?)',[$('#txFirstName').val(), $('#txLastName').val()],
-			nullHandler,errorHandler);
-		});
+			<div id="barra_superior" class="barra_superior">
+				<div id="solapa_yo" class="solapa">
+                    <img src="avatar_default.png"/>
+					<label>Yo</label>
+				</div>
+				<div id="solapa_contactos" class="solapa">
+                    <img src="Imagenes/icono_contactos.png"/>
+					<label>Contactos</label>
+				</div>
+				<div id="solapa_trueques" class="solapa">
+                    <img src="Imagenes/icono_trueques.png"/>
+					<label>Trueques</label>
+				</div>
+				<div id="solapa_productos" class="solapa">
+                    <img src="Imagenes/icono_productos.png"/>
+					<label>Productos</label>
+				</div>
+				<div id="solapa_vortex" class="solapa">
+                    <img src="Imagenes/icono_conexiones.png"/>
+					<label>Conexiones</label>
+				</div>
+				
+			</div>
+			<div id="pantalla_usuario" class="pantalla">
+				<div class="datos_usuario">
+					<div id="div_recorte_avatar">
+						<img id="avatar_usuario" src="avatar_default.png" class="avatar_usuario" />
+						<video id="video_para_sacar_foto" autoplay></video>
+					</div>
+					<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+					<input id="btn_compartir_id" type="button" value="Id" class="btn btn-primary"/>
+					<input id="txt_nombre_producto_add" type="text" placeholder="Nuevo producto"/>
+					<input id="btn_add_producto" type="button" class="btn btn-primary" value="+"/>
+				</div>
+				<div class="panel_inventario_container">
+					<div id="panel_inventario">
+					</div>
+				</div>
+			</div>
 
-		// this calls the function that will show what is in the User table in the database
-		ListDBValues();
+			<div id="pantalla_productos" class="pantalla">
+			</div>
 
-		return false;
+			<div id="pantalla_contactos" class="pantalla">
+				<div id="pantalla_lista_contactos">
+					<div id="lista_contactos">
+					</div>
+					<div id="panel_alta_contacto">
+						<input id="btn_add_contacto" type="button" class="btn btn-primary" value="+"/>
+					</div>
+				</div>
 
-	}
-	 
-	 
-	</script>
-</head>
-<body onload="onBodyLoad()">
-<h1>WebSQL</h1>
-<input id="txFirstName" type="text" placeholder="FirstName">
-<input id="txLastName" type="text" placeholder="Last Name">
-<input type="button" value="Add record" onClick="AddValueToDB()">
-<input type="button" value="Refresh" onClick="ListDBValues()"> <br>
-<br>
-<span style="font-weight:bold;">Currently stored values:</span>
-<span id="lbUsers"></span>
-</body>
+				<div id="pantalla_contacto">
+					<div id="panel_contacto">
+						<div class="datos_usuario">
+							<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
+							<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
+							<input id="btn_trocar" type="button" class="btn btn-primary" value="Trocar"/>
+						</div>
+						<div id="panel_inventario_contacto">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="pantalla_trueques" class="pantalla">
+				<div id="pantalla_lista_trueques">
+					<div id="lista_trueques">
+					</div>
+				</div>
+
+				<div id="pantalla_trueque">				
+					<div class="datos_usuario datos_persona">
+						<img id="avatar_usuario" class="avatar_usuario" src="avatar_default.png"/>
+						<div id="lbl_nombre_usuario" class="lbl_nombre_usuario"></div>
+						<input id="btn_aceptar" type="button" class="btn btn-primary" value="Aceptar"/>
+						<input id="btn_ofertar" type="button" class="btn btn-primary" value="Ofertar"/>
+					</div>				
+
+					<div class="datos_contacto datos_persona">
+						<img id="avatar_contacto" class="avatar_usuario" src="avatar_default.png"/>
+						<div id="lbl_nombre_contacto" class="lbl_nombre_usuario"></div>
+					</div>				
+
+					<div id="oferta">
+						<div class="oferta_doy"> </div>
+						<div class="treque_cerrado"> CERRADO </div>
+						<div class="treque_por"> X </div>
+						<div class="oferta_recibo">	</div>
+					</div>
+
+					<div id="inventario_usuario" class="panel_inventario">
+					</div>
+
+					<div id="inventario_contacto" class="panel_inventario">
+					</div>				
+				</div>
+			</div>
+			<div id="pantalla_lista_conexiones" class="pantalla">
+				<div id="lista_conexiones">
+				</div>
+				<div id="panel_alta_conexion">
+					<input id="btn_add_conexion" type="button" class="btn btn-primary" value="+"/>
+				</div>
+			</div>
+        </div>
+    </body>
+    
+    <div id="plantillas">
+        <div class="contacto_en_lista item_en_lista">
+            <img id="avatar">
+            <div id="nombre"></div>
+			<div id="btn_eliminar">x</div>
+        </div>
+		
+		<div class="trueque_en_lista item_en_lista">
+            <div id="nombre"></div>
+			<div id="btn_eliminar">x</div>
+        </div>
+		
+        <div class="producto_en_inventario">
+            <div id="nombre"></div>
+            <div id="btn_eliminar">x</div>
+        </div>   
+		
+		<div class="producto_en_lista item_en_lista">
+            <img id="thumbnail_producto"/>
+            <div id="nombre"></div>
+            <img id="avatar_propietario">
+            <div id="btn_eliminar">x</div>
+        </div>
+		
+		<div class="lista_productos">
+			<div id="listado_de_productos">
+			</div>
+		</div>
+		
+		<div class="conexion_en_lista item_en_lista">
+			<input id="rad_activar" name="selectores_conexion" type="radio"/>
+            <div id="url"></div>
+			<div id="btn_eliminar">x</div>
+        </div>
+		
+		<div class="pantalla_edicion_producto">
+			<div id="div_imagen_producto">
+				<img id="imagen_producto" src="Gift-icon-grande.png"/>
+				<video id="video_para_sacar_foto" autoplay></video>
+			</div>
+			<label class="titulo_atributo_producto">Nombre:</label>
+			<input type="text" id="txt_nombre_producto" style="height: 35px; font-size: 18px;"/>			
+		</div>
+    </div>
+    
+    <script type="text/javascript" src="jquery-1.10.2.min.js"></script> 
+    <script type="text/javascript" src="underscore-min.js"></script> 
+    <script type="text/javascript" src="Cryptico.min.js"></script> 
+    <script type="text/javascript" src="select2-3.4.5/select2.min.js"></script> 
+    <script type="text/javascript" src="Bootstrap/js/bootstrap.min.js"></script> 
+<!--  vex es una libreria para abrir popups -->
+	<script src="vex/js/vex.combined.min.js"></script>
+<!-- opentip es para hacer tooltips copados -->
+	<script src="opentip/opentip-jquery.min.js"></script>
+    
+    <script type="text/javascript" src="VortexJS/FiltrosYTransformaciones.js"></script>
+    <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script> 
+    <script type="text/javascript" src="VortexJS/ClonadorDeObjetos.js"></script> 
+    <script type="text/javascript" src="VortexJS/GeneradorDeIdMensaje.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoClienteHTTP.js"></script>  
+    <script type="text/javascript" src="VortexJS/NodoPortalBidi.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoPortalBidiMonoFiltro.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoRouter.js"></script> 
+    <script type="text/javascript" src="VortexJS/PataConectora.js"></script> 
+    <script type="text/javascript" src="VortexJS/NodoConectorSocket.js"></script>
+    <script type="text/javascript" src="VortexJS/socket.io.js"></script>
+    <script type="text/javascript" src="VortexJS/Vortex.js"></script>     
+
+	
+    <script type="text/javascript" src="Main.js"></script> 
+    <script type="text/javascript" src="Traders.js"></script> 
+    <script type="text/javascript" src="PantallaInicio.js"></script> 
+    <script type="text/javascript" src="BarraSuperior.js"></script> 
+    <script type="text/javascript" src="PantallaUsuario.js"></script> 
+    <script type="text/javascript" src="PantallaListaContactos.js"></script> 
+	<script type="text/javascript" src="PantallaListaConexiones.js"></script> 
+    <script type="text/javascript" src="PantallaContactos.js"></script>     
+	<script type="text/javascript" src="PantallaContacto.js"></script> 
+	<script type="text/javascript" src="PantallaTrueques.js"></script> 
+    <script type="text/javascript" src="PantallaListaTrueques.js"></script> 
+	<script type="text/javascript" src="PantallaTrueque.js"></script> 
+	<script type="text/javascript" src="PantallaEdicionProducto.js"></script> 
+	<script type="text/javascript" src="ListaProductos.js"></script> 
+	<script type="text/javascript" src="PantallaProductos.js"></script> 
+	<script type="text/javascript" src="VistaDeUnProductoEnLista.js"></script> 
+    <script type="text/javascript" src="VistaDeUnProductoEnInventario.js"></script> 
+    
+	<script type="text/javascript" src="PersistidorManual.js"></script>
+	<script type="text/javascript" src="PersistidorLocalStorage.js"></script>
+	<script type="text/javascript" src="PersistidorPhoneGap.js"></script>
+	
+	<script type="text/javascript" src="RepositorioDeConexiones.js"></script> 
+
+    <script type="text/javascript" src="Utiles.js"></script>
+	
+    <script type="text/javascript" src="phonegap.js"></script>
 </html>
+
