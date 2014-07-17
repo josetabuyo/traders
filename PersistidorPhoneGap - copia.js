@@ -5,91 +5,6 @@ var PersistidorPhoneGap = function(opt){
 	if(!window.isphone) return;
 	//
 	
-	// TO DO: descular como usar SQLite
-	// ahora es una copia del PersistidorLocalStorage
-	// adaptado  
-	
-	var optDefault = {
-		usuario_id: null,
-		contacto_id: null
-	};
-	
-	$.extend(true, optDefault, opt);	
-	$.extend(true, this, optDefault);	
-	
-	if(!this.contacto_id){
-		this.contacto_id = this.usuario_id
-	}
-	
-	vx.pedirMensajes({
-		filtro: {
-				tipoDeMensaje: "vortex.persistencia.guardarDatos",
-				de: _this.contacto_id,
-				para: _this.usuario_id
-			},
-		callback: function(mensaje){
-
-			var estado = 'ERROR';
-
-			//estado = 'DENEGADO';
-
-			if(typeof(Storage)!=="undefined"){
-				localStorage.setItem(_this.contacto_id + 'PersistidorPhoneGap', mensaje.datoSeguro);
-				estado = 'OK';
-			}
-
-			vx.send({
-				responseTo: mensaje.idRequest,
-				de: _this.usuario_id,
-				para: _this.contacto_id,
-				descripcion: 'LocalStorage',
-				estado: estado
-			});
-		}
-	});
-	
-	
-	vx.pedirMensajesSeguros({
-		filtro: {
-			tipoDeMensaje:"vortex.persistencia.obtenerDatos",
-			de: _this.contacto_id,
-			para: _this.usuario_id
-		},
-		callback: function(mensaje){
-
-			var estado = 'ERROR';
-			//estado = 'DENEGADO';
-
-			var datos;
-
-			if(typeof(Storage)!=="undefined"){
-				datos = localStorage.getItem(_this.usuario_id + 'PersistidorPhoneGap');
-				if(datos){
-					estado = 'OK';
-				}
-			}
-
-			var obj = {
-				responseTo: mensaje.idRequest,
-				de: _this.usuario_id,
-				para: _this.contacto_id,
-				descripcion: 'PersistidorPhoneGap',
-				estado: estado,
-				datoSeguro: datos														
-			};
-			vx.enviarMensaje(obj);
-		}
-	});	
-};
-
-/*
-var PersistidorPhoneGap = function(opt){
-	var _this = this;    
-	
-	// validacion
-	if(!window.isphone) return;
-	//
-	
 	
 	var optDefault = {
 		usuario_id: null,
@@ -345,7 +260,7 @@ var PersistidorPhoneGap = function(opt){
 		
 	}, onErrorGenerico, function() {
 		
-		//onSuccess
+		/*onSuccess*/
 		vx.send({
 			tipoDeMensaje	: "vortex.debug",
 			descripcion		: 'Terminou la transaccion global',
@@ -357,4 +272,3 @@ var PersistidorPhoneGap = function(opt){
 	
 		
 };
-*/
